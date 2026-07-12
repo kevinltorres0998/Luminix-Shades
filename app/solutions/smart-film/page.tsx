@@ -16,7 +16,7 @@ function Fade({ children, className = "" }: { children: React.ReactNode; classNa
 }
 
 function GlassPanels({ variant }: { variant: "total" | "light" | "black" }) {
-  return <div className={`${styles.cardGlass} ${styles[variant]}`} aria-hidden="true"><i /><i /><i /></div>;
+  return <><div className={`${styles.cardGlass} ${styles[variant]}`} aria-hidden="true"><i /><i /><i /></div><div className={styles.cardFrame} aria-hidden="true"><i className={styles.cardFrameLeft} /><i className={styles.cardFrameOne} /><i className={styles.cardFrameTwo} /><i className={styles.cardFrameRight} /><i className={styles.cardFrameTop} /><i className={styles.cardFrameBottom} /></div></>;
 }
 
 function BenefitIcon({ type }: { type: string }) {
