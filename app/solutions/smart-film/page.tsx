@@ -46,7 +46,7 @@ export default function SmartFilmPage() {
       <SiteHeader />
 
       <section className={styles.hero} id="top">
-        <motion.div className={styles.heroMedia} style={{ y: heroY }}><Image src="/images/smart-film-demo-clear.png" alt="Glass conference room designed for switchable privacy film" fill priority sizes="100vw" /></motion.div>
+        <motion.div className={styles.heroMedia} style={{ y: heroY }}><Image src="/images/smart-film-hero-v2.png" alt="Premium glass conference room designed for switchable privacy film" fill priority sizes="100vw" /></motion.div>
         <div className={styles.heroShade} />
         <motion.div className={styles.heroContent} initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .95, ease: [0.22, 1, 0.36, 1] }}>
           <span className={styles.kicker}>SMART FILM</span>
