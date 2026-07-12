@@ -26,7 +26,7 @@ const principles = [
 
 const capabilities = [
   ["Residential", "Private residences shaped around comfort, atmosphere, and daily rituals.", "/images/residential.png"],
-  ["Commercial", "Scalable solutions for hospitality, workplace, retail, and signature developments.", "/images/commercial.png"],
+  ["Commercial", "Scalable solutions for hospitality, workplace, retail, and signature developments.", "/images/about-hospitality.png"],
   ["Design Partners", "A collaborative resource for architects, designers, builders, and contractors.", "/images/architecture.png"],
 ];
 
@@ -72,29 +72,42 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className={styles.statement}>
-        <Image src="/images/smart-film.png" alt="Miami interior with smart privacy glass" fill sizes="100vw" />
-        <div className={styles.statementShade} />
-        <Fade className={styles.statementCopy}>
-          <span className={styles.kicker}>DESIGN MEETS TECHNOLOGY</span>
-          <h2>Innovation should never<br />interrupt the architecture.</h2>
-          <p>Our systems are selected and integrated to enhance the experience of a space—not compete with it.</p>
+      <section className={styles.manifesto}>
+        <Fade>
+          <span className={styles.kicker}>OUR STARTING POINT</span>
+          <h2>We don&apos;t begin with the product.<br /><em>We begin with the space.</em></h2>
+          <p>Every project starts by understanding how light, privacy, architecture, and daily life come together. The solution comes after.</p>
         </Fade>
       </section>
 
-      <section className={styles.story}>
-        <div className={styles.storyImage}><Image src="/images/residential.png" alt="Warm contemporary residence in South Florida" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
-        <Fade className={styles.storyCopy}>
-          <span className={styles.kicker}>BUILT IN SOUTH FLORIDA</span>
-          <h2>Local understanding.<br /><em>World-class standards.</em></h2>
-          <p>South Florida demands a unique relationship with light, heat, privacy, and expansive glass. Our approach is grounded in that reality and elevated by a global design perspective.</p>
-          <p>From waterfront residences to hospitality and commercial environments, every project receives the same level of care, coordination, and finish.</p>
-          <div className={styles.storyFacts}>
-            <div><b>01</b><span>Design-led consultation</span></div>
-            <div><b>02</b><span>Technical specification</span></div>
-            <div><b>03</b><span>Precision installation</span></div>
-          </div>
+      <section className={styles.details}>
+        <Fade className={styles.detailsHeading}>
+          <span className={styles.kicker}>ATTENTION TO DETAIL</span>
+          <h2>The difference lives<br />in what others overlook.</h2>
+          <p>Texture, alignment, movement, and finish are not secondary considerations. They are the experience.</p>
         </Fade>
+        <div className={styles.detailGallery}>
+          <motion.figure className={styles.fabricDetail} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .85, ease: [0.22, 1, 0.36, 1] }}>
+            <div><Image src="/images/about-fabric-detail.png" alt="Close-up of premium sheer and linen drapery" fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
+            <figcaption><span>01 / MATERIAL</span><p>Fabrics selected for the way they filter light, fall, and complete the room.</p></figcaption>
+          </motion.figure>
+          <motion.figure className={styles.motorDetail} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .85, delay: .12, ease: [0.22, 1, 0.36, 1] }}>
+            <div><Image src="/images/about-motor-detail.png" alt="Precision installation of a concealed motorized shade" fill sizes="(max-width: 900px) 100vw, 38vw" /></div>
+            <figcaption><span>02 / PRECISION</span><p>Concealed technology resolved down to the final architectural junction.</p></figcaption>
+          </motion.figure>
+        </div>
+      </section>
+
+      <section className={styles.approach}>
+        <Fade className={styles.approachIntro}>
+          <span className={styles.kicker}>THE LUMINIX APPROACH</span>
+          <h2>A considered journey<br />from vision to installation.</h2>
+        </Fade>
+        <div className={styles.approachSteps}>
+          {["Listen", "Design", "Engineer", "Install"].map((step, index) => (
+            <div key={step}><span>0{index + 1}</span><h3>{step}</h3><p>{["Understand the space, the people, and the intention.", "Shape a solution around light, material, and proportion.", "Resolve every technical detail before production.", "Deliver a precise finish with minimal disruption."][index]}</p></div>
+          ))}
+        </div>
       </section>
 
       <section className={styles.capabilities}>
@@ -112,16 +125,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className={styles.approach}>
-        <Fade className={styles.approachIntro}>
-          <span className={styles.kicker}>THE LUMINIX APPROACH</span>
-          <h2>A considered journey<br />from vision to installation.</h2>
+      <section className={styles.technology}>
+        <div className={styles.technologyImage}><Image src="/images/about-smart-film-detail.png" alt="Smart film transitioning from transparent to frosted glass" fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
+        <Fade className={styles.technologyCopy}>
+          <span className={styles.kicker}>TECHNOLOGY & CRAFT</span>
+          <h2>Advanced systems.<br /><em>Beautifully resolved.</em></h2>
+          <p>Innovation matters only when it improves the experience of the architecture. We pair proven technology with exact specification, careful fabrication, and a disciplined installation process.</p>
+          <div className={styles.technologyNotes}><span>Quiet movement</span><span>Seamless integration</span><span>Precise control</span></div>
         </Fade>
-        <div className={styles.approachSteps}>
-          {["Listen", "Design", "Engineer", "Install"].map((step, index) => (
-            <div key={step}><span>0{index + 1}</span><h3>{step}</h3><p>{["Understand the space, the people, and the intention.", "Shape a solution around light, material, and proportion.", "Resolve every technical detail before production.", "Deliver a precise finish with minimal disruption."][index]}</p></div>
-          ))}
-        </div>
+      </section>
+
+      <section className={styles.partners}>
+        <Fade className={styles.partnersIntro}>
+          <span className={styles.kicker}>TRUSTED TECHNOLOGY PARTNERS</span>
+          <p>We work with established systems selected for performance, reliability, and elegant integration.</p>
+        </Fade>
+        <div className={styles.partnerNames}><b>somfy.</b><b>LUTRON.</b><b>SMARTTINT®</b><b className={styles.partnerSerif}>ALTA</b><b>mecho</b></div>
       </section>
 
       <section className={styles.region}>
@@ -131,13 +150,14 @@ export default function AboutPage() {
           <p>We serve homeowners, design professionals, and commercial teams throughout Miami, Fort Lauderdale, Boca Raton, Palm Beach, and beyond.</p>
           <a className="arrow-link" href="/#areas">VIEW SERVICE AREAS <span aria-hidden="true">→</span></a>
         </Fade>
-        <div className={styles.regionImage}><Image src="/images/commercial.png" alt="Commercial interior overlooking the Miami skyline" fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
+        <div className={styles.regionImage}><Image src="/images/smart-film.png" alt="South Florida interior overlooking the water" fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
       </section>
 
       <section className={styles.finalSection}>
         <div className={styles.finalPanel}>
-          <span className={styles.kicker}>START A CONVERSATION</span>
-          <h2>Let&apos;s shape the right<br /><em>experience for your space.</em></h2>
+          <span className={styles.kicker}>THE BEGINNING OF SOMETHING CONSIDERED</span>
+          <h2>Bring us the space.<br /><em>We&apos;ll begin with the light.</em></h2>
+          <p>Every meaningful project begins with a conversation about how you want the environment to feel.</p>
           <div><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com">CONTACT OUR TEAM</a></div>
         </div>
       </section>
