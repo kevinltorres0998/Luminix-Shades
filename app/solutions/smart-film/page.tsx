@@ -12,85 +12,88 @@ function Image(props: React.ComponentProps<typeof NextImage>) {
 }
 
 function Fade({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <motion.div className={className} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .75, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>;
+  return <motion.div className={className} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .72, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>;
 }
 
-const benefits = [
-  ["Instant Privacy", "Transparent when the space is open. Softly private in a moment."],
-  ["Minimal Design", "Keep glass, sightlines, and architectural intent completely unobstructed."],
-  ["Smart Integration", "Coordinate privacy with a switch, remote, app, or automation system."],
-  ["Light & UV Control", "Diffuse glare and help protect refined interiors from UV exposure."],
+function GlassPanels({ variant }: { variant: "total" | "light" | "black" }) {
+  return <div className={`${styles.cardGlass} ${styles[variant]}`} aria-hidden="true"><i /><i /><i /></div>;
+}
+
+function BenefitIcon({ type }: { type: string }) {
+  return <span className={`${styles.benefitIcon} ${styles[type]}`} aria-hidden="true"><i /><b /><em /></span>;
+}
+
+const filmTypes = [
+  { variant: "total" as const, title: "Smart Film Total", copy: "Complete privacy. Full opacity for maximum discretion.", cta: "EXPLORE TOTAL", featured: true },
+  { variant: "light" as const, title: "Smart Film Light", copy: "Balanced privacy. Natural light with enhanced discretion.", cta: "EXPLORE LIGHT", featured: false },
+  { variant: "black" as const, title: "Smart Film Black", copy: "Maximum privacy and light control with a dark, elegant finish.", cta: "EXPLORE BLACK", featured: false },
 ];
 
-const steps = [
-  ["01", "Apply", "Precision-installed Smart Film is fitted directly to suitable existing glass."],
-  ["02", "Connect", "Discreet electrical components are integrated cleanly into the surrounding architecture."],
-  ["03", "Control", "Switch instantly using a wall switch, remote, mobile control, or automation system."],
+const benefits = [
+  ["Instant Privacy", "Transform glass from transparent to private in a moment.", "privacyIcon"],
+  ["Minimal Design", "Preserve clean sightlines without shades, tracks, or visual clutter.", "minimalIcon"],
+  ["Smart Integration", "Control with a switch, remote, app, or automation system.", "smartIcon"],
+  ["Light & UV Control", "Diffuse glare and help protect refined interiors from harmful UV.", "lightIcon"],
 ];
 
 export default function SmartFilmPage() {
-  const [privacyLevel, setPrivacyLevel] = useState(54);
+  const [divider, setDivider] = useState(50);
   const { scrollY } = useScroll();
-  const heroY = useTransform(scrollY, [0, 720], [0, 62]);
+  const heroY = useTransform(scrollY, [0, 700], [0, 50]);
 
   return (
     <main className={styles.page}>
       <SiteHeader />
 
       <section className={styles.hero} id="top">
-        <motion.div className={styles.heroMedia} style={{ y: heroY }}><Image src="/images/about-smart-film-detail.png" alt="Smart film integrated into a refined glass conference room" fill priority sizes="100vw" /></motion.div>
+        <motion.div className={styles.heroMedia} style={{ y: heroY }}><Image src="/images/smart-film-demo-clear.png" alt="Glass conference room designed for switchable privacy film" fill priority sizes="100vw" /></motion.div>
         <div className={styles.heroShade} />
-        <motion.div className={styles.heroContent} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}>
+        <motion.div className={styles.heroContent} initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .95, ease: [0.22, 1, 0.36, 1] }}>
           <span className={styles.kicker}>SMART FILM</span>
-          <h1>Privacy, on demand.<br /><em>Architecture, uninterrupted.</em></h1>
+          <h1>Privacy, on demand.<br /><em>Architecture,<br />uninterrupted.</em></h1>
           <p>Switchable privacy glass that moves effortlessly between openness and discretion—without compromising the design of the space.</p>
-          <div className={styles.heroActions}><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="#experience">SEE IT IN ACTION</a></div>
+          <div><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="#transformation">SEE IT IN ACTION</a></div>
         </motion.div>
-        <span className={styles.scrollCue}>DISCOVER SMART FILM <i aria-hidden="true" /></span>
+        <a className={styles.heroCue} href="#transformation" aria-label="View Smart Film transformation">⌄</a>
       </section>
 
-      <section className={styles.intro}>
-        <Fade className={styles.introLead}><span className={styles.kicker}>A NEW RELATIONSHIP WITH GLASS</span><h2>Glass when open.<br /><em>Privacy when needed.</em></h2></Fade>
-        <Fade className={styles.introCopy}><p>Smart film gives architectural glass a second state. With one touch, transparent surfaces become softly opaque—creating privacy without adding visual weight.</p><p>It is a precise solution for interiors where flexibility, clean design, and intelligent control belong together.</p></Fade>
-      </section>
-
-      <section className={styles.experience} id="experience">
-        <Fade className={styles.experienceHeading}><span className={styles.kicker}>EXPERIENCE THE TRANSFORMATION</span><h2>One room.<br />Two precise states.</h2><p>Only the glass changes. The architecture, furniture, frames, and light remain exactly the same.</p></Fade>
-        <motion.div className={styles.demo} initial={{ opacity: 0, scale: 1.015 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: .18 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}>
-          <Image src="/images/smart-film-demo-clear.png" alt="Clear glass conference room used to demonstrate switchable privacy film" fill sizes="100vw" />
-          <div className={styles.privacyReveal} style={{ clipPath: `inset(0 ${100 - privacyLevel}% 0 0)` }} aria-hidden="true"><span className={`${styles.glassPane} ${styles.paneOne}`} /><span className={`${styles.glassPane} ${styles.paneTwo}`} /><span className={`${styles.glassPane} ${styles.paneThree}`} /></div>
-          <div className={styles.handle} style={{ left: `${privacyLevel}%` }} aria-hidden="true"><span>‹</span><span>›</span></div>
-          <span className={`${styles.demoLabel} ${styles.privateLabel}`}>PRIVATE</span><span className={`${styles.demoLabel} ${styles.clearLabel}`}>CLEAR</span>
-          <input type="range" min="12" max="88" value={privacyLevel} onChange={(event) => setPrivacyLevel(Number(event.target.value))} aria-label="Adjust the smart film privacy level" />
+      <section className={styles.transformation} id="transformation">
+        <Fade className={styles.transformHeading}><div><span className={styles.kicker}>EXPERIENCE THE TRANSFORMATION</span><h2>One room.<br />Two precise states.</h2></div><p>Drag to switch the glass from clear to private.</p></Fade>
+        <motion.div className={styles.comparison} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }}>
+          <Image src="/images/smart-film-demo-clear.png" alt="Clear glass conference room with interactive Smart Film privacy comparison" fill sizes="100vw" />
+          <div className={styles.privateState} style={{ clipPath: `inset(0 0 0 ${divider}%)` }} aria-hidden="true"><i /><i /><i /></div>
+          <span className={`${styles.stateLabel} ${styles.clearLabel}`}>CLEAR</span><span className={`${styles.stateLabel} ${styles.privateLabel}`}>PRIVATE</span>
+          <span className={styles.divider} style={{ left: `${divider}%` }} aria-hidden="true"><i>‹</i><i>›</i></span>
+          <input type="range" min="14" max="86" value={divider} onChange={(event) => setDivider(Number(event.target.value))} aria-label="Drag to switch the glass from clear to private" />
         </motion.div>
-        <p className={styles.demoInstruction}><i aria-hidden="true" /> Drag to switch the glass from clear to private.</p>
       </section>
 
-      <section className={styles.benefits}>
-        <Fade className={styles.benefitsHeading}><span className={styles.kicker}>BEAUTY IN BOTH STATES</span><h2>Technology that<br />disappears into the design.</h2></Fade>
-        <div className={styles.benefitGrid}>{benefits.map(([title, copy], index) => <Fade className={styles.benefit} key={title}><span className={styles.benefitLine} aria-hidden="true"><i style={{ width: `${28 + index * 9}%` }} /></span><small>0{index + 1}</small><h3>{title}</h3><p>{copy}</p></Fade>)}</div>
-      </section>
-
-      <section className={styles.applications}>
-        <Fade className={styles.applicationIntro}><span className={styles.kicker}>DESIGNED FOR THE WAY SPACES CHANGE</span><h2>One technology.<br />Distinct possibilities.</h2></Fade>
-        <div className={styles.applicationGrid}>
-          <motion.a href="/solutions#residential" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .8 }}><Image src="/images/about-smart-film-detail.png" alt="Frosted Smart Film on an interior glass door" fill sizes="(max-width: 900px) 100vw, 50vw" /><div><span>RESIDENTIAL</span><h3>Privacy that appears only when you want it.</h3><p>Bathrooms · Bedrooms · Entryways · Interior glass partitions</p><b>SMART FILM FOR RESIDENCES →</b></div></motion.a>
-          <motion.a href="/solutions#commercial" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .8, delay: .08 }}><Image src="/images/smart-film-demo-clear.png" alt="Smart Film-ready glass conference room" fill sizes="(max-width: 900px) 100vw, 50vw" /><div><span>COMMERCIAL</span><h3>Flexible privacy for spaces that perform.</h3><p>Conference rooms · Executive offices · Hospitality · Healthcare · Retail</p><b>SMART FILM FOR BUSINESS →</b></div></motion.a>
+      <section className={styles.filmSection} id="film-types">
+        <Fade className={styles.filmIntro}><span className={styles.kicker}>THREE SMART FILM SOLUTIONS</span><h2>The right level of privacy<br />for every space.</h2></Fade>
+        <div className={styles.filmGrid}>
+          {filmTypes.map((film, index) => <motion.a className={styles.filmCard} href="mailto:hello@luminixshades.com?subject=Smart%20Film%20Consultation" key={film.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .72, delay: index * .06 }}>
+            <div className={styles.filmVisual}><Image src="/images/smart-film-demo-clear.png" alt={`${film.title} privacy finish`} fill sizes="(max-width: 900px) 100vw, 29vw" /><GlassPanels variant={film.variant} />{film.featured && <span>MOST POPULAR</span>}</div>
+            <div className={styles.filmCopy}><h3>{film.title}</h3><p>{film.copy}</p><b>{film.cta} <i>→</i></b></div>
+          </motion.a>)}
         </div>
       </section>
 
-      <section className={styles.process}>
-        <Fade className={styles.processIntro}><span className={styles.kicker}>HOW IT WORKS</span><h2>Precisely integrated.<br />Effortless to use.</h2><p>From field measurement to final programming, every detail is considered as part of the finished environment.</p></Fade>
-        <div className={styles.stepGrid}>{steps.map(([number, title, copy]) => <Fade className={styles.step} key={title}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div></Fade>)}</div>
+      <section className={styles.benefits}>
+        <Fade className={styles.benefitIntro}><span className={styles.kicker}>BEAUTY IN BOTH STATES</span><h2>Technology that<br />disappears into the design.</h2></Fade>
+        <div className={styles.benefitGrid}>{benefits.map(([title, copy, icon], index) => <Fade className={styles.benefit} key={title}><BenefitIcon type={icon} /><h3>{title}</h3><p>{copy}</p><span>0{index + 1}</span></Fade>)}</div>
       </section>
 
-      <section className={styles.integration}>
-        <div className={styles.integrationImage}><Image src="/images/smart-film-control-detail.png" alt="Smart Film power integration and wall control beside a glass partition" fill sizes="(max-width: 900px) 100vw, 52vw" /></div>
-        <Fade className={styles.integrationCopy}><span className={styles.kicker}>CONTROLS & TECHNICAL CONFIDENCE</span><h2>Privacy, connected<br />to your environment.</h2><p>Smart Film can operate independently or become part of a complete automation system—planned as one clean, discreet architectural detail.</p><ul><li>Retrofit application to compatible existing glass</li><li>Custom sizing and professional measurement</li><li>Discreet power and control integration</li><li>Residential, commercial, and automation compatibility</li></ul><div className={styles.integrationLinks}><a href="mailto:hello@luminixshades.com?subject=Smart%20Film%20Technical%20Information">REQUEST TECHNICAL INFORMATION →</a><span className={styles.partnerMark}>SMARTTINT® <i>technology partner</i></span></div></Fade>
+      <section className={styles.useCases}>
+        <span className={styles.kicker}>DESIGNED FOR EVERY SPACE</span>
+        <div className={styles.useGrid}>
+          <motion.a href="mailto:hello@luminixshades.com?subject=Residential%20Smart%20Film" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }}><div className={styles.useCopy}><h2>Residential</h2><p>Bathrooms, bedrooms, entryways, and interior glass partitions.</p><b>EXPLORE RESIDENTIAL <i>→</i></b></div><div className={styles.useImage}><Image src="/images/about-smart-film-detail.png" alt="Residential Smart Film on an interior glass partition" fill sizes="(max-width: 900px) 100vw, 33vw" /></div></motion.a>
+          <motion.a href="mailto:hello@luminixshades.com?subject=Commercial%20Smart%20Film" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ delay: .08 }}><div className={styles.useCopy}><h2>Commercial</h2><p>Offices, conference rooms, hospitality, healthcare, and retail spaces.</p><b>EXPLORE COMMERCIAL <i>→</i></b></div><div className={styles.useImage}><Image src="/images/smart-film-control-detail.png" alt="Commercial Smart Film glass partition and control" fill sizes="(max-width: 900px) 100vw, 33vw" /></div></motion.a>
+        </div>
       </section>
 
-      <section className={styles.finalSection}>
-        <div className={styles.finalPanel}><span className={styles.kicker}>BEGIN WITH THE GLASS</span><h2>See what your glass<br /><em>can become.</em></h2><p>Tell us about the space, the glass, and the level of privacy you need. We&apos;ll help determine the right Smart Film solution.</p><div><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com?subject=Smart%20Film%20Technical%20Information">REQUEST TECHNICAL INFORMATION</a></div></div>
+      <section className={styles.finalCta} id="contact">
+        <Fade className={styles.finalTitle}><span className={styles.kicker}>LET&apos;S DESIGN THE RIGHT SOLUTION</span><h2>See what your glass<br />can become.</h2></Fade>
+        <Fade className={styles.finalCopy}><p>Tell us about the space, the glass, and the level of privacy you need. We&apos;ll help determine the right Smart Film solution.</p><div><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com?subject=Smart%20Film%20Technical%20Information">REQUEST TECHNICAL INFORMATION</a></div></Fade>
       </section>
 
       <SiteFooter />
