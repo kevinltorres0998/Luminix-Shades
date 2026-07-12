@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import NextImage from "next/image";
+import { useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import styles from "./solutions.module.css";
@@ -15,12 +16,13 @@ function Fade({ children, className = "" }: { children: React.ReactNode; classNa
 }
 
 const featured = [
-  { id: "smart-film", name: "Smart Film", copy: "Switchable privacy glass that transforms instantly while preserving clean architectural design.", image: "/images/about-smart-film-detail.png", href: "/#smart-film" },
-  { id: "motorized", name: "Motorized Shades", copy: "Quiet automation designed for effortless daily comfort and precise light control.", image: "/images/hero.png", href: "/#solutions" },
-  { id: "drapery", name: "Custom Drapery", copy: "Layered softness, texture, and craftsmanship tailored to every interior.", image: "/images/about-fabric-detail.png", href: "/#drapery" },
+  { id: "smart-film", name: "Smart Film", bestFor: "Instant Privacy", copy: "Switchable privacy glass that transforms instantly while preserving clean architectural design.", image: "/images/about-smart-film-detail.png", href: "/#smart-film" },
+  { id: "motorized", name: "Motorized Shades", bestFor: "Everyday Automation", copy: "Quiet automation designed for effortless daily comfort and precise light control.", image: "/images/hero.png", href: "/#solutions" },
+  { id: "drapery", name: "Custom Drapery", bestFor: "Warmth & Texture", copy: "Layered softness, texture, and craftsmanship tailored to every interior.", image: "/images/about-fabric-detail.png", href: "/#drapery" },
 ];
 
 export default function SolutionsPage() {
+  const [activeSelection, setActiveSelection] = useState(0);
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 700], [0, 58]);
 
@@ -54,10 +56,15 @@ export default function SolutionsPage() {
 
       <section className={styles.chooser}>
         <Fade className={styles.chooserTitle}><span className={styles.kicker}>CHOOSING THE RIGHT SOLUTION</span><h2>A simple place<br />to begin.</h2></Fade>
-        <div className={styles.selectionGallery}>
-          <a href="/#smart-film"><h3>Smart<br />Film</h3><div><span>Instant Privacy</span><i aria-hidden="true">→</i></div></a>
-          <a href="/#solutions"><h3>Motorized<br />Shades</h3><div><span>Everyday Automation</span><i aria-hidden="true">→</i></div></a>
-          <a href="/#drapery"><h3>Custom<br />Drapery</h3><div><span>Warmth & Texture</span><i aria-hidden="true">→</i></div></a>
+        <div className={styles.selectionStage}>
+          <nav className={styles.selectionList} aria-label="Choose a solution">
+            {featured.map((item, index) => <a className={activeSelection === index ? styles.activeSelection : ""} href={item.href} key={item.name} onMouseEnter={() => setActiveSelection(index)} onFocus={() => setActiveSelection(index)}><span>{item.name}</span><small>{item.bestFor}</small><i aria-hidden="true">→</i></a>)}
+          </nav>
+          <div className={styles.selectionVisual}>
+            <motion.div key={featured[activeSelection].image} initial={{ opacity: 0, scale: 1.025 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}>
+              <Image src={featured[activeSelection].image} alt={featured[activeSelection].name} fill sizes="(max-width: 900px) 100vw, 55vw" />
+            </motion.div>
+          </div>
         </div>
       </section>
 
