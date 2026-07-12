@@ -12,3 +12,16 @@
 @media(max-width:720px){.hero{height:760px;min-height:760px}.heroMedia{inset:0}.heroContent{left:24px;right:24px;top:auto;bottom:58px;transform:none}.heroContent h1{font-size:44px}.heroContent>div :global(.button){width:100%}.moment,.possibilities,.showroom,.motorization,.spaces,.details,.process,.projects{padding:58px 18px 64px}.momentCopy h2,.sectionHeading h2,.showroomCopy h2,.motorCopy h2,.spacesIntro h2,.detailsTitle h2,.processTitle h2,.projectsTitle h2{font-size:32px}.motionStage,.showroomStage{aspect-ratio:16/10}.solutionGrid{grid-template-columns:1fr}.solutionCard{min-height:360px}.motorization{grid-template-columns:1fr}.motorCopy{grid-column:auto}.integrations{gap:28px 12px}.spaceGrid{grid-template-columns:1fr 1fr}.spaceGrid article{min-height:260px}.detailGrid{grid-template-columns:1fr 1fr}.detail{min-height:160px;border-top:1px solid #d0cabc}.timeline{grid-template-columns:1fr}.timeline::before{left:22px;right:auto;top:20px;bottom:20px;width:1px;height:auto}.timelineStep{min-height:112px;text-align:left;padding:0 0 0 72px}.timelineStep>span{position:absolute;left:0;top:0}.projectGrid{grid-template-columns:1fr}.projectGrid article{height:320px}.finalCta{min-height:540px}.finalContent{margin:0 24px}.finalContent h2{font-size:36px}.finalContent>div :global(.button){width:100%}}
 @media(max-width:470px){.heroContent h1{font-size:39px}.animatedShades,.fabricLayer{left:13.6%;right:13.5%}.spaceGrid,.detailGrid{grid-template-columns:1fr}.spaceGrid article{min-height:310px}.detail{min-height:145px}.integrations{grid-template-columns:repeat(2,1fr)}}
 @media(prefers-reduced-motion:reduce){.animatedShades i{animation:none;transform:scaleY(.68)}.solutionCard>img,.spaceGrid img,.projectGrid img{transition:none}}
+
+/* Physically accurate showroom hardware and fabric finishes. */
+.fabricLayer{top:13.4%;height:64.3%}
+.fabricLayer i{border-bottom:4px solid rgba(225,224,219,.88)}
+.fabricLayer i::before{display:none}
+.fabricLayer i::after{bottom:-4px;height:4px;background:linear-gradient(180deg,#f7f6f2,#c8c7c1)}
+.blackout i{background-color:#7b7e7d;background-image:linear-gradient(90deg,#747776,#858887 50%,#747776);backdrop-filter:brightness(.08)}
+.screen i{background-color:rgba(67,70,69,.43);background-image:repeating-linear-gradient(0deg,rgba(240,241,237,.2) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(16,19,19,.22) 0 1px,transparent 1px 3px);background-size:3px 3px;backdrop-filter:brightness(.68) saturate(.62)}
+.hardwareLayer{position:absolute;z-index:3;left:13.6%;right:13.5%;top:12.35%;height:65.35%;display:grid;grid-template-columns:repeat(4,1fr);gap:1.05%;pointer-events:none}
+.hardwareLayer i{position:relative;display:block}
+.hardwareLayer i::before{content:"";position:absolute;left:-1px;right:-1px;top:0;height:8px;border-radius:2px 2px 0 0;background:linear-gradient(180deg,#fff,#e8e7e2 72%,#c8c7c1);box-shadow:0 2px 5px rgba(0,0,0,.3)}
+.sealedHardware i{border-left:3px solid rgba(242,241,237,.96);border-right:3px solid rgba(242,241,237,.96);box-shadow:inset 2px 0 3px rgba(0,0,0,.18),inset -2px 0 3px rgba(0,0,0,.18)}
+.sealedHardware i::after{content:"";position:absolute;left:-3px;right:-3px;bottom:0;height:5px;background:linear-gradient(180deg,#f2f1ed,#d1d0ca);box-shadow:0 -2px 4px rgba(0,0,0,.16)}
