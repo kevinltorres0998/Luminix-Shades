@@ -75,6 +75,10 @@ export default function SiteHeader() {
                   <span className="mega-detail drapery-detail" aria-hidden="true" /><h3>Custom Drapery</h3>
                   <p>Tailored designer drapery with premium fabrics and refined finishes.</p>
                 </a>
+                <a href="/solutions/cellular-shades" onClick={closeNavigation}>
+                  <span className="mega-detail cellular-detail" aria-hidden="true" /><h3>Cellular Shades</h3>
+                  <p>Insulating honeycomb shades designed for comfort, quiet, and energy efficiency.</p>
+                </a>
               </div>
               <div className="mega-secondary">
                 <a href="/solutions#residential" onClick={closeNavigation}>Residential <span aria-hidden="true">→</span></a>
@@ -108,6 +112,7 @@ export default function SiteHeader() {
                 <a href="/solutions/smart-film" onClick={closeNavigation}><b>Smart Film</b><span>Switchable privacy glass</span></a>
                 <a href="/solutions/roller-shades" onClick={closeNavigation}><b>Motorized Shades</b><span>Automated light control</span></a>
                 <a href="/solutions/custom-drapery" onClick={closeNavigation}><b>Custom Drapery</b><span>Tailored premium fabrics</span></a>
+                <a href="/solutions/cellular-shades" onClick={closeNavigation}><b>Cellular Shades</b><span>Insulated everyday comfort</span></a>
                 <div><a href="/solutions#residential" onClick={closeNavigation}>Residential</a><a href="/solutions#commercial" onClick={closeNavigation}>Commercial</a></div>
               </div>
             )}

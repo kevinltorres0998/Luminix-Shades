@@ -23,7 +23,7 @@ img { object-fit:cover; }
 .solutions-nav.is-open .nav-trigger span { transform:rotate(180deg); }
 .mega-menu { position:absolute; top:calc(100% - 2px); left:50%; width:min(940px,92vw); transform:translate(-50%,12px); padding:34px 34px 22px; background:rgba(13,14,14,.98); border:1px solid rgba(216,185,137,.22); box-shadow:0 30px 70px rgba(0,0,0,.42); opacity:0; visibility:hidden; pointer-events:none; transition:opacity .25s ease,transform .25s ease,visibility .25s ease; }
 .solutions-nav.is-open .mega-menu { opacity:1; visibility:visible; pointer-events:auto; transform:translate(-50%,0); }
-.mega-products { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.mega-products { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
 .mega-products>a { min-height:178px; padding:27px 28px 30px; border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.012); position:relative; transition:background .22s ease,border-color .22s ease,transform .22s ease,box-shadow .22s ease; }
 .mega-products>a::after { content:""; position:absolute; left:28px; right:28px; bottom:-1px; height:1px; background:var(--gold); transform:scaleX(0); transform-origin:left; opacity:.8; transition:transform .22s ease; }
 .mega-products>a:hover,.mega-products>a:focus-visible { background:rgba(255,255,255,.045); border-color:rgba(216,185,137,.38); transform:translateY(-2px); box-shadow:0 12px 25px rgba(0,0,0,.16); outline:none; }
@@ -36,6 +36,8 @@ img { object-fit:cover; }
 .shade-detail::after { right:3px; top:3px; width:1px; height:16px; opacity:.55; }
 .drapery-detail::before { top:2px; bottom:2px; left:8px; width:1px; box-shadow:6px 0 0 rgba(216,185,137,.72),12px 0 0 rgba(216,185,137,.72); }
 .drapery-detail::after { left:3px; right:3px; top:3px; height:1px; opacity:.5; }
+.cellular-detail::before { left:4px; right:4px; top:4px; height:1px; box-shadow:0 3px 0 rgba(216,185,137,.72),0 6px 0 rgba(216,185,137,.72),0 9px 0 rgba(216,185,137,.72),0 12px 0 rgba(216,185,137,.72); }
+.cellular-detail::after { left:5px; right:5px; bottom:3px; height:1px; opacity:.45; }
 .mega-products h3 { margin:17px 0 10px; font-size:17px; font-weight:400; letter-spacing:.015em; }
 .mega-products p { margin:0; max-width:230px; color:#bdbdbd; font-size:11px; line-height:1.62; }
 .mega-secondary { border-top:1px solid rgba(255,255,255,.12); margin-top:20px; padding-top:18px; display:flex; gap:42px; }
