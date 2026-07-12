@@ -19,9 +19,9 @@ function Fade({ children, className = "" }: { children: React.ReactNode; classNa
 }
 
 const principles = [
-  ["Precision", "Every proportion, material, and movement is considered as part of the architecture."],
-  ["Discretion", "Technology should feel effortless—present when needed and nearly invisible when not."],
-  ["Craft", "Premium materials and exact installation turn functional systems into finished interiors."],
+  ["Precision", "Every proportion, material, and movement is considered as part of the architecture.", "precisionIcon"],
+  ["Discretion", "Technology should feel effortless—present when needed and nearly invisible when not.", "discretionIcon"],
+  ["Craft", "Premium materials and exact installation turn functional systems into finished interiors.", "craftIcon"],
 ];
 
 const capabilities = [
@@ -63,9 +63,9 @@ export default function AboutPage() {
           <p>Our work is defined by restraint, discipline, and an understanding that luxury is felt most clearly in the details.</p>
         </Fade>
         <div className={styles.principleGrid}>
-          {principles.map(([title, copy]) => (
+          {principles.map(([title, copy, icon]) => (
             <Fade className={styles.principleCard} key={title}>
-              <span className={styles.lineDetail} aria-hidden="true" />
+              <span className={`${styles.archIcon} ${styles[icon]}`} aria-hidden="true"><i /></span>
               <h3>{title}</h3><p>{copy}</p>
             </Fade>
           ))}

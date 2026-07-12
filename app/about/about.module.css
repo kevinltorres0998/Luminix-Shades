@@ -21,8 +21,23 @@
 .sectionHeading p { margin:0; max-width:470px; color:#bdbdbd; font-size:12px; line-height:1.7; }
 .principleGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:38px; }
 .principleCard { min-height:205px; padding:30px 4px 10px; border-top:1px solid rgba(255,255,255,.18); }
-.lineDetail { width:32px; height:22px; border:1px solid rgba(201,164,107,.75); display:block; position:relative; margin-bottom:29px; }
-.lineDetail::before { content:""; position:absolute; top:-1px; bottom:-1px; left:50%; width:1px; background:rgba(201,164,107,.75); }
+.archIcon { width:48px; height:38px; display:block; position:relative; margin-bottom:31px; color:rgba(201,164,107,.82); }
+.archIcon::before,.archIcon::after,.archIcon i,.archIcon i::after { content:""; position:absolute; display:block; box-sizing:border-box; transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s ease; }
+.precisionIcon::before { left:4px; top:5px; width:28px; height:28px; border:1px solid currentColor; }
+.precisionIcon::after { left:0; top:18px; width:40px; height:1px; background:currentColor; opacity:.58; }
+.precisionIcon i { left:17px; top:1px; width:1px; height:36px; background:currentColor; opacity:.58; }
+.precisionIcon i::after { left:-2px; top:15px; width:5px; height:5px; border:1px solid currentColor; border-radius:50%; background:#0b0c0c; opacity:1; }
+.principleCard:hover .precisionIcon::before { transform:translate(2px,-2px); }
+.discretionIcon::before { left:3px; top:10px; width:31px; height:21px; border:1px solid currentColor; opacity:.32; }
+.discretionIcon::after { left:11px; top:3px; width:31px; height:21px; border:1px solid currentColor; }
+.discretionIcon i { left:11px; top:25px; width:31px; height:1px; background:linear-gradient(90deg,currentColor,transparent); opacity:.55; }
+.principleCard:hover .discretionIcon::after { transform:translate(3px,-2px); }
+.principleCard:hover .discretionIcon::before { transform:translate(-2px,2px); opacity:.48; }
+.craftIcon::before { left:3px; top:3px; width:21px; height:29px; border-left:1px solid currentColor; border-bottom:1px solid currentColor; }
+.craftIcon::after { right:4px; top:3px; width:21px; height:29px; border-top:1px solid currentColor; border-right:1px solid currentColor; }
+.craftIcon i { left:17px; top:18px; width:17px; height:1px; background:currentColor; transform:rotate(-45deg); transform-origin:center; }
+.craftIcon i::after { left:7px; top:-2px; width:5px; height:5px; border:1px solid currentColor; background:#0b0c0c; transform:rotate(45deg); }
+.principleCard:hover .craftIcon i { transform:rotate(-45deg) scaleX(1.25); }
 .principleCard h3 { margin:0 0 14px; font-size:20px; font-weight:400; }
 .principleCard p { margin:0; max-width:330px; color:#b5b5b5; font-size:11px; line-height:1.65; }
 .manifesto { min-height:650px; padding:100px 8vw; background:#f4f1ea; color:#171717; display:flex; align-items:center; }
