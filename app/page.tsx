@@ -40,7 +40,9 @@ export default function Home() {
           <a href="#about">About</a><a href="#areas">Service Areas</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
         </div>
         <div className="main-nav">
-          <a className="brand" href="#top" aria-label="Luminix Shades home"><strong>LUMINIX</strong><span>SHADES</span></a>
+          <a className="brand" href="#top" aria-label="Luminix Shades home">
+            <Image className="official-logo" src="/images/logo-white.png" alt="" width={2420} height={689} priority />
+          </a>
           <nav aria-label="Primary navigation"><a className="active" href="#top">Home</a><a href="#smart-film">Smart Film</a><a href="#solutions">Shades</a><a href="#drapery">Drapery</a></nav>
           <a className="button button-gold desktop-cta" href="#contact">SCHEDULE A CONSULTATION</a>
           <a className="mobile-menu" href="#solutions" aria-label="Open navigation">MENU</a>
@@ -101,7 +103,7 @@ export default function Home() {
       </section>
 
       <footer>
-        <div className="footer-brand"><a className="brand" href="#top"><strong>LUMINIX</strong><span>SHADES</span></a><p>Smart film. Motorized shades.<br />Custom drapery. Designed for living.</p></div>
+        <div className="footer-brand"><a className="brand" href="#top" aria-label="Luminix Shades home"><Image className="official-logo" src="/images/logo-white.png" alt="" width={2420} height={689} /></a><p>Smart film. Motorized shades.<br />Custom drapery. Designed for living.</p></div>
         <div><b>QUICK LINKS</b><a href="#smart-film">Smart Film</a><a href="#solutions">Shades</a><a href="#drapery">Drapery</a><a href="#areas">Gallery</a></div>
         <div><b>COMPANY</b><a href="#about">About Us</a><a href="#process">Our Process</a><a href="#areas">Service Areas</a><a href="#contact">Contact</a></div>
         <div id="faq"><b>RESOURCES</b><a href="#faq">FAQ</a><a href="#contact">Get a Quote</a><a href="#contact">Schedule a Consultation</a><a href="#top">Privacy Policy</a></div>
