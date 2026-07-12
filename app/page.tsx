@@ -45,7 +45,7 @@ export default function Home() {
         <Fade className="hero-content">
           <h1>Redefining Light.<br />Elevating Spaces.</h1>
           <p>Smart film, motorized shades and custom drapery designed for Miami&apos;s most refined residential and commercial spaces.</p>
-          <div className="button-row"><a className="button button-gold" href="#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="#solutions">EXPLORE OUR SOLUTIONS</a></div>
+          <div className="button-row"><a className="button button-gold" href="#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="/solutions">EXPLORE OUR SOLUTIONS</a></div>
         </Fade>
       </section>
 

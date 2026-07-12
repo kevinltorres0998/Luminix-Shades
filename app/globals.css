@@ -16,7 +16,7 @@ img { object-fit:cover; }
 .desktop-nav { display:flex; gap:42px; font-size:12px; align-self:stretch; align-items:center; }
 .desktop-nav>a,.nav-trigger { height:100%; display:flex; align-items:center; position:relative; border:0; background:none; color:inherit; font:inherit; padding:0; cursor:pointer; letter-spacing:.025em; transition:color .25s ease; }
 .desktop-nav>a:hover,.nav-trigger:hover,.solutions-nav.is-open .nav-trigger { color:#dec291; }
-.desktop-nav>a.active::after { content:""; position:absolute; left:0; right:0; bottom:18px; height:1px; background:var(--gold); }
+.desktop-nav>a.active::after,.nav-trigger.active::after { content:""; position:absolute; left:0; right:0; bottom:18px; height:1px; background:var(--gold); }
 .nav-trigger { gap:7px; }
 .nav-trigger span { color:var(--gold); font-size:12px; transition:transform .25s ease; }
 .solutions-nav { align-self:stretch; display:flex; align-items:center; position:static; }
