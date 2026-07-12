@@ -127,7 +127,10 @@ footer div>b { color:#b5b5b5; font-size:9px; letter-spacing:.08em; margin-bottom
   .official-logo { width:136px; }
   .mobile-panel { display:block; position:fixed; inset:72px 0 0; background:#0c0d0d; overflow-y:auto; animation:mobileNavIn .3s ease both; }
   .mobile-panel nav { min-height:100%; padding:28px 24px 38px; display:flex; flex-direction:column; }
-  .mobile-panel nav>a,.mobile-solutions-toggle { min-height:58px; border:0; border-bottom:1px solid rgba(255,255,255,.11); background:none; color:#f4f1ea; display:flex; align-items:center; justify-content:space-between; padding:0 2px; font-size:22px; font-weight:300; text-align:left; }
+  .mobile-panel nav>a,.mobile-solutions-row { min-height:58px; border:0; border-bottom:1px solid rgba(255,255,255,.11); background:none; color:#f4f1ea; display:flex; align-items:center; justify-content:space-between; padding:0 2px; font-size:22px; font-weight:300; text-align:left; }
+  .mobile-solutions-row { padding:0; }
+  .mobile-solutions-row>a { flex:1; min-height:58px; display:flex; align-items:center; }
+  .mobile-solutions-toggle { width:56px; align-self:stretch; border:0; border-left:1px solid rgba(255,255,255,.08); background:none; color:#f4f1ea; display:grid; place-items:center; cursor:pointer; }
   .mobile-solutions-toggle span { color:var(--gold); font-size:22px; font-weight:300; }
   .mobile-solutions { padding:11px 0 17px 16px; border-bottom:1px solid rgba(255,255,255,.11); }
   .mobile-solutions>a { display:flex; flex-direction:column; gap:5px; padding:11px 0; }

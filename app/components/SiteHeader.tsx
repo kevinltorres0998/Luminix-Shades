@@ -58,9 +58,9 @@ export default function SiteHeader() {
               if (!event.currentTarget.contains(event.relatedTarget as Node)) setSolutionsOpen(false);
             }}
           >
-            <button className={`nav-trigger${pathname === "/solutions" ? " active" : ""}`} type="button" aria-expanded={solutionsOpen} aria-controls="solutions-mega-menu" onClick={() => setSolutionsOpen((open) => !open)} onFocus={() => setSolutionsOpen(true)}>
+            <a className={`nav-trigger${pathname === "/solutions" ? " active" : ""}`} href="/solutions" aria-expanded={solutionsOpen} aria-controls="solutions-mega-menu" onFocus={() => setSolutionsOpen(true)}>
               Solutions <span aria-hidden="true">⌄</span>
-            </button>
+            </a>
             <div className="mega-menu" id="solutions-mega-menu">
               <div className="mega-products">
                 <a href="/solutions#smart-film" onClick={closeNavigation}>
@@ -97,9 +97,12 @@ export default function SiteHeader() {
         <div className="mobile-panel">
           <nav aria-label="Mobile navigation">
             <a href={onHome ? "#top" : "/"} onClick={closeNavigation}>Home</a>
-            <button className="mobile-solutions-toggle" type="button" aria-expanded={mobileSolutionsOpen} onClick={() => setMobileSolutionsOpen((open) => !open)}>
-              Solutions <span aria-hidden="true">{mobileSolutionsOpen ? "−" : "+"}</span>
-            </button>
+            <div className="mobile-solutions-row">
+              <a href="/solutions" onClick={closeNavigation}>Solutions</a>
+              <button className="mobile-solutions-toggle" type="button" aria-label={mobileSolutionsOpen ? "Collapse solutions" : "Expand solutions"} aria-expanded={mobileSolutionsOpen} onClick={() => setMobileSolutionsOpen((open) => !open)}>
+                <span aria-hidden="true">{mobileSolutionsOpen ? "−" : "+"}</span>
+              </button>
+            </div>
             {mobileSolutionsOpen && (
               <div className="mobile-solutions">
                 <a href="/solutions#smart-film" onClick={closeNavigation}><b>Smart Film</b><span>Switchable privacy glass</span></a>
