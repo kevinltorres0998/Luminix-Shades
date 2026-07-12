@@ -18,7 +18,7 @@
 .fabricLayer i{border-bottom:0}
 .fabricLayer i::before{display:none}
 .fabricLayer i::after{display:block;bottom:0;height:3px;background:linear-gradient(180deg,rgba(250,249,246,.9),rgba(179,178,172,.86));box-shadow:0 2px 4px rgba(0,0,0,.16)}
-.blackout i{background-color:#8b8b86;background-image:none;backdrop-filter:brightness(.08)}
+.blackout i{background-color:#979792;background-image:none;backdrop-filter:brightness(.08)}
 .screen i{background-color:rgba(246,246,242,.58);background-image:radial-gradient(circle,rgba(82,84,81,.1) .22px,rgba(249,249,246,.42) .5px);background-size:1.5px 1.5px;backdrop-filter:brightness(.82) saturate(.72)}
 .hardwareLayer{position:absolute;z-index:3;left:13.6%;right:13.5%;top:8.85%;height:1.5%;display:grid;grid-template-columns:repeat(4,1fr);gap:1.05%;pointer-events:none}
 .hardwareLayer i{position:relative;display:block}
