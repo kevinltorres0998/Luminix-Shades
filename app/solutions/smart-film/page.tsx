@@ -75,7 +75,7 @@ export default function SmartFilmPage() {
         <Fade className={styles.filmIntro}><span className={styles.kicker}>THREE SMART FILM SOLUTIONS</span><h2>The right level of privacy<br />for every space.</h2></Fade>
         <div className={styles.filmGrid}>
           {filmTypes.map((film, index) => <motion.button type="button" aria-pressed={selectedFilm === film.variant} aria-label={`Select ${film.title}`} onClick={() => setSelectedFilm(film.variant)} className={`${styles.filmCard} ${selectedFilm === film.variant ? styles.activeFilmCard : ""}`} key={film.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .72, delay: index * .06 }}>
-            <div className={styles.filmVisual}><Image src="/images/smart-film-demo-clear.png" alt={`${film.title} privacy finish`} fill sizes="(max-width: 900px) 100vw, 29vw" /><GlassPanels variant={film.variant} />{film.featured && <span>MOST POPULAR</span>}</div>
+            <div className={styles.filmVisual}><div className={styles.filmMediaScene}><Image src="/images/smart-film-demo-clear.png" alt={`${film.title} privacy finish`} fill sizes="(max-width: 900px) 100vw, 29vw" /><GlassPanels variant={film.variant} /></div>{film.featured && <span>MOST POPULAR</span>}</div>
             <div className={styles.filmCopy}><h3>{film.title}</h3><p>{film.copy}</p><b>{film.cta} <i>→</i></b></div>
           </motion.button>)}
         </div>
