@@ -39,8 +39,8 @@
 .remote>i::after{content:"somfy";font-size:15px}
 
 /* Match the supplied original Somfy handset reference. */
-.remote{width:96px;height:252px;padding:30px 19px 17px;overflow:hidden;border:2px solid #656a68;border-radius:34px;background:#f7f8f7;box-shadow:25px 34px 46px rgba(30,28,24,.2),inset 0 0 0 1px rgba(255,255,255,.82);color:#4d504e}
-.remote::before{z-index:0;inset:16px 14px 14px;border:1px solid #b9bcb9;border-radius:20px;background:linear-gradient(180deg,transparent 39.7%,#aeb1ae 39.9%,#aeb1ae 40.3%,transparent 40.5%),#f5f6f5}
+.remote{width:96px;height:252px;padding:30px 19px 17px;overflow:hidden;border:2px solid #656a68;border-radius:18px 18px 21px 21px;background:#f7f8f7;box-shadow:25px 34px 46px rgba(30,28,24,.2),inset 0 0 0 1px rgba(255,255,255,.82);color:#4d504e}
+.remote::before{z-index:0;inset:16px 14px 14px;border:1px solid #b9bcb9;border-radius:13px;background:linear-gradient(180deg,transparent 39.7%,#aeb1ae 39.9%,#aeb1ae 40.3%,transparent 40.5%),#f5f6f5}
 .remote>*{position:relative;z-index:1}
 .remote>b{width:50px;height:52px;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none}
 .remote>b:nth-of-type(1)::before,.remote>b:nth-of-type(1)::after,.remote>b:nth-of-type(3)::before,.remote>b:nth-of-type(3)::after{content:"";position:absolute;top:24px;width:18px;height:4px;border-radius:3px;background:#505350}
