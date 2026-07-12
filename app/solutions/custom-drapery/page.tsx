@@ -30,46 +30,55 @@ const fabrics = {
     label: "Sheer",
     title: "Weightless light.",
     copy: "Airy, luminous, and quietly private. Sheer layers soften the room without closing it in.",
+    characteristics: "Soft diffusion · Natural movement · Layered privacy",
     image: "/images/drapery-hero-sheer.png",
   },
   linen: {
     label: "Linen",
     title: "Natural structure.",
     copy: "A relaxed weave with tailored presence, balancing texture, warmth, and filtered daylight.",
+    characteristics: "Natural texture · Filtered light · Timeless structure",
     image: "/images/drapery-room-linen.png",
   },
   velvet: {
     label: "Velvet",
     title: "Depth and drama.",
     copy: "Rich texture and sculptural folds create an intimate atmosphere with unmistakable softness.",
+    characteristics: "Acoustic softness · Rich depth · Dramatic drape",
     image: "/images/drapery-room-velvet.png",
   },
   blackout: {
     label: "Blackout",
     title: "Rest, beautifully framed.",
     copy: "Tailored opacity brings privacy and calm while preserving the elegance of the architecture.",
+    characteristics: "Room darkening · Thermal comfort · Complete privacy",
     image: "/images/drapery-room-blackout.png",
   },
 } as const;
 
 type Fabric = keyof typeof fabrics;
 
-const pleats = ["Ripple Fold", "Pinch Pleat", "Goblet Pleat", "Wave Fold"];
-const samples: { name: string; fabric: Fabric }[] = [
-  { name: "Ivory Linen", fabric: "linen" },
-  { name: "Sand Linen", fabric: "linen" },
-  { name: "Pearl Sheer", fabric: "sheer" },
-  { name: "Stone Velvet", fabric: "velvet" },
-  { name: "Charcoal Linen", fabric: "blackout" },
+const pleats = [
+  { name: "Ripple Fold", description: "Continuous, architectural waves create a clean rhythm from every angle.", benefits: "Modern lines · Effortless movement · Ideal for wide openings" },
+  { name: "Pinch Pleat", description: "Precisely tailored folds bring quiet structure and enduring elegance.", benefits: "Tailored profile · Full body · Timeless character" },
+  { name: "Goblet Pleat", description: "Sculptural headings give formal interiors a refined, dimensional presence.", benefits: "Statement detail · Luxurious fullness · Formal elegance" },
+  { name: "Wave Fold", description: "Soft, consistent folds balance relaxed movement with contemporary precision.", benefits: "Fluid stack · Minimal profile · Smooth operation" },
+];
+const samples: { name: string; fabric: Fabric; description: string; characteristics: string }[] = [
+  { name: "Ivory Linen", fabric: "linen", description: "A warm, softly woven linen that brings natural light and understated texture into the room.", characteristics: "Organic weave · Warm ivory · Filtered daylight" },
+  { name: "Sand Linen", fabric: "linen", description: "A grounded neutral with an organic hand, designed for calm architectural interiors.", characteristics: "Natural fibers · Relaxed structure · Warm neutral" },
+  { name: "Pearl Sheer", fabric: "sheer", description: "A luminous voile that diffuses direct sun while preserving openness and movement.", characteristics: "Translucent · Airy · Soft light diffusion" },
+  { name: "Stone Velvet", fabric: "velvet", description: "A dense, tactile velvet with subtle luster and beautifully sculpted folds.", characteristics: "Rich pile · Acoustic softness · Dimensional color" },
+  { name: "Charcoal Linen", fabric: "blackout", description: "A deep architectural linen pairing visual depth with enhanced privacy and light control.", characteristics: "Deep tone · Refined texture · Enhanced privacy" },
 ];
 const finishes = ["Matte Black", "Champagne", "Brushed Nickel", "Bronze", "White"];
 const spaces = [
-  ["Living Room", "/images/drapery-hero-sheer.png"],
-  ["Bedroom", "/images/about-hospitality.png"],
-  ["Dining Room", "/images/drapery-room-linen.png"],
-  ["Office", "/images/commercial-smart-film-cover-v3.png"],
-  ["Hotel", "/images/about-fabric-detail.png"],
-  ["Luxury Residence", "/images/drapery-room-velvet.png"],
+  { name: "Living Room", image: "/images/drapery-hero-sheer.png", description: "Layered softness frames the view without interrupting the architecture.", recommended: "Pearl Sheer · Ivory Linen" },
+  { name: "Bedroom", image: "/images/about-hospitality.png", description: "Privacy, acoustic comfort, and restful light control tailored for retreat.", recommended: "Blackout · Stone Velvet" },
+  { name: "Dining Room", image: "/images/drapery-room-linen.png", description: "Natural texture and elegant fullness create warmth for every gathering.", recommended: "Sand Linen · Ripple Fold" },
+  { name: "Office", image: "/images/commercial-smart-film-cover-v3.png", description: "Refined glare control softens the workspace while maintaining focus and clarity.", recommended: "Screen Sheer · Wave Fold" },
+  { name: "Hotel", image: "/images/about-fabric-detail.png", description: "Durable luxury and layered privacy designed for elevated hospitality experiences.", recommended: "Velvet · Layered Blackout" },
+  { name: "Luxury Residence", image: "/images/drapery-room-velvet.png", description: "A complete textile composition shaped around scale, mood, and architectural detail.", recommended: "Custom Layering · Motorized Ripple Fold" },
 ];
 const installations = [
   ["Key Biscayne Residence", "Ripple Fold Sheer", "/images/drapery-hero-sheer.png"],
@@ -81,6 +90,8 @@ const installations = [
 export default function CustomDraperyPage() {
   const [fabric, setFabric] = useState<Fabric>("sheer");
   const [sample, setSample] = useState("Pearl Sheer");
+  const [pleat, setPleat] = useState(0);
+  const [space, setSpace] = useState(0);
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 820], [0, 58]);
 
@@ -133,6 +144,7 @@ export default function CustomDraperyPage() {
               <span>{fabrics[fabric].label.toUpperCase()}</span>
               <h3>{fabrics[fabric].title}</h3>
               <p>{fabrics[fabric].copy}</p>
+              <small>{fabrics[fabric].characteristics}</small>
             </motion.div>
           </div>
         </Fade>
@@ -142,14 +154,19 @@ export default function CustomDraperyPage() {
         <Fade className={styles.sectionIntro}>
           <span className={styles.kicker}>CRAFTED TO PERFECTION</span>
           <h2>Every fold<br />matters.</h2>
-          <p>Different pleats. Different character.<br />Designed to elevate your space.</p>
+          <AnimatePresence mode="wait">
+            <motion.div key={pleat} className={styles.selectorCopy} initial={{ opacity: 0, y: 7 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.28 }}>
+              <p>{pleats[pleat].description}</p>
+              <small>{pleats[pleat].benefits}</small>
+            </motion.div>
+          </AnimatePresence>
         </Fade>
         <div className={styles.pleatGrid}>
-          {pleats.map((pleat, index) => (
-            <Fade className={styles.pleatCard} key={pleat}>
+          {pleats.map((item, index) => (
+            <motion.button className={`${styles.pleatCard} ${pleat === index ? styles.activePleat : ""}`} key={item.name} type="button" aria-pressed={pleat === index} onClick={() => setPleat(index)} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.16 }} transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}>
               <div className={styles.pleatImage} style={{ backgroundPosition: `${index * 33.333}% center` }} />
-              <div><span>0{index + 1}</span><h3>{pleat}</h3><i aria-hidden="true">↗</i></div>
-            </Fade>
+              <div><span>0{index + 1}</span><h3>{item.name}</h3><i aria-hidden="true">{pleat === index ? "✓" : "↗"}</i></div>
+            </motion.button>
           ))}
         </div>
       </section>
@@ -158,7 +175,12 @@ export default function CustomDraperyPage() {
         <Fade className={styles.libraryIntro}>
           <span className={styles.kicker}>FABRIC LIBRARY</span>
           <h2>Curated materials.<br />Unlimited possibilities.</h2>
-          <p>Select a material to see it shape the room above.</p>
+          <AnimatePresence mode="wait">
+            <motion.div key={sample} className={styles.selectorCopy} initial={{ opacity: 0, y: 7 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.28 }}>
+              <p>{samples.find((item) => item.name === sample)?.description}</p>
+              <small>{samples.find((item) => item.name === sample)?.characteristics}</small>
+            </motion.div>
+          </AnimatePresence>
         </Fade>
         <div className={styles.sampleGrid}>
           {samples.map((item, index) => (
@@ -187,13 +209,22 @@ export default function CustomDraperyPage() {
       </section>
 
       <section className={styles.spaces}>
-        <Fade className={styles.spacesTitle}><span className={styles.kicker}>DESIGNED FOR EVERY SPACE</span><h2>Softness, tailored<br />to the architecture.</h2></Fade>
+        <Fade className={styles.spacesTitle}>
+          <div><span className={styles.kicker}>DESIGNED FOR EVERY SPACE</span><h2>Softness, tailored<br />to the architecture.</h2></div>
+          <AnimatePresence mode="wait">
+            <motion.div key={space} className={styles.spaceSelection} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -8 }} transition={{ duration: 0.3 }}>
+              <span>{spaces[space].name.toUpperCase()}</span>
+              <p>{spaces[space].description}</p>
+              <small>RECOMMENDED · {spaces[space].recommended}</small>
+            </motion.div>
+          </AnimatePresence>
+        </Fade>
         <div className={styles.spaceGrid}>
-          {spaces.map(([title, image]) => (
-            <motion.article key={title} whileHover={{ y: -4 }}>
-              <Image src={image} alt={`${title} with custom Luminix drapery`} fill sizes="(max-width: 760px) 50vw, 16vw" />
-              <div><h3>{title}</h3><span>↗</span></div>
-            </motion.article>
+          {spaces.map((item, index) => (
+            <motion.button key={item.name} type="button" className={space === index ? styles.activeSpace : ""} aria-pressed={space === index} onClick={() => setSpace(index)} whileHover={{ y: -4 }}>
+              <Image src={item.image} alt={`${item.name} with custom Luminix drapery`} fill sizes="(max-width: 760px) 50vw, 16vw" />
+              <div><h3>{item.name}</h3><span>{space === index ? "✓" : "↗"}</span></div>
+            </motion.button>
           ))}
         </div>
       </section>
