@@ -38,6 +38,7 @@ const benefits = [
 
 export default function SmartFilmPage() {
   const [divider, setDivider] = useState(50);
+  const [selectedFilm, setSelectedFilm] = useState<(typeof filmTypes)[number]["variant"]>("total");
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 700], [0, 50]);
 
@@ -61,7 +62,7 @@ export default function SmartFilmPage() {
         <Fade className={styles.transformHeading}><div><span className={styles.kicker}>EXPERIENCE THE TRANSFORMATION</span><h2>One room.<br />Two precise states.</h2></div><p>Drag to switch the glass from clear to private.</p></Fade>
         <motion.div className={styles.comparison} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }}>
           <Image src="/images/smart-film-demo-clear.png" alt="Clear glass conference room with interactive Smart Film privacy comparison" fill sizes="100vw" />
-          <div className={styles.privateState} style={{ clipPath: `inset(0 0 0 ${divider}%)` }} aria-hidden="true"><i /><i /><i /></div>
+          <motion.div key={selectedFilm} className={`${styles.privateState} ${styles[selectedFilm]}`} style={{ clipPath: `inset(0 0 0 ${divider}%)` }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true"><i /><i /><i /></motion.div>
           <div className={styles.frameLayer} aria-hidden="true"><i className={styles.frameLeft} /><i className={styles.frameOne} /><i className={styles.frameTwo} /><i className={styles.frameRight} /><i className={styles.frameTop} /><i className={styles.frameBottom} /></div>
           <span className={`${styles.stateLabel} ${styles.clearLabel}`}>CLEAR</span><span className={`${styles.stateLabel} ${styles.privateLabel}`}>PRIVATE</span>
           <span className={styles.divider} style={{ left: `${divider}%` }} aria-hidden="true"><i>‹</i><i>›</i></span>
@@ -72,10 +73,10 @@ export default function SmartFilmPage() {
       <section className={styles.filmSection} id="film-types">
         <Fade className={styles.filmIntro}><span className={styles.kicker}>THREE SMART FILM SOLUTIONS</span><h2>The right level of privacy<br />for every space.</h2></Fade>
         <div className={styles.filmGrid}>
-          {filmTypes.map((film, index) => <motion.a className={styles.filmCard} href="mailto:hello@luminixshades.com?subject=Smart%20Film%20Consultation" key={film.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .72, delay: index * .06 }}>
+          {filmTypes.map((film, index) => <motion.button type="button" aria-pressed={selectedFilm === film.variant} aria-label={`Select ${film.title}`} onClick={() => setSelectedFilm(film.variant)} className={`${styles.filmCard} ${selectedFilm === film.variant ? styles.activeFilmCard : ""}`} key={film.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .72, delay: index * .06 }}>
             <div className={styles.filmVisual}><Image src="/images/smart-film-demo-clear.png" alt={`${film.title} privacy finish`} fill sizes="(max-width: 900px) 100vw, 29vw" /><GlassPanels variant={film.variant} />{film.featured && <span>MOST POPULAR</span>}</div>
             <div className={styles.filmCopy}><h3>{film.title}</h3><p>{film.copy}</p><b>{film.cta} <i>→</i></b></div>
-          </motion.a>)}
+          </motion.button>)}
         </div>
       </section>
 
