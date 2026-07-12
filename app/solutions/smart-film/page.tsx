@@ -62,6 +62,7 @@ export default function SmartFilmPage() {
         <motion.div className={styles.comparison} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }}>
           <Image src="/images/smart-film-demo-clear.png" alt="Clear glass conference room with interactive Smart Film privacy comparison" fill sizes="100vw" />
           <div className={styles.privateState} style={{ clipPath: `inset(0 0 0 ${divider}%)` }} aria-hidden="true"><i /><i /><i /></div>
+          <div className={styles.frameLayer} aria-hidden="true"><i className={styles.frameLeft} /><i className={styles.frameOne} /><i className={styles.frameTwo} /><i className={styles.frameRight} /><i className={styles.frameTop} /><i className={styles.frameBottom} /></div>
           <span className={`${styles.stateLabel} ${styles.clearLabel}`}>CLEAR</span><span className={`${styles.stateLabel} ${styles.privateLabel}`}>PRIVATE</span>
           <span className={styles.divider} style={{ left: `${divider}%` }} aria-hidden="true"><i>‹</i><i>›</i></span>
           <input type="range" min="14" max="86" value={divider} onChange={(event) => setDivider(Number(event.target.value))} aria-label="Drag to switch the glass from clear to private" />
