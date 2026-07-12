@@ -15,15 +15,15 @@
 .finalCta { padding:62px 7.7vw 70px; background:#111416; border-top:1px solid rgba(255,255,255,.18); display:grid; grid-template-columns:.82fr 1.18fr; gap:7vw; align-items:center; scroll-margin-top:84px; }.finalTitle h2 { margin:22px 0 0; font-size:40px; line-height:1.03; font-weight:300; letter-spacing:-.04em; }.finalCopy p { margin:0 0 24px; max-width:540px; color:#d2d2d2; font-size:11px; line-height:1.7; }.finalCopy>div { display:flex; gap:14px; flex-wrap:wrap; }.finalCopy :global(.button) { min-height:43px; }
 
 .privateState i { background:rgba(248,248,244,.998); backdrop-filter:blur(38px) saturate(.1) brightness(1.08); }
-.privateState i:nth-child(1) { left:16.35%; width:22.03%; }
-.privateState i:nth-child(2) { left:37.6%; width:24.82%; }
-.privateState i:nth-child(3) { left:61.58%; width:22.3%; }
+.privateState i:nth-child(1) { left:16.28%; width:21.92%; }
+.privateState i:nth-child(2) { left:37.75%; width:24.45%; }
+.privateState i:nth-child(3) { left:61.8%; width:22.08%; }
 .frameLayer { position:absolute; inset:0; z-index:3; pointer-events:none; }
 .frameLayer i { position:absolute; inset:0; background-image:url('/images/smart-film-demo-clear.png'); background-size:cover; background-position:center; background-repeat:no-repeat; }
-.frameLeft { clip-path:inset(0 83.5% 0 15.3%); }
-.frameOne { clip-path:inset(0 61.55% 0 37.52%); }
-.frameTwo { clip-path:inset(0 37.48% 0 61.5%); }
-.frameRight { clip-path:inset(0 15.55% 0 83.72%); }
+.frameLeft { clip-path:inset(0 83.68% 0 15.55%); }
+.frameOne { clip-path:inset(0 61.82% 0 37.78%); }
+.frameTwo { clip-path:inset(0 37.85% 0 61.83%); }
+.frameRight { clip-path:inset(0 15.7% 0 83.9%); }
 .frameTop { clip-path:inset(4.1% 15.55% 93.7% 15.3%); }
 .frameBottom { clip-path:inset(95.65% 15.55% 2.65% 15.3%); }
 .total i { background:rgba(248,248,244,.995); backdrop-filter:blur(28px) saturate(.12) brightness(1.08); }
