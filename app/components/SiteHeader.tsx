@@ -67,7 +67,7 @@ export default function SiteHeader() {
                   <span className="mega-detail film-detail" aria-hidden="true" /><h3>Smart Film</h3>
                   <p>Switchable privacy glass for residential and commercial spaces.</p>
                 </a>
-                <a href="/solutions#motorized" onClick={closeNavigation}>
+                <a href="/solutions/roller-shades" onClick={closeNavigation}>
                   <span className="mega-detail shade-detail" aria-hidden="true" /><h3>Motorized Shades</h3>
                   <p>Automated window treatments designed for comfort, privacy, and light control.</p>
                 </a>
@@ -106,7 +106,7 @@ export default function SiteHeader() {
             {mobileSolutionsOpen && (
               <div className="mobile-solutions">
                 <a href="/solutions/smart-film" onClick={closeNavigation}><b>Smart Film</b><span>Switchable privacy glass</span></a>
-                <a href="/solutions#motorized" onClick={closeNavigation}><b>Motorized Shades</b><span>Automated light control</span></a>
+                <a href="/solutions/roller-shades" onClick={closeNavigation}><b>Motorized Shades</b><span>Automated light control</span></a>
                 <a href="/solutions#drapery" onClick={closeNavigation}><b>Custom Drapery</b><span>Tailored premium fabrics</span></a>
                 <div><a href="/solutions#residential" onClick={closeNavigation}>Residential</a><a href="/solutions#commercial" onClick={closeNavigation}>Commercial</a></div>
               </div>
