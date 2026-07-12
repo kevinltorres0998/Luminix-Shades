@@ -199,6 +199,9 @@ export default function CellularShadesPage() {
                   ))}
                 </div>
               </div>
+              <button className={styles.exploreAnother} type="button" onClick={() => setSelectedSpace((selectedSpace + 1) % spaces.length)}>
+                <span>COMPARE ANOTHER SPACE</span><b>{spaces[(selectedSpace + 1) % spaces.length].name}</b><i aria-hidden="true">→</i>
+              </button>
               <div className={styles.spaceSelector} role="tablist" aria-label="Choose a room">
                 {spaces.map((space, index) => <button key={space.name} type="button" role="tab" aria-selected={selectedSpace === index} onClick={() => setSelectedSpace(index)}>{space.name}</button>)}
               </div>
