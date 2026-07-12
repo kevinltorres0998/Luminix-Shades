@@ -72,7 +72,7 @@ export default function RollerShadesPage() {
         <Image src="/images/roller-shades-demo-room.png" alt="Interactive Roller Shade fabric showroom" fill sizes="(max-width: 900px) 100vw, 68vw" />
         <motion.div key={`${fabric}-${fabricSequence}-mood`} className={`${styles.roomMood} ${styles[`${fabric}Mood`]}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2.05, ease: [0.45, 0, 0.18, 1] }} aria-hidden="true" />
         <div key={`${fabric}-${fabricSequence}`} className={`${styles.fabricLayer} ${styles[fabric]}`} aria-hidden="true">{[0,1,2,3].map((index) => <motion.i key={index} initial={{ scaleY: .025 }} animate={{ scaleY: 1 }} transition={{ duration: 1.85, delay: index * .1, ease: [0.65, 0, 0.35, 1] }} />)}</div>
-        <div className={`${styles.hardwareLayer} ${fabric === "blackout" ? styles.sealedHardware : ""}`} aria-hidden="true">{[0,1,2,3].map((index) => <i key={index} />)}</div>
+        <div className={styles.hardwareLayer} aria-hidden="true">{[0,1,2,3].map((index) => <i key={index} />)}</div>
         <div className={styles.fabricTabs}>{(Object.keys(fabrics) as Fabric[]).map((key) => <button type="button" key={key} className={fabric === key ? styles.activeFabric : ""} aria-pressed={fabric === key} onClick={() => { setFabric(key); setFabricSequence((sequence) => sequence + 1); }}>{fabrics[key].label}</button>)}</div>
         <motion.div key={`${fabric}-note`} className={styles.fabricNote} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>{fabrics[fabric].note}</motion.div>
       </Fade>
