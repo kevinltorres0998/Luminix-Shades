@@ -24,9 +24,9 @@ function BenefitIcon({ type }: { type: string }) {
 }
 
 const filmTypes = [
-  { variant: "total" as const, title: "Smart Film Total", copy: "Complete privacy. Full opacity for maximum discretion.", cta: "EXPLORE TOTAL", featured: true },
-  { variant: "light" as const, title: "Smart Film Light", copy: "Balanced privacy. Natural light with enhanced discretion.", cta: "EXPLORE LIGHT", featured: false },
-  { variant: "black" as const, title: "Smart Film Black", copy: "Maximum privacy and light control with a dark, elegant finish.", cta: "EXPLORE BLACK", featured: false },
+  { variant: "total" as const, title: "Smart Film Total", copy: "Complete privacy. Full opacity for maximum discretion.", cta: "SELECT TOTAL", featured: true },
+  { variant: "light" as const, title: "Smart Film Light", copy: "Balanced privacy. Natural light with enhanced discretion.", cta: "SELECT LIGHT", featured: false },
+  { variant: "black" as const, title: "Smart Film Black", copy: "Maximum privacy and light control with a dark, elegant finish.", cta: "SELECT BLACK", featured: false },
 ];
 
 const benefits = [
