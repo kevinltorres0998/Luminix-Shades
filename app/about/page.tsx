@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import NextImage from "next/image";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
@@ -13,6 +13,14 @@ function Image(props: React.ComponentProps<typeof NextImage>) {
 function Fade({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <motion.div className={className} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.16 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
+      {children}
+    </motion.div>
+  );
+}
+
+function RevealImage({ children, className }: { children: React.ReactNode; className: string }) {
+  return (
+    <motion.div className={className} initial={{ clipPath: "inset(0 0 12% 0)", opacity: .7, scale: 1.018 }} whileInView={{ clipPath: "inset(0 0 0% 0)", opacity: 1, scale: 1 }} viewport={{ once: true, amount: .12 }} transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}>
       {children}
     </motion.div>
   );
@@ -31,12 +39,15 @@ const capabilities = [
 ];
 
 export default function AboutPage() {
+  const { scrollY } = useScroll();
+  const heroImageY = useTransform(scrollY, [0, 700], [0, 62]);
+
   return (
     <main className={styles.aboutPage}>
       <SiteHeader />
 
       <section className={styles.hero} id="top">
-        <Image src="/images/architecture.png" alt="Architectural glass residence at dusk" fill priority sizes="100vw" />
+        <motion.div className={styles.heroMedia} style={{ y: heroImageY }}><Image src="/images/architecture.png" alt="Architectural glass residence at dusk" fill priority sizes="100vw" /></motion.div>
         <div className={styles.heroShade} />
         <motion.div className={styles.heroContent} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}>
           <span className={styles.eyebrow}>ABOUT LUMINIX SHADES</span>
@@ -53,7 +64,7 @@ export default function AboutPage() {
           <p className={styles.lead}>Luminix Shades was created around a simple idea: the way light enters a space should be as carefully considered as the space itself.</p>
           <p>We combine technical knowledge with a design-led sensibility to create environments that feel quieter, more comfortable, and completely intentional.</p>
         </Fade>
-        <div className={styles.introImage}><Image src="/images/hero.png" alt="Refined Miami residence with controlled natural light" fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
+        <RevealImage className={styles.introImage}><Image src="/images/hero.png" alt="Refined Miami residence with controlled natural light" fill sizes="(max-width: 900px) 100vw, 58vw" /></RevealImage>
       </section>
 
       <section className={styles.principles}>
@@ -99,6 +110,7 @@ export default function AboutPage() {
       </section>
 
       <section className={styles.approach}>
+        <motion.span className={styles.approachLine} aria-hidden="true" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, amount: .25 }} transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} />
         <Fade className={styles.approachIntro}>
           <span className={styles.kicker}>THE LUMINIX APPROACH</span>
           <h2>A considered journey<br />from vision to installation.</h2>
@@ -116,17 +128,17 @@ export default function AboutPage() {
           <h2>One standard.<br />Every scale.</h2>
         </Fade>
         <div className={styles.capabilityGrid}>
-          {capabilities.map(([title, copy, image]) => (
-            <article className={styles.capabilityCard} key={title}>
+          {capabilities.map(([title, copy, image], index) => (
+            <motion.article className={styles.capabilityCard} key={title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .7, delay: index * .08, ease: [0.22, 1, 0.36, 1] }}>
               <div className={styles.capabilityImage}><Image src={image} alt="" fill sizes="(max-width: 900px) 100vw, 33vw" /></div>
               <div><h3>{title}</h3><p>{copy}</p><a href="/#contact">EXPLORE <span aria-hidden="true">→</span></a></div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </section>
 
       <section className={styles.technology}>
-        <div className={styles.technologyImage}><Image src="/images/about-smart-film-detail.png" alt="Smart film transitioning from transparent to frosted glass" fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
+        <RevealImage className={styles.technologyImage}><Image src="/images/about-smart-film-detail.png" alt="Smart film transitioning from transparent to frosted glass" fill sizes="(max-width: 900px) 100vw, 58vw" /></RevealImage>
         <Fade className={styles.technologyCopy}>
           <span className={styles.kicker}>TECHNOLOGY & CRAFT</span>
           <h2>Advanced systems.<br /><em>Beautifully resolved.</em></h2>
@@ -140,7 +152,7 @@ export default function AboutPage() {
           <span className={styles.kicker}>TRUSTED TECHNOLOGY PARTNERS</span>
           <p>We work with established systems selected for performance, reliability, and elegant integration.</p>
         </Fade>
-        <div className={styles.partnerNames}><b>somfy.</b><b>LUTRON.</b><b>SMARTTINT®</b><b className={styles.partnerSerif}>ALTA</b><b>mecho</b></div>
+        <motion.div className={styles.partnerNames} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: .4 }} transition={{ duration: 1.1, ease: "easeOut" }}><b>somfy.</b><b>LUTRON.</b><b>SMARTTINT®</b><b className={styles.partnerSerif}>ALTA</b><b>mecho</b></motion.div>
       </section>
 
       <section className={styles.region}>
@@ -150,7 +162,7 @@ export default function AboutPage() {
           <p>We serve homeowners, design professionals, and commercial teams throughout Miami, Fort Lauderdale, Boca Raton, Palm Beach, and beyond.</p>
           <a className="arrow-link" href="/#areas">VIEW SERVICE AREAS <span aria-hidden="true">→</span></a>
         </Fade>
-        <div className={styles.regionImage}><Image src="/images/smart-film.png" alt="South Florida interior overlooking the water" fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
+        <RevealImage className={styles.regionImage}><Image src="/images/smart-film.png" alt="South Florida interior overlooking the water" fill sizes="(max-width: 900px) 100vw, 58vw" /></RevealImage>
       </section>
 
       <section className={styles.finalSection}>
