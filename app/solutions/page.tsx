@@ -16,7 +16,7 @@ function Fade({ children, className = "" }: { children: React.ReactNode; classNa
 }
 
 const featured = [
-  { id: "smart-film", name: "Smart Film", bestFor: "Instant Privacy", copy: "Switchable privacy glass that transforms instantly while preserving clean architectural design.", image: "/images/about-smart-film-detail.png", href: "/#smart-film" },
+  { id: "smart-film", name: "Smart Film", bestFor: "Instant Privacy", copy: "Switchable privacy glass that transforms instantly while preserving clean architectural design.", image: "/images/about-smart-film-detail.png", href: "/solutions/smart-film" },
   { id: "motorized", name: "Motorized Shades", bestFor: "Everyday Automation", copy: "Quiet automation designed for effortless daily comfort and precise light control.", image: "/images/hero.png", href: "/#solutions" },
   { id: "drapery", name: "Custom Drapery", bestFor: "Warmth & Texture", copy: "Layered softness, texture, and craftsmanship tailored to every interior.", image: "/images/about-fabric-detail.png", href: "/#drapery" },
 ];

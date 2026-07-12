@@ -63,7 +63,7 @@ export default function SiteHeader() {
             </a>
             <div className="mega-menu" id="solutions-mega-menu">
               <div className="mega-products">
-                <a href="/solutions#smart-film" onClick={closeNavigation}>
+                <a href="/solutions/smart-film" onClick={closeNavigation}>
                   <span className="mega-detail film-detail" aria-hidden="true" /><h3>Smart Film</h3>
                   <p>Switchable privacy glass for residential and commercial spaces.</p>
                 </a>
@@ -105,7 +105,7 @@ export default function SiteHeader() {
             </div>
             {mobileSolutionsOpen && (
               <div className="mobile-solutions">
-                <a href="/solutions#smart-film" onClick={closeNavigation}><b>Smart Film</b><span>Switchable privacy glass</span></a>
+                <a href="/solutions/smart-film" onClick={closeNavigation}><b>Smart Film</b><span>Switchable privacy glass</span></a>
                 <a href="/solutions#motorized" onClick={closeNavigation}><b>Motorized Shades</b><span>Automated light control</span></a>
                 <a href="/solutions#drapery" onClick={closeNavigation}><b>Custom Drapery</b><span>Tailored premium fabrics</span></a>
                 <div><a href="/solutions#residential" onClick={closeNavigation}>Residential</a><a href="/solutions#commercial" onClick={closeNavigation}>Commercial</a></div>
