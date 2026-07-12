@@ -97,15 +97,15 @@ function Header() {
             <div className="mega-menu" id="solutions-mega-menu">
               <div className="mega-products">
                 <a href="#smart-film" onClick={closeNavigation}>
-                  <span>01</span><h3>Smart Film</h3>
+                  <span className="mega-detail film-detail" aria-hidden="true" /><h3>Smart Film</h3>
                   <p>Switchable privacy glass for residential and commercial spaces.</p>
                 </a>
                 <a href="#solutions" onClick={closeNavigation}>
-                  <span>02</span><h3>Motorized Shades</h3>
+                  <span className="mega-detail shade-detail" aria-hidden="true" /><h3>Motorized Shades</h3>
                   <p>Automated window treatments designed for comfort, privacy, and light control.</p>
                 </a>
                 <a href="#drapery" onClick={closeNavigation}>
-                  <span>03</span><h3>Custom Drapery</h3>
+                  <span className="mega-detail drapery-detail" aria-hidden="true" /><h3>Custom Drapery</h3>
                   <p>Tailored designer drapery with premium fabrics and refined finishes.</p>
                 </a>
               </div>

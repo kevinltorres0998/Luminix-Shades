@@ -21,17 +21,24 @@ img { object-fit:cover; }
 .nav-trigger span { color:var(--gold); font-size:12px; transition:transform .25s ease; }
 .solutions-nav { align-self:stretch; display:flex; align-items:center; position:static; }
 .solutions-nav.is-open .nav-trigger span { transform:rotate(180deg); }
-.mega-menu { position:absolute; top:calc(100% - 2px); left:50%; width:min(900px,92vw); transform:translate(-50%,12px); padding:30px 32px 20px; background:rgba(13,14,14,.98); border:1px solid rgba(216,185,137,.22); box-shadow:0 30px 70px rgba(0,0,0,.42); opacity:0; visibility:hidden; pointer-events:none; transition:opacity .25s ease,transform .25s ease,visibility .25s ease; }
+.mega-menu { position:absolute; top:calc(100% - 2px); left:50%; width:min(940px,92vw); transform:translate(-50%,12px); padding:34px 34px 22px; background:rgba(13,14,14,.98); border:1px solid rgba(216,185,137,.22); box-shadow:0 30px 70px rgba(0,0,0,.42); opacity:0; visibility:hidden; pointer-events:none; transition:opacity .25s ease,transform .25s ease,visibility .25s ease; }
 .solutions-nav.is-open .mega-menu { opacity:1; visibility:visible; pointer-events:auto; transform:translate(-50%,0); }
-.mega-products { display:grid; grid-template-columns:repeat(3,1fr); }
-.mega-products>a { min-height:148px; padding:8px 28px 22px; border-right:1px solid rgba(255,255,255,.11); transition:background .25s ease; }
-.mega-products>a:first-child { padding-left:8px; }
-.mega-products>a:last-child { border-right:0; }
-.mega-products>a:hover { background:rgba(255,255,255,.025); }
-.mega-products span { color:var(--gold); font-size:9px; letter-spacing:.12em; }
-.mega-products h3 { margin:14px 0 9px; font-size:17px; font-weight:400; }
-.mega-products p { margin:0; max-width:220px; color:#bdbdbd; font-size:11px; line-height:1.55; }
-.mega-secondary { border-top:1px solid rgba(255,255,255,.12); padding-top:17px; display:flex; gap:42px; }
+.mega-products { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.mega-products>a { min-height:178px; padding:27px 28px 30px; border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.012); position:relative; transition:background .22s ease,border-color .22s ease,transform .22s ease,box-shadow .22s ease; }
+.mega-products>a::after { content:""; position:absolute; left:28px; right:28px; bottom:-1px; height:1px; background:var(--gold); transform:scaleX(0); transform-origin:left; opacity:.8; transition:transform .22s ease; }
+.mega-products>a:hover,.mega-products>a:focus-visible { background:rgba(255,255,255,.045); border-color:rgba(216,185,137,.38); transform:translateY(-2px); box-shadow:0 12px 25px rgba(0,0,0,.16); outline:none; }
+.mega-products>a:hover::after,.mega-products>a:focus-visible::after { transform:scaleX(1); }
+.mega-detail { width:31px; height:22px; display:block; position:relative; border:1px solid rgba(216,185,137,.72); opacity:.9; }
+.mega-detail::before,.mega-detail::after { content:""; position:absolute; background:rgba(216,185,137,.72); }
+.film-detail::before { top:-1px; bottom:-1px; left:50%; width:1px; }
+.film-detail::after { left:4px; right:4px; top:50%; height:1px; opacity:.45; }
+.shade-detail::before { left:4px; right:4px; top:5px; height:1px; box-shadow:0 4px 0 rgba(216,185,137,.72),0 8px 0 rgba(216,185,137,.72); }
+.shade-detail::after { right:3px; top:3px; width:1px; height:16px; opacity:.55; }
+.drapery-detail::before { top:2px; bottom:2px; left:8px; width:1px; box-shadow:6px 0 0 rgba(216,185,137,.72),12px 0 0 rgba(216,185,137,.72); }
+.drapery-detail::after { left:3px; right:3px; top:3px; height:1px; opacity:.5; }
+.mega-products h3 { margin:17px 0 10px; font-size:17px; font-weight:400; letter-spacing:.015em; }
+.mega-products p { margin:0; max-width:230px; color:#bdbdbd; font-size:11px; line-height:1.62; }
+.mega-secondary { border-top:1px solid rgba(255,255,255,.12); margin-top:20px; padding-top:18px; display:flex; gap:42px; }
 .mega-secondary a { display:flex; gap:20px; align-items:center; color:#e5e1da; font-size:11px; letter-spacing:.04em; }
 .mega-secondary a span { color:var(--gold); transition:transform .25s ease; }
 .mega-secondary a:hover span { transform:translateX(4px); }
