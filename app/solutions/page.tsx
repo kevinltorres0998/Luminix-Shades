@@ -54,10 +54,10 @@ export default function SolutionsPage() {
 
       <section className={styles.chooser}>
         <Fade className={styles.chooserTitle}><span className={styles.kicker}>CHOOSING THE RIGHT SOLUTION</span><h2>A simple place<br />to begin.</h2></Fade>
-        <div className={styles.chooserRows}>
-          <a href="/#smart-film"><b>Smart Film</b><span>Instant Privacy</span><i aria-hidden="true">→</i></a>
-          <a href="/#solutions"><b>Motorized Shades</b><span>Everyday Automation</span><i aria-hidden="true">→</i></a>
-          <a href="/#drapery"><b>Custom Drapery</b><span>Warmth & Texture</span><i aria-hidden="true">→</i></a>
+        <div className={styles.selectionGallery}>
+          <a href="/#smart-film"><h3>Smart<br />Film</h3><div><span>Instant Privacy</span><i aria-hidden="true">→</i></div></a>
+          <a href="/#solutions"><h3>Motorized<br />Shades</h3><div><span>Everyday Automation</span><i aria-hidden="true">→</i></div></a>
+          <a href="/#drapery"><h3>Custom<br />Drapery</h3><div><span>Warmth & Texture</span><i aria-hidden="true">→</i></div></a>
         </div>
       </section>
 
