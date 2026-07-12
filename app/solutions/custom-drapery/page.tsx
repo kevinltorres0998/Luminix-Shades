@@ -372,9 +372,9 @@ export default function CustomDraperyPage() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="showroom-panel-title"
-              initial={{ opacity: 0, y: 26 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, x: 46 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 34 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               <button ref={closeRef} type="button" className={styles.panelClose} onClick={closeDetail} aria-label="Close details">
