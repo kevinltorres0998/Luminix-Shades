@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import NextImage from "next/image";
-import { useEffect, useState } from "react";
+import SiteFooter from "./components/SiteFooter";
+import SiteHeader from "./components/SiteHeader";
 
 function Image(props: React.ComponentProps<typeof NextImage>) {
   return <NextImage {...props} unoptimized />;
@@ -33,140 +34,10 @@ function ArrowLink({ children }: { children: React.ReactNode }) {
   return <a className="arrow-link" href="#contact">{children}<span aria-hidden="true">→</span></a>;
 }
 
-function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [solutionsOpen, setSolutionsOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSolutionsOpen(false);
-        setMobileOpen(false);
-      }
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
-
-  const closeNavigation = () => {
-    setSolutionsOpen(false);
-    setMobileOpen(false);
-  };
-
-  return (
-    <header className={`site-header${scrolled ? " is-scrolled" : ""}${mobileOpen ? " is-mobile-open" : ""}`}>
-      <div className="main-nav">
-        <a className="brand" href="#top" aria-label="Luminix Shades home" onClick={closeNavigation}>
-          <Image className="official-logo" src="/images/logo-white.png" alt="" width={2420} height={689} priority />
-        </a>
-
-        <nav className="desktop-nav" aria-label="Primary navigation">
-          <a className="active" href="#top">Home</a>
-          <div
-            className={`solutions-nav${solutionsOpen ? " is-open" : ""}`}
-            onMouseEnter={() => setSolutionsOpen(true)}
-            onMouseLeave={() => setSolutionsOpen(false)}
-            onBlur={(event) => {
-              if (!event.currentTarget.contains(event.relatedTarget as Node)) setSolutionsOpen(false);
-            }}
-          >
-            <button
-              className="nav-trigger"
-              type="button"
-              aria-expanded={solutionsOpen}
-              aria-controls="solutions-mega-menu"
-              onClick={() => setSolutionsOpen((open) => !open)}
-              onFocus={() => setSolutionsOpen(true)}
-            >
-              Solutions <span aria-hidden="true">⌄</span>
-            </button>
-            <div className="mega-menu" id="solutions-mega-menu">
-              <div className="mega-products">
-                <a href="#smart-film" onClick={closeNavigation}>
-                  <span className="mega-detail film-detail" aria-hidden="true" /><h3>Smart Film</h3>
-                  <p>Switchable privacy glass for residential and commercial spaces.</p>
-                </a>
-                <a href="#solutions" onClick={closeNavigation}>
-                  <span className="mega-detail shade-detail" aria-hidden="true" /><h3>Motorized Shades</h3>
-                  <p>Automated window treatments designed for comfort, privacy, and light control.</p>
-                </a>
-                <a href="#drapery" onClick={closeNavigation}>
-                  <span className="mega-detail drapery-detail" aria-hidden="true" /><h3>Custom Drapery</h3>
-                  <p>Tailored designer drapery with premium fabrics and refined finishes.</p>
-                </a>
-              </div>
-              <div className="mega-secondary">
-                <a href="#residential" onClick={closeNavigation}>Residential <span aria-hidden="true">→</span></a>
-                <a href="#commercial" onClick={closeNavigation}>Commercial <span aria-hidden="true">→</span></a>
-              </div>
-            </div>
-          </div>
-          <a href="#projects">Projects</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </nav>
-
-        <a className="button button-gold desktop-cta" href="#contact">SCHEDULE A CONSULTATION</a>
-        <button
-          className={`mobile-menu${mobileOpen ? " is-open" : ""}`}
-          type="button"
-          aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
-          aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen((open) => !open)}
-        >
-          <span /><span /><span />
-        </button>
-      </div>
-
-      {mobileOpen && (
-        <div className="mobile-panel">
-          <nav aria-label="Mobile navigation">
-            <a href="#top" onClick={closeNavigation}>Home</a>
-            <button
-              className="mobile-solutions-toggle"
-              type="button"
-              aria-expanded={mobileSolutionsOpen}
-              onClick={() => setMobileSolutionsOpen((open) => !open)}
-            >
-              Solutions <span aria-hidden="true">{mobileSolutionsOpen ? "−" : "+"}</span>
-            </button>
-            {mobileSolutionsOpen && (
-              <div className="mobile-solutions">
-                <a href="#smart-film" onClick={closeNavigation}><b>Smart Film</b><span>Switchable privacy glass</span></a>
-                <a href="#solutions" onClick={closeNavigation}><b>Motorized Shades</b><span>Automated light control</span></a>
-                <a href="#drapery" onClick={closeNavigation}><b>Custom Drapery</b><span>Tailored premium fabrics</span></a>
-                <div><a href="#residential" onClick={closeNavigation}>Residential</a><a href="#commercial" onClick={closeNavigation}>Commercial</a></div>
-              </div>
-            )}
-            <a href="#projects" onClick={closeNavigation}>Projects</a>
-            <a href="#about" onClick={closeNavigation}>About</a>
-            <a href="#contact" onClick={closeNavigation}>Contact</a>
-            <a className="button button-gold mobile-cta" href="#contact" onClick={closeNavigation}>SCHEDULE A CONSULTATION</a>
-          </nav>
-        </div>
-      )}
-    </header>
-  );
-}
-
 export default function Home() {
   return (
     <main>
-      <Header />
+      <SiteHeader />
 
       <section className="hero" id="top">
         <Image src="/images/hero.png" alt="Luxury Miami waterfront interior with automated shades" fill priority sizes="100vw" />
@@ -221,13 +92,7 @@ export default function Home() {
         <div className="final-cta" id="contact"><h2>Let&apos;s design the right<br /><em>solution for your space.</em></h2><div className="button-row"><a className="button button-gold" href="mailto:hello@luminixshades.com">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com">REQUEST A QUOTE</a></div></div>
       </section>
 
-      <footer>
-        <div className="footer-brand"><a className="brand" href="#top" aria-label="Luminix Shades home"><Image className="official-logo" src="/images/logo-white.png" alt="" width={2420} height={689} /></a><p>Smart film. Motorized shades.<br />Custom drapery. Designed for living.</p></div>
-        <div><b>QUICK LINKS</b><a href="#smart-film">Smart Film</a><a href="#solutions">Shades</a><a href="#drapery">Drapery</a><a href="#areas">Gallery</a></div>
-        <div><b>COMPANY</b><a href="#about">About Us</a><a href="#process">Our Process</a><a href="#areas">Service Areas</a><a href="#contact">Contact</a></div>
-        <div id="faq"><b>RESOURCES</b><a href="#faq">FAQ</a><a href="#contact">Get a Quote</a><a href="#contact">Schedule a Consultation</a><a href="#top">Privacy Policy</a></div>
-        <div><b>FOLLOW US</b><p>◎ &nbsp; f &nbsp; in</p><p>© 2026 Luminix Shades<br />All rights reserved.</p></div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
