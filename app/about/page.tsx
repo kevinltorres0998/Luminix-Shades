@@ -59,6 +59,11 @@ export default function AboutPage() {
 
       <section className={styles.principles} id="principles"><span className={styles.kicker}>OUR PRINCIPLES</span><div className={styles.principleGrid}>{principles.map((item,index) => <Fade className={styles.principle} key={item.title}><span className={`${styles.lineIcon} ${styles[item.icon]}`} aria-hidden="true"><i /></span><h3>{item.title}</h3><p>{item.copy}</p>{index < principles.length - 1 && <b aria-hidden="true" />}</Fade>)}</div></section>
 
+      <section className={styles.founder} aria-labelledby="founder-heading">
+        <RevealImage className={styles.founderPortrait}><Image src="/images/luminix-founder-ceo.png" alt="Founder and CEO of Luminix Shades" fill sizes="(max-width:760px) 100vw, 38vw" /></RevealImage>
+        <Fade className={styles.founderCopy}><span className={styles.kicker}>LEADERSHIP</span><h2 id="founder-heading">A vision shaped<br />by <em>intention.</em></h2><i aria-hidden="true" /><strong>CEO &amp; FOUNDER</strong><small>LUMINIX SHADES</small></Fade>
+      </section>
+
       <section className={styles.details} id="details">
         <Fade className={styles.detailsIntro}><span className={styles.kicker}>THE DIFFERENCE LIVES</span><h2>in what others overlook.</h2><i aria-hidden="true" /><p>Obsessive attention to detail.<br />Flawless execution.<br />This is what sets our work apart.</p><a className={styles.textLink} href="#experience">SEE THE DETAILS <span>→</span></a></Fade>
         <div className={styles.detailGrid}>{details.map((detail,index) => <motion.figure key={detail.caption} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .7, delay: index * .07, ease: [0.22, 1, 0.36, 1] }}><div><Image src={detail.image} alt={detail.alt} fill sizes="(max-width:700px) 50vw, 16vw" /></div><figcaption>{detail.caption}</figcaption></motion.figure>)}</div>
