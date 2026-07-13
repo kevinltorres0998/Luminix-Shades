@@ -6,6 +6,7 @@ import styles from "./ConsultationBooking.module.css";
 
 export default function ConsultationBooking() {
   const [open, setOpen] = useState(false);
+  const [schedulerReady, setSchedulerReady] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const openBooking = useCallback(() => {
@@ -61,10 +62,12 @@ export default function ConsultationBooking() {
     };
   }, [open]);
 
-  if (!open) return null;
-
   return (
-    <div className={styles.overlay} onMouseDown={(event) => { if (event.target === event.currentTarget) setOpen(false); }}>
+    <div
+      className={`${styles.overlay} ${open ? styles.overlayOpen : styles.overlayClosed}`}
+      aria-hidden={!open}
+      onMouseDown={(event) => { if (open && event.target === event.currentTarget) setOpen(false); }}
+    >
       <section className={styles.dialog} data-consultation-dialog role="dialog" aria-modal="true" aria-labelledby="consultation-title">
         <div className={styles.heading}>
           <div>
@@ -75,7 +78,17 @@ export default function ConsultationBooking() {
           <button ref={closeButtonRef} type="button" className={styles.close} onClick={() => setOpen(false)} aria-label="Close consultation scheduler">×</button>
         </div>
         <div className={styles.scheduler}>
-          <iframe title="Schedule a consultation with Luminix Shades" src={`${BOOKING_URL}&embed=1`} />
+          <div className={`${styles.schedulerLoading} ${schedulerReady ? styles.schedulerLoadingHidden : ""}`} aria-hidden="true">
+            <span className={styles.loadingMark}>L</span>
+            <strong>PREPARING YOUR PRIVATE CONSULTATION</strong>
+            <i />
+          </div>
+          <iframe
+            className={schedulerReady ? styles.schedulerReady : ""}
+            title="Schedule a consultation with Luminix Shades"
+            src={`${BOOKING_URL}&embed=1`}
+            onLoad={() => setSchedulerReady(true)}
+          />
         </div>
         <div className={styles.fallback}>
           <span>HAVING TROUBLE WITH THE CALENDAR?</span>
