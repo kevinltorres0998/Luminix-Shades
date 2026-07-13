@@ -88,7 +88,7 @@ export default function Home() {
 
       <section className={styles.solutions} id="solutions">
         <Fade className={styles.sectionHeading}><div><span className={styles.kicker}>EXPLORE OUR SOLUTIONS</span><h2>Every space. Every need.<br />The perfect solution.</h2></div><a className={styles.textLink} href="/solutions">VIEW ALL SOLUTIONS <span>→</span></a></Fade>
-        <div className={styles.solutionGrid}>{solutions.map((item) => <motion.a className={`${styles.solutionCard} ${styles[item.key]}`} href={item.href} key={item.name}><div className={styles.solutionImage}><Image src={item.image} alt={`${item.name} installation`} fill sizes="(max-width:760px) 100vw, 25vw" /><div className={styles.productEffect} aria-hidden="true"><i /><i /><i /><i /></div></div><div className={styles.solutionBody}><span className={styles.miniIcon} aria-hidden="true" /><h3>{item.name}</h3><p>{item.copy}</p><strong>EXPLORE {item.name.toUpperCase()} <b>→</b></strong></div></motion.a>)}</div>
+        <div className={styles.solutionGrid}>{solutions.map((item) => <motion.a className={`${styles.solutionCard} ${styles[item.key]}`} href={item.href} key={item.name}><div className={styles.solutionImage}><Image src={item.image} alt={`${item.name} installation`} fill sizes="(max-width:760px) 100vw, 25vw" /></div><div className={styles.solutionBody}><span className={styles.miniIcon} aria-hidden="true" /><h3>{item.name}</h3><p>{item.copy}</p><strong>EXPLORE {item.name.toUpperCase()} <b>→</b></strong></div></motion.a>)}</div>
       </section>
 
       <section className={styles.markets}>
