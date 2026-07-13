@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import NextImage from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import styles from "./solutions.module.css";
@@ -36,59 +36,84 @@ const comparison = [
 
 const projects = [
   {
-    name: "Miami Waterfront", category: "Smart Film", location: "Miami Beach", image: "/images/smart-film.png", interaction: "film",
-    title: "Privacy without surrendering the horizon.",
-    overview: "A waterfront residence needed instant discretion while preserving uninterrupted views and the clarity of its architecture. Smart Film created privacy on demand without adding tracks, textiles, or visual weight.",
-    goal: "We wanted complete privacy without sacrificing our panoramic waterfront views.",
-    products: ["Smart Film Total", "Low-profile controls", "Smart automation"],
-    benefits: ["Instant Privacy", "Uninterrupted Views", "Minimal Architecture", "Smart Automation"],
-    gallery: ["/images/smart-film-hero-v2.png", "/images/smart-film-demo-clear.png", "/images/residential-smart-film-cover-v3.png"],
+    name: "Miami Waterfront", location: "Miami Beach", type: "Waterfront Residence", image: "/images/smart-film.png",
+    ratings: [["Smart Film", 5], ["Motorized Roller Shades", 4], ["Custom Drapery", 5], ["Cellular Shades", 2]] as [string, number][],
+    combination: "Smart Film + Ripple Fold Linen Drapery",
+    combinationItems: [["Smart Film", "/images/smart-film.png"], ["Ripple Fold Linen Drapery", "/images/drapery-room-linen.png"]],
+    reasoning: "For a waterfront residence, preserving panoramic views is essential. Smart Film provides instant privacy without permanently blocking the scenery, while full-height linen drapery adds warmth, softness, acoustic comfort, and architectural elegance. Motorized Roller Shades remain an excellent complementary option for managing afternoon glare.",
+    bestFor: ["Waterfront Homes", "Floor-to-Ceiling Windows", "Luxury Living Rooms", "Open Architecture"],
   },
   {
-    name: "Brickell Residence", category: "Motorized Roller Shades", location: "Brickell", image: "/images/hero.png", interaction: "roller",
-    title: "Daylight composed with quiet precision.",
-    overview: "Floor-to-ceiling glazing brought extraordinary light—and demanding heat and glare. Four independently motorized screen shades now move in harmony, protecting comfort while keeping the skyline present.",
-    goal: "We wanted the view to remain the focus, with effortless control from morning through sunset.",
-    products: ["Motorized Screen Shades", "Somfy automation", "Minimal white cassettes"],
-    benefits: ["Glare Reduction", "Solar Protection", "Quiet Operation", "Scene Control"],
-    gallery: ["/images/roller-shades-demo-room.png", "/images/about-hospitality.png", "/images/residential.png"],
+    name: "Brickell Residence", location: "Brickell", type: "High-Rise Residence", image: "/images/hero.png",
+    ratings: [["Smart Film", 4], ["Motorized Roller Shades", 5], ["Custom Drapery", 4], ["Cellular Shades", 3]] as [string, number][],
+    combination: "Motorized Screen Shades + Sheer Drapery",
+    combinationItems: [["Motorized Screen Shades", "/images/roller-shades-demo-room.png"], ["Sheer Drapery", "/images/drapery-hero-sheer.png"]],
+    reasoning: "High-rise glass invites extraordinary daylight but also creates glare and solar heat. Motorized Screen Shades provide precise daily control while preserving the skyline. A sheer drapery layer softens the architecture and adds movement, making the residence feel warmer after sunset.",
+    bestFor: ["High-Rise Homes", "Panoramic Views", "Afternoon Sun", "Smart Living"],
   },
   {
-    name: "Coral Gables Home", category: "Custom Drapery", location: "Coral Gables", image: "/images/drapery-room-linen.png", interaction: "drapery",
-    title: "Softness tailored to the architecture.",
-    overview: "The interior called for warmth without heaviness. Custom linen drapery was proportioned to the room, ceiling-mounted, and hand-finished to soften daylight and frame the garden with quiet elegance.",
-    goal: "We wanted the room to feel softer and more complete, without losing its clean modern character.",
-    products: ["Ivory Linen", "Ripple Fold", "Champagne hardware"],
-    benefits: ["Filtered Daylight", "Tailored Fullness", "Acoustic Softness", "Timeless Finish"],
-    gallery: ["/images/drapery-hero-sheer.png", "/images/drapery-room-velvet.png", "/images/drapery-final-sunset.png"],
+    name: "Coral Gables Home", location: "Coral Gables", type: "Luxury Residence", image: "/images/drapery-room-linen.png",
+    ratings: [["Smart Film", 2], ["Motorized Roller Shades", 3], ["Custom Drapery", 5], ["Cellular Shades", 4]] as [string, number][],
+    combination: "Tailored Linen Drapery + Cellular Shades",
+    combinationItems: [["Tailored Linen Drapery", "/images/drapery-room-linen.png"], ["Cellular Shades", "/images/cellular-compare-with.webp"]],
+    reasoning: "The layered architecture benefits from materials that add softness and residential warmth. Full-height linen drapery creates elegant scale and acoustic comfort, while Cellular Shades provide discreet insulation and flexible privacy behind the textile layer.",
+    bestFor: ["Layered Interiors", "Garden Views", "Formal Living", "Acoustic Comfort"],
   },
   {
-    name: "Quiet Primary Suite", category: "Cellular Shades", location: "Coconut Grove", image: "/images/cellular-hero-winter.webp", interaction: "cellular",
-    title: "A calmer room, engineered for rest.",
-    overview: "This primary suite needed deeper darkness, more stable temperatures, and a quieter atmosphere. Cellular Shades added an insulating layer that transformed comfort without competing with the restrained interior.",
-    goal: "We wanted better sleep and a room that felt consistently calm in every season.",
-    products: ["Room Darkening Cellular", "Top-down control", "Concealed motorization"],
-    benefits: ["Thermal Comfort", "Room Darkening", "Noise Reduction", "Energy Efficiency"],
-    gallery: ["/images/cellular-compare-with.webp", "/images/cellular-space-office-v2.webp", "/images/cellular-space-nursery-v2.webp"],
+    name: "Quiet Primary Suite", location: "Coconut Grove", type: "Primary Bedroom", image: "/images/cellular-hero-winter.webp",
+    ratings: [["Smart Film", 2], ["Motorized Roller Shades", 4], ["Custom Drapery", 4], ["Cellular Shades", 5]] as [string, number][],
+    combination: "Room-Darkening Cellular Shades + Drapery",
+    combinationItems: [["Room-Darkening Cellular Shades", "/images/cellular-hero-winter.webp"], ["Blackout Drapery", "/images/drapery-room-blackout.png"]],
+    reasoning: "A primary suite should protect rest before anything else. Room-darkening Cellular Shades deliver thermal stability, reduced noise, and dependable light control. Drapery completes the composition with softness and an additional layer of privacy and darkness.",
+    bestFor: ["Primary Suites", "Restful Sleep", "Thermal Comfort", "Quiet Interiors"],
   },
   {
-    name: "Downtown Workplace", category: "Smart Film + Shades", location: "Downtown Miami", image: "/images/commercial.png", interaction: "combined",
-    title: "Adaptable privacy at architectural scale.",
-    overview: "A high-performance workplace required meeting-room privacy, glare management, and consistent visual order. Smart Film and automated shades were integrated as one responsive system for focus, openness, and control.",
-    goal: "We needed spaces that could shift from open collaboration to complete discretion in seconds.",
-    products: ["Smart Film Light", "Motorized Screen Shades", "Central automation"],
-    benefits: ["Flexible Privacy", "Glare Control", "Unified Automation", "Professional Finish"],
-    gallery: ["/images/commercial-smart-film-cover-v3.png", "/images/commercial.png", "/images/smart-film-hero-v2.png"],
+    name: "Downtown Workplace", location: "Downtown Miami", type: "Commercial Office", image: "/images/commercial.png",
+    ratings: [["Smart Film", 5], ["Motorized Roller Shades", 5], ["Custom Drapery", 2], ["Cellular Shades", 3]] as [string, number][],
+    combination: "Smart Film + Motorized Screen Shades",
+    combinationItems: [["Smart Film", "/images/commercial-smart-film-cover-v3.png"], ["Motorized Screen Shades", "/images/commercial.png"]],
+    reasoning: "Modern workplaces need to shift quickly between openness and discretion. Smart Film creates instant meeting-room privacy without visual clutter, while Motorized Screen Shades reduce glare and heat across exterior glazing. Together they form one precise, adaptable system.",
+    bestFor: ["Executive Offices", "Meeting Rooms", "Glass Partitions", "Flexible Workplaces"],
   },
 ];
 
 export default function SolutionsPage() {
   const [category, setCategory] = useState(0);
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const [projectReveal, setProjectReveal] = useState(52);
+  const panelRef = useRef<HTMLElement>(null);
+  const panelCloseRef = useRef<HTMLButtonElement>(null);
+  const projectTriggerRef = useRef<HTMLButtonElement | null>(null);
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 760], [0, 54]);
   const active = recommendations[category];
+  const selectedSpace = selectedProject === null ? null : projects[selectedProject];
+
+  const closeProjectPanel = () => {
+    setSelectedProject(null);
+    window.setTimeout(() => projectTriggerRef.current?.focus(), 0);
+  };
+
+  useEffect(() => {
+    if (selectedProject === null) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    panelCloseRef.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeProjectPanel();
+      if (event.key !== "Tab" || !panelRef.current) return;
+      const focusable = Array.from(panelRef.current.querySelectorAll<HTMLElement>('button, a[href], input, [tabindex]:not([tabindex="-1"])')).filter((element) => !element.hasAttribute("disabled"));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedProject]);
 
   return (
     <main className={styles.page}>
@@ -147,48 +172,24 @@ export default function SolutionsPage() {
       </section>
 
       <section className={styles.projects} id="projects">
-        <AnimatePresence mode="wait" initial={false}>
-          {selectedProject === null ? (
-            <motion.div className={styles.projectsIndex} key="project-index" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: .985 }} transition={{ duration: .42, ease: [0.22, 1, 0.36, 1] }}>
-              <Fade className={styles.projectsIntro}><span className={styles.kicker}>FEATURED PROJECTS</span><h2>Inspired by<br />real spaces.</h2><p>See how our solutions transform architecture into elevated experiences.</p></Fade>
-              <div className={styles.projectGrid}>{projects.map((project, index) => <motion.button type="button" key={project.name} whileHover={{ y: -4 }} onClick={() => { setProjectReveal(52); setSelectedProject(index); }} aria-label={`Explore ${project.name} case study`}><Image src={project.image} alt={`${project.name} featuring ${project.category}`} fill sizes="(max-width: 760px) 100vw, 19vw" /><div><h3>{project.name}</h3><p>{project.category}</p><span>{project.location}</span></div></motion.button>)}</div>
-            </motion.div>
-          ) : (() => {
-            const project = projects[selectedProject];
-            return (
-              <motion.article className={styles.caseStudy} key={project.name} initial={{ opacity: 0, y: 24, scale: .992 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -18 }} transition={{ duration: .7, ease: [0.22, 1, 0.36, 1] }}>
-                <div className={`${styles.caseHero} ${styles[`case_${project.interaction}`]}`}>
-                  <Image src={project.image} alt={`${project.name} architectural project`} fill priority sizes="100vw" />
-                  {project.interaction === "film" && <div className={styles.filmState} style={{ clipPath: `inset(0 ${100 - projectReveal}% 0 0)` }} />}
-                  {project.interaction === "cellular" && <div className={styles.cellularState} style={{ clipPath: `inset(0 ${100 - projectReveal}% 0 0)` }}><Image src="/images/cellular-compare-with.webp" alt="Room with Cellular Shades" fill sizes="100vw" /></div>}
-                  {(project.interaction === "roller" || project.interaction === "combined") && <div className={styles.caseRollers} aria-hidden="true"><i /><i /><i /><i /></div>}
-                  {project.interaction === "drapery" && <div className={styles.caseDrapes} aria-hidden="true"><i /><i /></div>}
-                  {project.interaction === "combined" && <div className={styles.combinedFilm} aria-hidden="true" />}
-                  <div className={styles.caseHeroShade} />
-                  <button className={styles.caseBack} type="button" onClick={() => setSelectedProject(null)} aria-label="Return to all featured projects">&#8592; ALL PROJECTS</button>
-                  <div className={styles.caseHeroCopy}><span>{project.category} · {project.location}</span><h2>{project.name}</h2><p>{project.title}</p></div>
-                  {(project.interaction === "film" || project.interaction === "cellular") && <label className={styles.caseSlider}><span>{project.interaction === "film" ? "CLEAR" : "WITHOUT"}</span><input type="range" min="8" max="92" value={projectReveal} onChange={(event) => setProjectReveal(Number(event.target.value))} aria-label={`Compare ${project.category} transformation`} /><span>{project.interaction === "film" ? "PRIVATE" : "WITH"}</span></label>}
-                  {(project.interaction === "roller" || project.interaction === "drapery" || project.interaction === "combined") && <span className={styles.interactionHint}>HOVER TO EXPERIENCE THE TRANSFORMATION</span>}
-                </div>
-
-                <div className={styles.caseDetails}>
-                  <div className={styles.caseOverview}><span className={styles.kicker}>PROJECT OVERVIEW</span><h3>{project.title}</h3><p>{project.overview}</p></div>
-                  <div className={styles.caseSpecs}><div><small>PRODUCTS INSTALLED</small>{project.products.map((item) => <span key={item}>✓ {item}</span>)}</div><div><small>BENEFITS DELIVERED</small>{project.benefits.map((item) => <span key={item}>✓ {item}</span>)}</div></div>
-                </div>
-
-                <blockquote className={styles.caseQuote}><span>CLIENT OBJECTIVE</span><p>“{project.goal}”</p></blockquote>
-
-                <div className={styles.caseGallery}>{project.gallery.map((image, index) => <motion.div key={image} whileHover={{ scale: .995 }}><Image src={image} alt={`${project.name} project detail ${index + 1}`} fill sizes="(max-width: 760px) 100vw, 33vw" /></motion.div>)}</div>
-
-                <div className={styles.caseNavigation}>
-                  <button type="button" onClick={() => { setProjectReveal(52); setSelectedProject((selectedProject - 1 + projects.length) % projects.length); }}>&#8592; PREVIOUS PROJECT</button>
-                  <a className="button button-gold" href="/#contact">CREATE A SIMILAR PROJECT</a>
-                  <button type="button" onClick={() => { setProjectReveal(52); setSelectedProject((selectedProject + 1) % projects.length); }}>NEXT PROJECT &#8594;</button>
-                </div>
-              </motion.article>
-            );
-          })()}
-        </AnimatePresence>
+        <div className={styles.projectsIndex}>
+          <Fade className={styles.projectsIntro}><span className={styles.kicker}>FEATURED SPACES</span><h2>Inspired by<br />real spaces.</h2><p>Every environment is different. Discover which combination of privacy, light control, comfort, and texture we would recommend for yours.</p></Fade>
+          <div className={styles.projectGrid}>{projects.map((project, index) => (
+            <motion.button
+              type="button"
+              key={project.name}
+              onClick={(event) => { projectTriggerRef.current = event.currentTarget; setSelectedProject(index); }}
+              aria-label={`View design recommendations for ${project.name}`}
+            >
+              <Image src={project.image} alt={`${project.name} in ${project.location}`} fill sizes="(max-width: 760px) 100vw, 19vw" />
+              <div className={styles.projectCardContent}>
+                <h3>{project.name}</h3><p>{project.location} · {project.type}</p>
+                <div className={styles.cardRecommendations}>{project.ratings.map(([solution, score]) => <span key={solution}><b>{solution}</b><i aria-label={`${score} out of 5 stars`}>{"★".repeat(score)}<em>{"☆".repeat(5 - score)}</em></i></span>)}</div>
+                <div className={styles.cardCombination}><small>RECOMMENDED COMBINATION</small><strong>{project.combination}</strong></div>
+              </div>
+            </motion.button>
+          ))}</div>
+        </div>
       </section>
 
       <section className={styles.finalCta}>
@@ -196,6 +197,33 @@ export default function SolutionsPage() {
       </section>
 
       <SiteFooter />
+
+      <AnimatePresence>
+        {selectedSpace && (
+          <motion.div className={styles.recommendationOverlay} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .24 }} onMouseDown={(event) => { if (event.target === event.currentTarget) closeProjectPanel(); }}>
+            <motion.aside ref={panelRef} className={styles.recommendationPanel} role="dialog" aria-modal="true" aria-labelledby="recommendation-title" initial={{ opacity: 0, x: 46 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 34 }} transition={{ duration: .34, ease: [0.22, 1, 0.36, 1] }}>
+              <button ref={panelCloseRef} type="button" className={styles.panelClose} onClick={closeProjectPanel} aria-label="Close recommendations"><span aria-hidden="true">×</span></button>
+              <div className={styles.panelScroll}>
+                <span className={styles.kicker}>RECOMMENDATION FOR THIS SPACE</span>
+                <h2 id="recommendation-title">{selectedSpace.name}</h2>
+                <p className={styles.panelMeta}>{selectedSpace.location} <span>·</span> {selectedSpace.type}</p>
+                <div className={styles.panelHero}><Image src={selectedSpace.image} alt={`${selectedSpace.name} recommendation`} fill sizes="(max-width:760px) 100vw, 520px" /></div>
+
+                <section className={styles.panelSection}><h3>RECOMMENDED SOLUTIONS</h3><div className={styles.panelRatings}>{selectedSpace.ratings.map(([solution, score]) => <div key={solution}><span>{solution}</span><i aria-label={`${score} out of 5 stars`}>{"★".repeat(score)}<em>{"☆".repeat(5 - score)}</em></i></div>)}</div></section>
+
+                <section className={styles.panelSection}><h3>WHY WE RECOMMEND THIS</h3><p>{selectedSpace.reasoning}</p></section>
+
+                <section className={styles.panelSection}><h3>BEST FOR</h3><div className={styles.bestFor}>{selectedSpace.bestFor.map((item, index) => <div key={item}><i aria-hidden="true">{["⌂", "□", "◇", "⌗"][index]}</i><span>{item}</span></div>)}</div></section>
+
+                <section className={styles.panelSection}><h3>RECOMMENDED COMBINATION</h3><div className={styles.combinationVisual}>{selectedSpace.combinationItems.map(([label, image], index) => <div key={label} className={styles.comboItem}><figure><Image src={image} alt="" fill sizes="110px" /></figure><span>{label}</span>{index === 0 && <b aria-hidden="true">+</b>}</div>)}</div></section>
+
+                <a className="button button-gold" href="/#contact" onClick={closeProjectPanel}>SCHEDULE A DESIGN CONSULTATION</a>
+                <button type="button" className={styles.exploreAnother} onClick={closeProjectPanel}>EXPLORE ANOTHER SPACE <span aria-hidden="true">←</span></button>
+              </div>
+            </motion.aside>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
