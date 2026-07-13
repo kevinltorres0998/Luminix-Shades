@@ -82,11 +82,14 @@ export default function SolutionsPage() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const panelRef = useRef<HTMLElement>(null);
   const panelCloseRef = useRef<HTMLButtonElement>(null);
+  const panelScrollRef = useRef<HTMLDivElement>(null);
+  const projectGridRef = useRef<HTMLDivElement>(null);
   const projectTriggerRef = useRef<HTMLButtonElement | null>(null);
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 760], [0, 54]);
   const active = recommendations[category];
   const selectedSpace = selectedProject === null ? null : projects[selectedProject];
+  const panelOpen = selectedProject !== null;
 
   const closeProjectPanel = () => {
     setSelectedProject(null);
@@ -94,26 +97,32 @@ export default function SolutionsPage() {
   };
 
   useEffect(() => {
-    if (selectedProject === null) return;
+    if (!panelOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     panelCloseRef.current?.focus();
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") closeProjectPanel();
-      if (event.key !== "Tab" || !panelRef.current) return;
-      const focusable = Array.from(panelRef.current.querySelectorAll<HTMLElement>('button, a[href], input, [tabindex]:not([tabindex="-1"])')).filter((element) => !element.hasAttribute("disabled"));
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (!panelRef.current?.contains(target) && !projectGridRef.current?.parentElement?.contains(target)) closeProjectPanel();
     };
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("pointerdown", handlePointerDown);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("pointerdown", handlePointerDown);
     };
+  }, [panelOpen]);
+
+  useEffect(() => {
+    if (selectedProject === null) return;
+    panelScrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [selectedProject]);
+
+  const scrollProjects = (direction: number) => projectGridRef.current?.scrollBy({ left: direction * 240, behavior: "smooth" });
 
   return (
     <main className={styles.page}>
@@ -171,15 +180,18 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      <section className={styles.projects} id="projects">
+      <section className={`${styles.projects} ${panelOpen ? styles.projectsPanelOpen : ""}`} id="projects">
         <div className={styles.projectsIndex}>
           <Fade className={styles.projectsIntro}><span className={styles.kicker}>FEATURED SPACES</span><h2>Inspired by<br />real spaces.</h2><p>Every environment is different. Discover which combination of privacy, light control, comfort, and texture we would recommend for yours.</p></Fade>
-          <div className={styles.projectGrid}>{projects.map((project, index) => (
+          <div className={styles.projectGallery}>
+          <div ref={projectGridRef} className={styles.projectGrid}>{projects.map((project, index) => (
             <motion.button
               type="button"
               key={project.name}
+              className={selectedProject === index ? styles.activeProject : ""}
               onClick={(event) => { projectTriggerRef.current = event.currentTarget; setSelectedProject(index); }}
               aria-label={`View design recommendations for ${project.name}`}
+              aria-pressed={selectedProject === index}
             >
               <Image src={project.image} alt={`${project.name} in ${project.location}`} fill sizes="(max-width: 760px) 100vw, 19vw" />
               <div className={styles.projectCardContent}>
@@ -189,6 +201,8 @@ export default function SolutionsPage() {
               </div>
             </motion.button>
           ))}</div>
+          <AnimatePresence>{panelOpen && <motion.div className={styles.projectCarouselNav} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}><button type="button" onClick={() => scrollProjects(-1)} aria-label="Previous spaces">←</button><span>EXPLORE SPACES</span><button type="button" onClick={() => scrollProjects(1)} aria-label="Next spaces">→</button></motion.div>}</AnimatePresence>
+          </div>
         </div>
       </section>
 
@@ -200,10 +214,12 @@ export default function SolutionsPage() {
 
       <AnimatePresence>
         {selectedSpace && (
-          <motion.div className={styles.recommendationOverlay} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .24 }} onMouseDown={(event) => { if (event.target === event.currentTarget) closeProjectPanel(); }}>
-            <motion.aside ref={panelRef} className={styles.recommendationPanel} role="dialog" aria-modal="true" aria-labelledby="recommendation-title" initial={{ opacity: 0, x: 46 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 34 }} transition={{ duration: .34, ease: [0.22, 1, 0.36, 1] }}>
+          <motion.div className={styles.recommendationOverlay} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .24 }}>
+            <motion.aside ref={panelRef} className={styles.recommendationPanel} role="dialog" aria-modal="false" aria-labelledby="recommendation-title" initial={{ opacity: 0, x: 46 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 34 }} transition={{ duration: .34, ease: [0.22, 1, 0.36, 1] }}>
               <button ref={panelCloseRef} type="button" className={styles.panelClose} onClick={closeProjectPanel} aria-label="Close recommendations"><span aria-hidden="true">×</span></button>
-              <div className={styles.panelScroll}>
+              <div ref={panelScrollRef} className={styles.panelScroll}>
+                <AnimatePresence mode="wait" initial={false}>
+                <motion.div className={styles.panelContent} key={selectedSpace.name} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -8 }} transition={{ duration: .3, ease: [0.22, 1, 0.36, 1] }}>
                 <span className={styles.kicker}>RECOMMENDATION FOR THIS SPACE</span>
                 <h2 id="recommendation-title">{selectedSpace.name}</h2>
                 <p className={styles.panelMeta}>{selectedSpace.location} <span>·</span> {selectedSpace.type}</p>
@@ -219,6 +235,8 @@ export default function SolutionsPage() {
 
                 <a className="button button-gold" href="/#contact" onClick={closeProjectPanel}>SCHEDULE A DESIGN CONSULTATION</a>
                 <button type="button" className={styles.exploreAnother} onClick={closeProjectPanel}>EXPLORE ANOTHER SPACE <span aria-hidden="true">←</span></button>
+                </motion.div>
+                </AnimatePresence>
               </div>
             </motion.aside>
           </motion.div>
