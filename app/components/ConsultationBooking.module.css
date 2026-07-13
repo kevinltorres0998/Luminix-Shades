@@ -5,18 +5,53 @@
   padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
   display: grid;
   place-items: center;
-  background: rgba(4, 5, 5, .76);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: opacity .28s ease, visibility .28s ease;
+  overflow: hidden;
+  background: #141512;
+  transition: opacity .1s ease, visibility .1s ease;
 }
 
 .overlayOpen { opacity: 1; visibility: visible; pointer-events: auto; }
 .overlayClosed { opacity: 0; visibility: hidden; pointer-events: none; }
 
+.brandSignature {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 46%, #22231f 0, #171814 38%, #11120f 100%);
+  transition: opacity .18s cubic-bezier(.22, 1, .36, 1), visibility .18s ease;
+}
+
+.brandSignatureVisible { opacity: 1; visibility: visible; }
+.brandSignatureHidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.logoStage {
+  width: clamp(210px, 32vw, 410px);
+  position: relative;
+  line-height: 0;
+  animation: logoEntrance .1s ease-out both;
+}
+
+.logoBase,
+.logoSweep img { width: 100%; height: auto; display: block; }
+.logoBase { opacity: .94; }
+
+.logoSweep {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  clip-path: polygon(-24% 0, -4% 0, -16% 100%, -36% 100%);
+  filter: brightness(1.28) sepia(.08) drop-shadow(0 0 5px rgba(255, 244, 218, .28));
+  animation: architecturalSweep .48s .18s cubic-bezier(.4, 0, .2, 1) both;
+}
+
 .dialog {
   width: min(1080px, 100%);
   height: min(820px, calc(100dvh - 48px));
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden;
@@ -24,11 +59,11 @@
   background: #101212;
   color: #fff;
   box-shadow: 0 32px 90px rgba(0, 0, 0, .52);
-  transition: opacity .38s cubic-bezier(.22, 1, .36, 1), transform .38s cubic-bezier(.22, 1, .36, 1);
+  transition: opacity .18s cubic-bezier(.22, 1, .36, 1), transform .18s cubic-bezier(.22, 1, .36, 1), visibility .18s ease;
 }
 
-.overlayClosed .dialog { opacity: 0; transform: translateY(18px) scale(.99); }
-.overlayOpen .dialog { opacity: 1; transform: none; }
+.dialogHidden { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(8px) scale(.995); }
+.dialogVisible { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
 
 .heading {
   min-height: 148px;
@@ -67,38 +102,29 @@
 .close:focus-visible { border-color: #d5b173; background: #d5b173; color: #17130d; outline: 0; transform: rotate(4deg); }
 
 .scheduler { min-height: 0; position: relative; overflow: hidden; background: #f4f1eb; }
-.scheduler iframe { width: 100%; height: 100%; position: relative; z-index: 2; display: block; border: 0; background: #fff; opacity: 0; transition: opacity .3s ease; }
+.scheduler iframe { width: 100%; height: 100%; display: block; border: 0; background: #fff; opacity: 0; transition: opacity .18s ease; }
 .scheduler iframe.schedulerReady { opacity: 1; }
-
-.schedulerLoading {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  background: linear-gradient(135deg, #f7f4ee, #ebe5da);
-  color: #171918;
-  transition: opacity .3s ease, visibility .3s ease;
-}
-
-.schedulerLoadingHidden { opacity: 0; visibility: hidden; }
-.loadingMark { width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid rgba(157, 119, 60, .55); border-radius: 50%; font-family: Georgia, serif; font-size: 25px; color: #a87d3f; }
-.schedulerLoading strong { font-size: 8px; letter-spacing: .16em; }
-.schedulerLoading i { width: 130px; height: 1px; position: relative; overflow: hidden; background: rgba(168, 125, 63, .22); }
-.schedulerLoading i::after { content: ""; position: absolute; inset: 0; background: #b58b4c; transform: translateX(-100%); animation: loadingLine 1.2s ease-in-out infinite; }
 
 .fallback { min-height: 55px; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(255, 255, 255, .12); background: #101212; }
 .fallback span { color: #8f8f8c; font-size: 7px; letter-spacing: .11em; }
 .fallback a { min-height: 44px; display: inline-flex; align-items: center; color: #d5b173; font-size: 8px; font-weight: 700; letter-spacing: .08em; }
 .fallback b { margin-left: 10px; font-size: 13px; font-weight: 400; }
 
-@keyframes loadingLine { 50% { transform: translateX(0); } 100% { transform: translateX(100%); } }
+@keyframes logoEntrance {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes architecturalSweep {
+  0% { opacity: 0; clip-path: polygon(-24% 0, -4% 0, -16% 100%, -36% 100%); }
+  12% { opacity: .9; }
+  88% { opacity: .9; }
+  100% { opacity: 0; clip-path: polygon(116% 0, 136% 0, 124% 100%, 104% 100%); }
+}
 
 @media (max-width: 700px) {
   .overlay { padding: 0; }
+  .logoStage { width: clamp(190px, 58vw, 290px); }
   .dialog { width: 100%; height: 100dvh; border: 0; }
   .heading { min-height: 164px; padding: calc(24px + env(safe-area-inset-top)) 72px 20px max(20px, env(safe-area-inset-left)); }
   .heading h2 { font-size: 32px; }
@@ -110,7 +136,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .overlay, .dialog, .scheduler iframe, .schedulerLoading { transition: none; }
+  .overlay, .brandSignature, .dialog, .scheduler iframe { transition-duration: .12s; }
+  .logoStage { animation: logoEntrance .12s ease-out both; }
+  .logoSweep { display: none; animation: none; }
   .close { transition: none; }
-  .schedulerLoading i::after { animation: none; transform: none; }
 }
