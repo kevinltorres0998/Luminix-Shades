@@ -68,7 +68,7 @@ export default function Home() {
 
       <section className={styles.hero} id="top">
         <AnimatePresence initial={false}>
-          <motion.div key={heroSlides[heroIndex].image} className={styles.heroMedia} style={{ y: heroY }} initial={{ opacity: 0, scale: 1.025 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}><Image src={heroSlides[heroIndex].image} alt={`${heroSlides[heroIndex].label} in a luxury architectural interior`} fill priority sizes="100vw" /></motion.div>
+          <motion.div key={heroSlides[heroIndex].image} className={styles.heroMedia} style={{ y: heroY }} initial={{ opacity: 0, scale: 1.055, x: heroIndex % 2 === 0 ? 8 : -8 }} animate={{ opacity: 1, scale: 1.012, x: 0 }} exit={{ opacity: 0, scale: 1, x: heroIndex % 2 === 0 ? -5 : 5 }} transition={{ opacity: { duration: 1.9, ease: [0.22, 1, 0.36, 1] }, scale: { duration: 9, ease: "linear" }, x: { duration: 9, ease: [0.22, 1, 0.36, 1] } }}><Image src={heroSlides[heroIndex].image} alt={`${heroSlides[heroIndex].label} in a luxury architectural interior`} fill priority sizes="100vw" /></motion.div>
         </AnimatePresence>
         <div className={styles.heroShade} />
         <motion.div className={styles.heroContent} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .95, ease: [0.22, 1, 0.36, 1] }}>
@@ -88,7 +88,7 @@ export default function Home() {
 
       <section className={styles.solutions} id="solutions">
         <Fade className={styles.sectionHeading}><div><span className={styles.kicker}>EXPLORE OUR SOLUTIONS</span><h2>Every space. Every need.<br />The perfect solution.</h2></div><a className={styles.textLink} href="/solutions">VIEW ALL SOLUTIONS <span>→</span></a></Fade>
-        <div className={styles.solutionGrid}>{solutions.map((item) => <motion.a className={`${styles.solutionCard} ${styles[item.key]}`} href={item.href} key={item.name} whileHover={{ y: -4 }}><div className={styles.solutionImage}><Image src={item.image} alt={`${item.name} installation`} fill sizes="(max-width:760px) 100vw, 25vw" /><div className={styles.productEffect} aria-hidden="true"><i /><i /><i /><i /></div></div><div className={styles.solutionBody}><span className={styles.miniIcon} aria-hidden="true" /><h3>{item.name}</h3><p>{item.copy}</p><strong>EXPLORE {item.name.toUpperCase()} <b>→</b></strong></div></motion.a>)}</div>
+        <div className={styles.solutionGrid}>{solutions.map((item) => <motion.a className={`${styles.solutionCard} ${styles[item.key]}`} href={item.href} key={item.name}><div className={styles.solutionImage}><Image src={item.image} alt={`${item.name} installation`} fill sizes="(max-width:760px) 100vw, 25vw" /><div className={styles.productEffect} aria-hidden="true"><i /><i /><i /><i /></div></div><div className={styles.solutionBody}><span className={styles.miniIcon} aria-hidden="true" /><h3>{item.name}</h3><p>{item.copy}</p><strong>EXPLORE {item.name.toUpperCase()} <b>→</b></strong></div></motion.a>)}</div>
       </section>
 
       <section className={styles.markets}>
@@ -98,7 +98,7 @@ export default function Home() {
 
       <section className={styles.process} id="process">
         <Fade className={styles.processTitle}><span className={styles.kicker}>OUR PROCESS</span><h2>A seamless experience<br />from start to finish.</h2></Fade>
-        {[["01","Consultation","We understand your needs and your space."],["02","Design & Measurement","Custom recommendations and precise measurements."],["03","Custom Production","Expert craftsmanship using premium materials."],["04","Professional Installation","Flawless installation with attention to every detail."]].map(([number,title,copy]) => <Fade className={styles.processStep} key={number}><strong>{number}</strong><i aria-hidden="true" /><h3>{title}</h3><p>{copy}</p></Fade>)}
+        {[["01","Consultation","We understand your needs and your space."],["02","Design & Measurement","Custom recommendations and precise measurements."],["03","Custom Production","Expert craftsmanship using premium materials."],["04","Professional Installation","Flawless installation with attention to every detail."]].map(([number,title,copy]) => <Fade className={styles.processStep} key={number}><strong>{number}</strong><i className={`${styles.processIcon} ${styles[`icon${number}`]}`} aria-hidden="true" /><h3>{title}</h3><p>{copy}</p></Fade>)}
       </section>
 
       <section className={`${styles.spaces} ${panelOpen ? styles.spacesPanelOpen : ""}`} id="projects">
