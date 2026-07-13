@@ -60,6 +60,7 @@
 .privateState { pointer-events:none; }
 .privateState i { overflow:hidden; opacity:1; filter:contrast(1); transition:opacity .3s cubic-bezier(.45,0,.2,1),filter .3s ease; will-change:opacity,filter; }
 .privateState i::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 25% 35%,rgba(255,255,255,.6) 0 1px,transparent 1.6px),radial-gradient(circle at 75% 65%,rgba(255,255,255,.34) 0 1px,transparent 1.5px); background-size:7px 7px,9px 9px; mix-blend-mode:screen; opacity:.23; transition:opacity .26s ease; }
+.privateState.light i::after,.privateState.black i::after { content:none; }
 .privateState i:nth-child(2),.privateState i:nth-child(3) { transition-delay:0s; }
 .filmPowered i { opacity:0; filter:contrast(1.08) brightness(1.04); }
 .filmPowered i::after { opacity:0; }
