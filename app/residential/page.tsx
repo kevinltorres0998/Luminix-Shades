@@ -27,10 +27,10 @@ const projects = [["Biscayne Bay Residence","Miami, Florida","/images/residentia
 
 const compositionHotspots = [
   { room:"Living Room", solution:<>Ripple Fold Drapery<br/>+ Motorized Roller Shades</>, description:"Softens the space while controlling light and preserving views.", icon:"curtain", x:25, y:63, card:"left" },
-  { room:"Master Bedroom", solution:<>Cellular Shades<br/>+ Blackout Roller Shades</>, description:"Improves sleep comfort with thermal insulation and total darkness.", icon:"bed", x:31, y:25, card:"top" },
-  { room:"Primary Bathroom", solution:<>Smart Film</>, description:"Instant privacy with natural light whenever you need it.", icon:"bath", x:57, y:25, card:"rightTop" },
+  { room:"Master Bedroom", solution:<>Cellular Shades<br/>+ Blackout Roller Shades</>, description:"Improves sleep comfort with thermal insulation and total darkness.", icon:"bed", x:40, y:25, card:"top" },
+  { room:"Primary Bathroom", solution:<>Smart Film</>, description:"Instant privacy with natural light whenever you need it.", icon:"bath", x:74, y:25, card:"rightTop" },
   { room:"Kitchen & Dining", solution:<>Screen Roller Shades</>, description:"Reduces glare while maintaining beautiful outdoor views.", icon:"shade", x:51, y:65, card:"bottom" },
-  { room:"Home Office", solution:<>Smart Film<br/>+ Screen Roller Shades</>, description:"Privacy for focus with natural light and views when wanted.", icon:"office", x:81, y:58, card:"right" },
+  { room:"Home Office", solution:<>Smart Film<br/>+ Screen Roller Shades</>, description:"Privacy for focus with natural light and views when wanted.", icon:"office", x:77, y:58, card:"right" },
   { room:"Outdoor Living", solution:<>Motorized Roller Shades</>, description:"Comfort on demand with shade, privacy and protection.", icon:"outdoor", x:73, y:78, card:"bottomRight" },
 ];
 
@@ -83,7 +83,7 @@ export default function ResidentialPage(){
           const isPinned=pinnedHotspot===index;
           return <div className={`${styles.hotspotWrap} ${styles[item.card]}`} style={{left:`${item.x}%`,top:`${item.y}%`}} key={item.room} onMouseEnter={()=>setHoveredHotspot(index)} onMouseLeave={()=>setHoveredHotspot(null)}>
             <button type="button" className={styles.archHotspot} aria-label={`View ${item.room} window solution`} aria-expanded={isVisible} aria-pressed={isPinned} onClick={()=>setPinnedHotspot(isPinned?null:index)}><span/></button>
-            <AnimatePresence>{isVisible&&<motion.article className={styles.annotationCard} initial={{opacity:0,y:8,scale:.985}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:5,scale:.99}} transition={{duration:.24,ease:[.22,1,.36,1]}}><small>{item.room}</small><h3>{item.solution}</h3><div><i className={styles[`annotationIcon_${item.icon}`]} aria-hidden="true"/><p>{item.description}</p></div></motion.article>}</AnimatePresence>
+            <article className={`${styles.annotationCard} ${isVisible?styles.annotationActive:""}`}><small>{item.room}</small><h3>{item.solution}</h3><div><i className={styles[`annotationIcon_${item.icon}`]} aria-hidden="true"/><p>{item.description}</p></div></article>
           </div>;
         })}
       </div>
