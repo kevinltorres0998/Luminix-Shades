@@ -58,7 +58,7 @@ export default function SiteHeader() {
               if (!event.currentTarget.contains(event.relatedTarget as Node)) setSolutionsOpen(false);
             }}
           >
-            <a className={`nav-trigger${pathname === "/solutions" ? " active" : ""}`} href="/solutions" aria-expanded={solutionsOpen} aria-controls="solutions-mega-menu" onFocus={() => setSolutionsOpen(true)}>
+            <a className={`nav-trigger${pathname === "/solutions" || pathname === "/residential" || pathname === "/commercial" ? " active" : ""}`} href="/solutions" aria-expanded={solutionsOpen} aria-controls="solutions-mega-menu" onFocus={() => setSolutionsOpen(true)}>
               Solutions <span aria-hidden="true">⌄</span>
             </a>
             <div className="mega-menu" id="solutions-mega-menu">
@@ -82,7 +82,7 @@ export default function SiteHeader() {
               </div>
               <div className="mega-secondary">
                 <a href="/residential" onClick={closeNavigation}>Residential <span aria-hidden="true">→</span></a>
-                <a href="/solutions#finder" onClick={closeNavigation}>Commercial <span aria-hidden="true">→</span></a>
+                <a href="/commercial" onClick={closeNavigation}>Commercial <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </div>
@@ -113,7 +113,7 @@ export default function SiteHeader() {
                 <a href="/solutions/roller-shades" onClick={closeNavigation}><b>Motorized Shades</b><span>Automated light control</span></a>
                 <a href="/solutions/custom-drapery" onClick={closeNavigation}><b>Custom Drapery</b><span>Tailored premium fabrics</span></a>
                 <a href="/solutions/cellular-shades" onClick={closeNavigation}><b>Cellular Shades</b><span>Insulated everyday comfort</span></a>
-                <div><a href="/residential" onClick={closeNavigation}>Residential</a><a href="/solutions#finder" onClick={closeNavigation}>Commercial</a></div>
+                <div><a href="/residential" onClick={closeNavigation}>Residential</a><a href="/commercial" onClick={closeNavigation}>Commercial</a></div>
               </div>
             )}
             <a href={homeAnchor("projects")} onClick={closeNavigation}>Gallery</a>
