@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import NextImage from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import styles from "./residential.module.css";
@@ -23,16 +23,41 @@ const rooms = [
 
 const collections = [["Waterfront Living","/images/residential.png"],["Modern Minimalism","/images/architecture.png"],["Family Homes","/images/drapery-room-linen.png"],["Luxury Condominiums","/images/hero.png"],["Private Estates","/images/about-hospitality.png"],["Smart Homes","/images/smart-film.png"]];
 const challenges = [["Too Much Heat","Reduce heat gain and improve energy efficiency.","Motorized Screen + Cellular"],["No Privacy","Maintain privacy without sacrificing natural light.","Smart Film + Drapery"],["Morning Sun","Wake up on your terms, not with the sun.","Blackout Roller + Cellular"],["Large Windows","Control expansive glazing without visual weight.","Motorized Roller Shades"],["Glare","Protect screens, finishes, and everyday comfort.","Screen Shades + Smart Film"]];
-const combinationRooms = [0,1,2,4,5,6,7];
 const projects = [["Biscayne Bay Residence","Miami, Florida","/images/residential.png"],["Modern Oceanfront Home","Pompano Beach, Florida","/images/hero.png"],["Brickell Penthouse","Miami, Florida","/images/drapery-hero-sheer.png"],["Coral Gables Estate","Coral Gables, Florida","/images/architecture.png"]];
+
+const compositionHotspots = [
+  { room:"Living Room", solution:<>Ripple Fold Drapery<br/>+ Motorized Roller Shades</>, description:"Softens the space while controlling light and preserving views.", icon:"curtain", x:25, y:63, card:"left" },
+  { room:"Master Bedroom", solution:<>Cellular Shades<br/>+ Blackout Roller Shades</>, description:"Improves sleep comfort with thermal insulation and total darkness.", icon:"bed", x:31, y:25, card:"top" },
+  { room:"Primary Bathroom", solution:<>Smart Film</>, description:"Instant privacy with natural light whenever you need it.", icon:"bath", x:57, y:25, card:"rightTop" },
+  { room:"Kitchen & Dining", solution:<>Screen Roller Shades</>, description:"Reduces glare while maintaining beautiful outdoor views.", icon:"shade", x:51, y:65, card:"bottom" },
+  { room:"Home Office", solution:<>Smart Film<br/>+ Screen Roller Shades</>, description:"Privacy for focus with natural light and views when wanted.", icon:"office", x:81, y:58, card:"right" },
+  { room:"Outdoor Living", solution:<>Motorized Roller Shades</>, description:"Comfort on demand with shade, privacy and protection.", icon:"outdoor", x:73, y:78, card:"bottomRight" },
+];
+
+const combinationBenefits = [
+  ["Light Control","Balance daylight without sacrificing beautiful views.","light"],
+  ["Thermal Comfort","Reduce heat gain while improving energy efficiency.","thermal"],
+  ["Privacy","Privacy exactly where and when it is needed.","privacy"],
+  ["Acoustic Comfort","Soft materials reduce echo and improve everyday comfort.","acoustic"],
+  ["Architectural Integration","Solutions designed to disappear into the architecture.","architecture"],
+];
 
 export default function ResidentialPage(){
   const [room,setRoom]=useState(0);
-  const [combinationRoom,setCombinationRoom]=useState(0);
+  const [pinnedHotspot,setPinnedHotspot]=useState<number|null>(null);
+  const [hoveredHotspot,setHoveredHotspot]=useState<number|null>(null);
+  const compositionRef=useRef<HTMLDivElement>(null);
   const active=rooms[room];
-  const activeCombination=rooms[combinationRooms[combinationRoom]];
+  const visibleHotspot=pinnedHotspot??hoveredHotspot;
   const {scrollY}=useScroll();
   const heroY=useTransform(scrollY,[0,760],[0,52]);
+  useEffect(()=>{
+    const onKeyDown=(event:KeyboardEvent)=>{if(event.key==="Escape")setPinnedHotspot(null)};
+    const onPointerDown=(event:PointerEvent)=>{if(compositionRef.current&&!compositionRef.current.contains(event.target as Node))setPinnedHotspot(null)};
+    window.addEventListener("keydown",onKeyDown);
+    window.addEventListener("pointerdown",onPointerDown);
+    return()=>{window.removeEventListener("keydown",onKeyDown);window.removeEventListener("pointerdown",onPointerDown)};
+  },[]);
   return <main className={styles.page}>
     <SiteHeader />
     <section className={styles.hero} id="top"><motion.div className={styles.heroMedia} style={{y:heroY}} initial={{opacity:.75,scale:1.03}} animate={{opacity:1,scale:1.01}} transition={{duration:1.6}}><Image src="/images/residential.png" alt="Luxury waterfront living room at sunset" fill priority sizes="100vw" /></motion.div><div className={styles.heroShade}/><motion.div className={styles.heroCopy} initial={{opacity:0,y:26}} animate={{opacity:1,y:0}} transition={{duration:.95,ease:[.22,1,.36,1]}}><span className={styles.kicker}>RESIDENTIAL SOLUTIONS</span><h1>Designed around<br/>the way <em>you live</em><br/>at home.</h1><p>Every room has different light, privacy, comfort and atmosphere requirements. Discover tailored window treatment solutions for every part of your home.</p><a className={styles.textLink} href="#explore">EXPLORE YOUR HOME <span>→</span></a></motion.div></section>
@@ -43,7 +68,32 @@ export default function ResidentialPage(){
 
     <section className={styles.collections}><Fade><span className={styles.kicker}>LIFESTYLE COLLECTIONS</span><h2>Solutions inspired by<br/>the way you <em>live.</em></h2></Fade><div className={styles.collectionGrid}>{collections.map(([name,image])=><a href="#explore" key={name}><Image src={image} alt={`${name} residential collection`} fill sizes="(max-width:760px) 70vw, 17vw"/><span>{name}</span></a>)}</div><a className={styles.textLink} href="/solutions">VIEW ALL COLLECTIONS <span>→</span></a></section>
 
-    <section className={styles.guidance}><div className={styles.challenges}><span className={styles.kicker}>COMMON RESIDENTIAL CHALLENGES</span><h2>We solve the problems<br/>homes face every day.</h2><div>{challenges.map(([title,copy,solution],index)=><article key={title}><i className={styles[`challengeIcon${index+1}`]} aria-hidden="true"/><h3>{title}</h3><p>{copy}</p><small>{solution}</small></article>)}</div></div><div className={styles.designedCombinations}><div className={styles.combinationIntro}><span className={styles.kicker}>DESIGNED COMBINATIONS</span><h2>Designed Combinations</h2><p>There is rarely one perfect product. Great homes are created by combining the right solutions for every room.</p></div><AnimatePresence mode="wait" initial={false}><motion.div className={styles.combinationStage} key={activeCombination.name} initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:.42,ease:[.22,1,.36,1]}}><div className={styles.combinationImage}><motion.div initial={{scale:1.025}} animate={{scale:1}} transition={{duration:1.1,ease:[.22,1,.36,1]}}><Image src={activeCombination.image} alt={`${activeCombination.name} designed combination`} fill sizes="(max-width:760px) 100vw, 67vw"/></motion.div></div><div className={styles.combinationShade}/><div className={styles.combinationCopy}><span className={styles.kicker}>{activeCombination.name.toUpperCase()}</span><h3>{activeCombination.headline}</h3><p>{activeCombination.description}</p><div className={styles.combinationBest}><small>BEST COMBINATION</small><strong>{activeCombination.combination}</strong><p>{activeCombination.why}</p></div></div><div className={styles.combinationRatings}><span className={styles.kicker}>RECOMMENDED SOLUTIONS</span>{activeCombination.ratings.map(([name,score])=><div key={name}><i>{"★".repeat(score)}<em>{"☆".repeat(5-score)}</em></i><span>{name}</span></div>)}<figure><Image src={activeCombination.detail} alt={`${activeCombination.name} supporting material`} fill sizes="220px"/></figure></div></motion.div></AnimatePresence><div className={styles.combinationTabs}>{combinationRooms.map((roomIndex,index)=><button type="button" key={rooms[roomIndex].name} aria-pressed={combinationRoom===index} onClick={()=>setCombinationRoom(index)}>{rooms[roomIndex].name}</button>)}</div></div></section>
+    <section className={styles.guidance}><div className={styles.challenges}><span className={styles.kicker}>COMMON RESIDENTIAL CHALLENGES</span><h2>We solve the problems<br/>homes face every day.</h2><div>{challenges.map(([title,copy,solution],index)=><article key={title}><i className={styles[`challengeIcon${index+1}`]} aria-hidden="true"/><h3>{title}</h3><p>{copy}</p><small>{solution}</small></article>)}</div></div></section>
+
+    <section className={styles.architecturalComposition} ref={compositionRef}>
+      <div className={styles.architecturalIntro}>
+        <div><span className={styles.kicker}>ARCHITECTURAL COMPOSITION</span><h2>Every solution<br/>has its <em>place.</em></h2></div>
+        <p>Explore how Smart Film, Motorized Roller Shades, Custom Drapery and Cellular Shades work together throughout one thoughtfully designed residence.</p>
+      </div>
+      <div className={styles.residenceStage}>
+        <Image src="/images/residential-architectural-composition.png" alt="Waterfront residence demonstrating integrated Luminix window solutions" fill sizes="100vw"/>
+        {visibleHotspot!==null&&<span className={styles.localHighlight} style={{left:`${compositionHotspots[visibleHotspot].x}%`,top:`${compositionHotspots[visibleHotspot].y}%`}} aria-hidden="true"/>}
+        {compositionHotspots.map((item,index)=>{
+          const isVisible=visibleHotspot===index;
+          const isPinned=pinnedHotspot===index;
+          return <div className={`${styles.hotspotWrap} ${styles[item.card]}`} style={{left:`${item.x}%`,top:`${item.y}%`}} key={item.room} onMouseEnter={()=>setHoveredHotspot(index)} onMouseLeave={()=>setHoveredHotspot(null)}>
+            <button type="button" className={styles.archHotspot} aria-label={`View ${item.room} window solution`} aria-expanded={isVisible} aria-pressed={isPinned} onClick={()=>setPinnedHotspot(isPinned?null:index)}><span/></button>
+            <AnimatePresence>{isVisible&&<motion.article className={styles.annotationCard} initial={{opacity:0,y:8,scale:.985}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:5,scale:.99}} transition={{duration:.24,ease:[.22,1,.36,1]}}><small>{item.room}</small><h3>{item.solution}</h3><div><i className={styles[`annotationIcon_${item.icon}`]} aria-hidden="true"/><p>{item.description}</p></div></motion.article>}</AnimatePresence>
+          </div>;
+        })}
+      </div>
+      <AnimatePresence mode="wait">{pinnedHotspot!==null&&<motion.div className={styles.mobileAnnotation} key={pinnedHotspot} initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-8}}><button type="button" onClick={()=>setPinnedHotspot(null)} aria-label="Close room details">×</button><small>{compositionHotspots[pinnedHotspot].room}</small><h3>{compositionHotspots[pinnedHotspot].solution}</h3><p>{compositionHotspots[pinnedHotspot].description}</p></motion.div>}</AnimatePresence>
+    </section>
+
+    <section className={styles.combinationsMatter}>
+      <div className={styles.combinationsHeadline}><span className={styles.kicker}>WHY COMBINATIONS MATTER</span><h2>Every room asks for<br/>something <em>different.</em></h2></div>
+      <div className={styles.benefitGrid}>{combinationBenefits.map(([title,copy,icon])=><article key={title}><i className={styles[`benefitIcon_${icon}`]} aria-hidden="true"/><h3>{title}</h3><p>{copy}</p></article>)}</div>
+    </section>
 
     <section className={styles.projects}><Fade className={styles.projectsIntro}><span className={styles.kicker}>FEATURED RESIDENTIAL PROJECTS</span><h2>Real homes.<br/>Real solutions.</h2><p>View more projects in our gallery.</p><a className={styles.textLink} href="/#projects">EXPLORE GALLERY <span>→</span></a></Fade><div className={styles.projectGrid}>{projects.map(([name,location,image])=><a href="/#projects" key={name}><Image src={image} alt={name} fill sizes="(max-width:760px) 100vw, 22vw"/><div><h3>{name}</h3><span>{location}</span></div></a>)}</div></section>
 
