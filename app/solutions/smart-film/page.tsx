@@ -38,7 +38,7 @@ const benefits = [
 ];
 
 export default function SmartFilmPage() {
-  const [divider, setDivider] = useState(50);
+  const [powered, setPowered] = useState(false);
   const [selectedFilm, setSelectedFilm] = useState<(typeof filmTypes)[number]["variant"]>("total");
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 700], [0, 50]);
@@ -60,15 +60,23 @@ export default function SmartFilmPage() {
       </section>
 
       <section className={styles.transformation} id="transformation">
-        <Fade className={styles.transformHeading}><div><span className={styles.kicker}>EXPERIENCE THE TRANSFORMATION</span><h2>One room.<br />Two precise states.</h2></div><p>Drag to switch the glass from clear to private.</p></Fade>
+        <Fade className={styles.transformHeading}><div><span className={styles.kicker}>EXPERIENCE THE TRANSFORMATION</span><h2>One room.<br />Two precise states.</h2></div><p>Click the wall switch to control the Smart Film.</p></Fade>
         <motion.div className={styles.comparison} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }}>
-          <Image src="/images/smart-film-demo-clear.png" alt="Clear glass conference room with interactive Smart Film privacy comparison" fill sizes="100vw" />
+          <Image src="/images/smart-film-demo-clear.png" alt="Conference room glass controlled by an architectural Smart Film wall switch" fill sizes="100vw" />
           <motion.div key={`${selectedFilm}-clear`} className={`${styles.clearProductState} ${styles[`${selectedFilm}Clear`]}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true"><i /><i /><i /></motion.div>
-          <motion.div key={selectedFilm} className={`${styles.privateState} ${styles[selectedFilm]}`} style={{ clipPath: `inset(0 0 0 ${divider}%)` }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true"><i /><i /><i /></motion.div>
+          <motion.div key={selectedFilm} className={`${styles.privateState} ${styles[selectedFilm]} ${powered ? styles.filmPowered : ""}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true"><i /><i /><i /></motion.div>
           <div className={styles.frameLayer} aria-hidden="true"><i className={styles.frameLeft} /><i className={styles.frameOne} /><i className={styles.frameTwo} /><i className={styles.frameRight} /><i className={styles.frameTop} /><i className={styles.frameBottom} /></div>
-          <span className={`${styles.stateLabel} ${styles.clearLabel}`}>CLEAR</span><span className={`${styles.stateLabel} ${styles.privateLabel}`}>PRIVATE</span>
-          <span className={styles.divider} style={{ left: `${divider}%` }} aria-hidden="true"><i>‹</i><i>›</i></span>
-          <input type="range" min="14" max="86" value={divider} onChange={(event) => setDivider(Number(event.target.value))} aria-label="Drag to switch the glass from clear to private" />
+          <div className={styles.switchConsole}>
+            <div className={styles.powerStatus} aria-live="polite"><span>POWER</span><strong>{powered ? "ON" : "OFF"}</strong></div>
+            <motion.button type="button" className={`${styles.wallSwitch} ${powered ? styles.switchOn : ""}`} onClick={() => setPowered((value) => !value)} whileTap={{ scale: .965, y: 1 }} transition={{ duration: .12 }} aria-pressed={powered} aria-label={`${powered ? "Turn off" : "Turn on"} Smart Film`}>
+              <span className={styles.switchRocker} aria-hidden="true"><i className={styles.switchLed} /></span>
+            </motion.button>
+            <div className={styles.switchDetails}>
+              <p><b>Power ON</b><span>Crystal clear visibility.</span></p>
+              <p><b>Power OFF</b><span>Instant privacy.</span></p>
+              <small>Designed to default to the private state during power loss, ensuring privacy even during electrical outages.</small>
+            </div>
+          </div>
         </motion.div>
       </section>
 
