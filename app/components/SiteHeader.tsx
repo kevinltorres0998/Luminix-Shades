@@ -81,8 +81,8 @@ export default function SiteHeader() {
                 </a>
               </div>
               <div className="mega-secondary">
-                <a href="/solutions#residential" onClick={closeNavigation}>Residential <span aria-hidden="true">→</span></a>
-                <a href="/solutions#commercial" onClick={closeNavigation}>Commercial <span aria-hidden="true">→</span></a>
+                <a href="/residential" onClick={closeNavigation}>Residential <span aria-hidden="true">→</span></a>
+                <a href="/solutions#finder" onClick={closeNavigation}>Commercial <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </div>
@@ -113,7 +113,7 @@ export default function SiteHeader() {
                 <a href="/solutions/roller-shades" onClick={closeNavigation}><b>Motorized Shades</b><span>Automated light control</span></a>
                 <a href="/solutions/custom-drapery" onClick={closeNavigation}><b>Custom Drapery</b><span>Tailored premium fabrics</span></a>
                 <a href="/solutions/cellular-shades" onClick={closeNavigation}><b>Cellular Shades</b><span>Insulated everyday comfort</span></a>
-                <div><a href="/solutions#residential" onClick={closeNavigation}>Residential</a><a href="/solutions#commercial" onClick={closeNavigation}>Commercial</a></div>
+                <div><a href="/residential" onClick={closeNavigation}>Residential</a><a href="/solutions#finder" onClick={closeNavigation}>Commercial</a></div>
               </div>
             )}
             <a href={homeAnchor("projects")} onClick={closeNavigation}>Gallery</a>
