@@ -98,56 +98,61 @@ export default function ConsultationBooking() {
   }, [stage]);
 
   return (
-    <div
-      className={`${styles.overlay} ${active ? styles.overlayOpen : styles.overlayClosed}`}
-      aria-hidden={!active}
-      onMouseDown={(event) => {
-        if (stage === "scheduler" && event.target === event.currentTarget) closeBooking();
-      }}
-    >
-      <div className={`${styles.brandSignature} ${stage === "signature" ? styles.brandSignatureVisible : styles.brandSignatureHidden}`} aria-hidden="true">
+    <>
+      <div
+        className={`${styles.websiteTransition} ${stage === "signature" ? styles.websiteTransitionVisible : styles.websiteTransitionHidden}`}
+        data-luminix-site-transition
+        aria-hidden="true"
+      >
         <div className={styles.logoStage}>
-          <Image className={styles.logoBase} src="/images/logo-white.png" alt="" width={2420} height={689} priority />
+          <Image className={styles.logoBase} src="/images/logo-white.png" alt="" width={2420} height={689} priority unoptimized />
           <span className={styles.logoSweep}>
-            <Image src="/images/logo-white.png" alt="" width={2420} height={689} priority />
+            <Image src="/images/logo-white.png" alt="" width={2420} height={689} priority unoptimized />
           </span>
         </div>
       </div>
 
-      <section
-        className={`${styles.dialog} ${stage === "scheduler" ? styles.dialogVisible : styles.dialogHidden}`}
-        data-consultation-dialog
-        role="dialog"
-        aria-modal="true"
+      <div
+        className={`${styles.schedulerOverlay} ${stage === "scheduler" ? styles.schedulerOverlayOpen : styles.schedulerOverlayClosed}`}
         aria-hidden={stage !== "scheduler"}
-        aria-labelledby="consultation-title"
+        onMouseDown={(event) => {
+          if (stage === "scheduler" && event.target === event.currentTarget) closeBooking();
+        }}
       >
-        <div className={styles.heading}>
-          <div>
-            <span>PRIVATE CONSULTATION</span>
-            <h2 id="consultation-title">Schedule your consultation.</h2>
-            <p>Choose a time that works for you. Our team will help shape the right solution for your space.</p>
+        <section
+          className={styles.dialog}
+          data-consultation-dialog
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="consultation-title"
+        >
+          <div className={styles.heading}>
+            <div>
+              <span>PRIVATE CONSULTATION</span>
+              <h2 id="consultation-title">Schedule your consultation.</h2>
+              <p>Choose a time that works for you. Our team will help shape the right solution for your space.</p>
+            </div>
+            <button ref={closeButtonRef} type="button" tabIndex={stage === "scheduler" ? 0 : -1} className={styles.close} onClick={closeBooking} aria-label="Close consultation scheduler">×</button>
           </div>
-          <button ref={closeButtonRef} type="button" tabIndex={stage === "scheduler" ? 0 : -1} className={styles.close} onClick={closeBooking} aria-label="Close consultation scheduler">×</button>
-        </div>
-        <div className={styles.scheduler}>
-          <iframe
-            className={schedulerReady ? styles.schedulerReady : ""}
-            tabIndex={stage === "scheduler" ? 0 : -1}
-            title="Schedule a consultation with Luminix Shades"
-            src={`${BOOKING_URL}&embed=1`}
-            onLoad={() => {
-              schedulerReadyRef.current = true;
-              setSchedulerReady(true);
-              if (stageRef.current === "signature" && signatureCompleteRef.current) setStage("scheduler");
-            }}
-          />
-        </div>
-        <div className={styles.fallback}>
-          <span>HAVING TROUBLE WITH THE CALENDAR?</span>
-          <a href={BOOKING_URL} tabIndex={stage === "scheduler" ? 0 : -1} target="_blank" rel="noopener noreferrer" data-booking-external>OPEN SCHEDULER IN A NEW TAB <b>↗</b></a>
-        </div>
-      </section>
-    </div>
+          <div className={styles.scheduler}>
+            <iframe
+              className={schedulerReady ? styles.schedulerReady : ""}
+              tabIndex={stage === "scheduler" ? 0 : -1}
+              title="Schedule a consultation with Luminix Shades"
+              src={`${BOOKING_URL}&embed=1`}
+              onLoad={() => {
+                schedulerReadyRef.current = true;
+                setSchedulerReady(true);
+                if (stageRef.current === "signature" && signatureCompleteRef.current) setStage("scheduler");
+              }}
+            />
+          </div>
+          <div className={styles.fallback}>
+            <span>HAVING TROUBLE WITH THE CALENDAR?</span>
+            <a href={BOOKING_URL} tabIndex={stage === "scheduler" ? 0 : -1} target="_blank" rel="noopener noreferrer" data-booking-external>OPEN SCHEDULER IN A NEW TAB <b>↗</b></a>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
