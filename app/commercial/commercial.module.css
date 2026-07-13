@@ -28,3 +28,4 @@
 @media(max-width:1050px){.industryCard{flex-basis:25%}}
 @media(max-width:900px){.industryPanel{width:100%;height:auto;max-height:88dvh;left:0;right:0;top:auto;bottom:0;padding:34px 26px 30px;border-left:0;border-top:1px solid rgba(201,164,107,.48);box-shadow:0 -24px 70px rgba(0,0,0,.42);border-radius:0}.industryPanel h2{font-size:34px}.industryScrim{background:rgba(3,4,4,.52)}}
 @media(max-width:760px){.industryCard{flex-basis:72%;height:300px}.industryPanel{padding-left:21px;padding-right:21px}.industryPanel ul,.panelApplications{grid-template-columns:1fr}.panelCombination{grid-template-columns:1fr}.panelCombination i{text-align:center}}
+@media(max-width:760px){.hero{min-height:max(690px,100svh)}.heroCopy{bottom:calc(48px + env(safe-area-inset-bottom))}.buildingVisual>button{width:44px;height:44px}.annotationWrap article{bottom:calc(18px + env(safe-area-inset-bottom))}.industryPanel{padding-bottom:calc(30px + env(safe-area-inset-bottom))}}

@@ -21,3 +21,4 @@
 @media(max-width:760px){.projectsPanelOpen{padding-right:18px}.projectsPanelOpen .projectGrid{display:grid;grid-template-columns:1fr 1fr;overflow:visible;padding:0}.projectCarouselNav{display:none}.recommendationOverlay{background:rgba(4,5,5,.48);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}.panelContent>h2{font-size:40px}}
 @media(max-width:480px){.projectsPanelOpen .projectGrid{grid-template-columns:1fr}.panelContent>h2{font-size:39px}}
 @media(prefers-reduced-motion:reduce){.projects,.projectCarouselNav,.panelContent{transition:none}}
+@media(max-width:760px){.hero{min-height:max(700px,100svh)}.heroContent{bottom:calc(55px + env(safe-area-inset-bottom))}.recommendationPanel{height:min(92dvh,820px)}.panelScroll{padding-bottom:calc(38px + env(safe-area-inset-bottom))}.compareTable{overscroll-behavior-x:contain;scroll-snap-type:x proximity}}

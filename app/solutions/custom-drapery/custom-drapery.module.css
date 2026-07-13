@@ -13,3 +13,5 @@
 @media(max-width:480px){.heroContent h1{font-size:42px}.pleatGrid,.sampleGrid,.finishGrid,.spaceGrid,.installGrid{grid-template-columns:1fr}.sampleGrid button:last-child,.finishCard:last-child{grid-column:auto}.pleatCard,.spaceGrid button,.installGrid button{height:330px}.sampleImage{height:240px}.finalContent :global(.button){width:100%}.showroomPanel{height:92vh}.panelGallery{grid-template-columns:1fr}.panelGallery figure{height:190px}.panelFacts>div{grid-template-columns:1fr;gap:7px;padding:15px 0}}
 @media(min-width:1101px){.showroomPanel{width:33vw;min-width:400px}}
 @media(prefers-reduced-motion:reduce){.pleatImage,.spaceGrid img,.installGrid img{transition:none}}
+@media(max-width:760px){.hero{min-height:max(700px,100svh)}.heroContent{bottom:calc(55px + env(safe-area-inset-bottom))}.showroomPanel{height:min(88dvh,780px)}.panelScroll{padding-bottom:calc(42px + env(safe-area-inset-bottom))}}
+@media(max-width:480px){.showroomPanel{height:92dvh}}

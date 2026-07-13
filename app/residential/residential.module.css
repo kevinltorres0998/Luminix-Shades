@@ -35,3 +35,4 @@
 @media(max-width:1050px){.residenceStage{height:clamp(500px,49vw,560px)}.annotationCard{width:176px}.combinationsMatter{grid-template-columns:1fr}.benefitGrid article{min-height:130px}}
 @media(max-width:760px){.residenceStage{height:72vw;min-height:390px}.annotationCard{display:none}.combinationsMatter{grid-template-columns:1fr;padding-top:46px;padding-bottom:38px}}
 @media(max-width:480px){.residenceStage{height:82vw;min-height:345px}}
+@media(max-width:760px){.hero{min-height:max(700px,100svh)}.heroCopy{bottom:calc(58px + env(safe-area-inset-bottom))}.roomList button{min-height:44px}.mobileAnnotation{padding-bottom:calc(26px + env(safe-area-inset-bottom))}}

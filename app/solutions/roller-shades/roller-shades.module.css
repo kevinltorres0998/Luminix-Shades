@@ -54,3 +54,4 @@
 .remote>span::after{top:11px;width:28px;height:5px;border:1px solid #a5a8a5;background:#3f423f;box-shadow:inset 0 0 0 1px rgba(255,255,255,.32)}
 .remote>i{color:#444744;letter-spacing:-.05em}
 .remote>i::after{font-size:16px}
+@media(max-width:720px){.hero{min-height:max(700px,100svh)}.heroContent{bottom:calc(58px + env(safe-area-inset-bottom))}.fabricTabs button{min-height:44px}}

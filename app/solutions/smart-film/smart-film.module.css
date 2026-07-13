@@ -78,3 +78,5 @@
 }
 
 @media(prefers-reduced-motion:reduce){ .filmCard,.useGrid>a,.useImage img { transition:none; } }
+@media(max-width:720px){.hero{min-height:max(700px,100svh)}.heroContent{bottom:calc(66px + env(safe-area-inset-bottom))}}
+@media(max-width:470px){.heroContent{bottom:calc(54px + env(safe-area-inset-bottom))}}

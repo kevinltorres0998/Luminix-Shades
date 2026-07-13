@@ -2,7 +2,7 @@
 
 import NextImage from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function SiteHeader() {
   const pathname = usePathname();
@@ -11,7 +11,10 @@ export default function SiteHeader() {
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
   const homeAnchor = (id: string) => onHome ? `#${id}` : `/#${id}`;
+  const isCurrent = (href: string) => pathname === href;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
@@ -32,13 +35,41 @@ export default function SiteHeader() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (!mobileOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const menuTrigger = menuButtonRef.current;
+    const panel = mobilePanelRef.current;
+    const focusable = panel ? Array.from(panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')) : [];
+    document.body.style.overflow = "hidden";
+    focusable[0]?.focus();
+
+    const trapFocus = (event: KeyboardEvent) => {
+      if (event.key !== "Tab" || focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", trapFocus);
+    return () => {
+      document.removeEventListener("keydown", trapFocus);
+      document.body.style.overflow = previousOverflow;
+      (previouslyFocused ?? menuTrigger)?.focus();
+    };
   }, [mobileOpen]);
 
   const closeNavigation = () => {
     setSolutionsOpen(false);
     setMobileOpen(false);
+    setMobileSolutionsOpen(false);
   };
 
   return (
@@ -92,32 +123,32 @@ export default function SiteHeader() {
         </nav>
 
         <a className="button button-gold desktop-cta" href={homeAnchor("contact")}>SCHEDULE A CONSULTATION</a>
-        <button className={`mobile-menu${mobileOpen ? " is-open" : ""}`} type="button" aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)}>
+        <button ref={menuButtonRef} className={`mobile-menu${mobileOpen ? " is-open" : ""}`} type="button" aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} aria-controls="mobile-navigation-panel" onClick={() => setMobileOpen((open) => !open)}>
           <span /><span /><span />
         </button>
       </div>
 
       {mobileOpen && (
-        <div className="mobile-panel">
+        <div ref={mobilePanelRef} className="mobile-panel" id="mobile-navigation-panel" role="dialog" aria-modal="true" aria-label="Mobile menu">
           <nav aria-label="Mobile navigation">
-            <a href={onHome ? "#top" : "/"} onClick={closeNavigation}>Home</a>
+            <a className={onHome ? "active" : ""} aria-current={onHome ? "page" : undefined} href={onHome ? "#top" : "/"} onClick={closeNavigation}>Home</a>
             <div className="mobile-solutions-row">
-              <a href="/solutions" onClick={closeNavigation}>Solutions</a>
+              <a className={pathname.startsWith("/solutions") ? "active" : ""} aria-current={isCurrent("/solutions") ? "page" : undefined} href="/solutions" onClick={closeNavigation}>Solutions</a>
               <button className="mobile-solutions-toggle" type="button" aria-label={mobileSolutionsOpen ? "Collapse solutions" : "Expand solutions"} aria-expanded={mobileSolutionsOpen} onClick={() => setMobileSolutionsOpen((open) => !open)}>
                 <span aria-hidden="true">{mobileSolutionsOpen ? "−" : "+"}</span>
               </button>
             </div>
             {mobileSolutionsOpen && (
               <div className="mobile-solutions">
-                <a href="/solutions/smart-film" onClick={closeNavigation}><b>Smart Film</b><span>Switchable privacy glass</span></a>
-                <a href="/solutions/roller-shades" onClick={closeNavigation}><b>Motorized Shades</b><span>Automated light control</span></a>
-                <a href="/solutions/custom-drapery" onClick={closeNavigation}><b>Custom Drapery</b><span>Tailored premium fabrics</span></a>
-                <a href="/solutions/cellular-shades" onClick={closeNavigation}><b>Cellular Shades</b><span>Insulated everyday comfort</span></a>
-                <div><a href="/residential" onClick={closeNavigation}>Residential</a><a href="/commercial" onClick={closeNavigation}>Commercial</a></div>
+                <a className={isCurrent("/solutions/smart-film") ? "active" : ""} aria-current={isCurrent("/solutions/smart-film") ? "page" : undefined} href="/solutions/smart-film" onClick={closeNavigation}><b>Smart Film</b><span>Switchable privacy glass</span></a>
+                <a className={isCurrent("/solutions/roller-shades") ? "active" : ""} aria-current={isCurrent("/solutions/roller-shades") ? "page" : undefined} href="/solutions/roller-shades" onClick={closeNavigation}><b>Motorized Shades</b><span>Automated light control</span></a>
+                <a className={isCurrent("/solutions/custom-drapery") ? "active" : ""} aria-current={isCurrent("/solutions/custom-drapery") ? "page" : undefined} href="/solutions/custom-drapery" onClick={closeNavigation}><b>Custom Drapery</b><span>Tailored premium fabrics</span></a>
+                <a className={isCurrent("/solutions/cellular-shades") ? "active" : ""} aria-current={isCurrent("/solutions/cellular-shades") ? "page" : undefined} href="/solutions/cellular-shades" onClick={closeNavigation}><b>Cellular Shades</b><span>Insulated everyday comfort</span></a>
+                <div><a className={isCurrent("/residential") ? "active" : ""} aria-current={isCurrent("/residential") ? "page" : undefined} href="/residential" onClick={closeNavigation}>Residential</a><a className={isCurrent("/commercial") ? "active" : ""} aria-current={isCurrent("/commercial") ? "page" : undefined} href="/commercial" onClick={closeNavigation}>Commercial</a></div>
               </div>
             )}
             <a href={homeAnchor("projects")} onClick={closeNavigation}>Gallery</a>
-            <a href="/about" onClick={closeNavigation}>About</a>
+            <a className={isCurrent("/about") ? "active" : ""} aria-current={isCurrent("/about") ? "page" : undefined} href="/about" onClick={closeNavigation}>About</a>
             <a href={homeAnchor("contact")} onClick={closeNavigation}>Contact</a>
             <a className="button button-gold mobile-cta" href={homeAnchor("contact")} onClick={closeNavigation}>SCHEDULE A CONSULTATION</a>
           </nav>

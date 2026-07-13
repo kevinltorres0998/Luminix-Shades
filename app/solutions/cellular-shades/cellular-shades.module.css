@@ -13,3 +13,4 @@
 @media(max-width:480px){.spaceHero{height:670px}.ratingGrid{grid-template-columns:1fr}}
 .exploreAnother{width:100%;min-height:58px;padding:0 5.5%;display:flex;align-items:center;gap:18px;border:0;border-top:1px solid rgba(255,255,255,.12);background:#101212;color:#fff;text-align:left;cursor:pointer;transition:background .25s}.exploreAnother:hover{background:#151717}.exploreAnother span{color:#d1ad73;font-size:7px;font-weight:600;letter-spacing:.13em}.exploreAnother b{font-family:Georgia,serif;font-size:14px;font-weight:400}.exploreAnother i{margin-left:auto;color:#d1ad73;font-size:15px;font-style:normal;transition:transform .25s}.exploreAnother:hover i{transform:translateX(4px)}.exploreAnother:focus-visible{outline:2px solid #c9a46b;outline-offset:-3px}
 @media(max-width:760px){.exploreAnother{min-height:56px;padding:0 20px}}
+@media(max-width:760px){.hero{min-height:max(700px,100svh)}.heroContent{bottom:calc(48px + env(safe-area-inset-bottom))}}
