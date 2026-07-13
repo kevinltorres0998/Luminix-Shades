@@ -5,6 +5,7 @@ import NextImage from "next/image";
 import { useState } from "react";
 import SiteFooter from "../../components/SiteFooter";
 import SiteHeader from "../../components/SiteHeader";
+import { BOOKING_URL } from "../../lib/booking";
 import styles from "./roller-shades.module.css";
 
 function Image(props: React.ComponentProps<typeof NextImage>) { return <NextImage {...props} unoptimized />; }
@@ -48,7 +49,7 @@ export default function RollerShadesPage() {
         <span className={styles.kicker}>ROLLER SHADES</span>
         <h1>Light,<br /><em>perfectly<br />controlled.</em></h1>
         <p>Custom motorized roller shades designed to balance privacy, daylight, and modern architecture.</p>
-        <div><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="#fabrics">EXPLORE FABRICS</a></div>
+        <div><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="#fabrics">EXPLORE FABRICS</a></div>
       </motion.div>
     </section>
 
@@ -107,7 +108,7 @@ export default function RollerShadesPage() {
     <section className={styles.finalCta}>
       <Image src="/images/residential.png" alt="Miami residence with partially open roller shades at sunset" fill sizes="100vw" />
       <div className={styles.finalShade} />
-      <Fade className={styles.finalContent}><span className={styles.kicker}>LET&apos;S CREATE YOUR PERFECT VIEW</span><h2>Designed around your view.</h2><p>Whether you&apos;re furnishing a luxury residence or a commercial space, we&apos;ll help you find the perfect balance of light, privacy, and design.</p><div><a className="button button-gold" href="/#contact">SCHEDULE CONSULTATION</a><a className="button button-outline" href="/#contact">REQUEST A QUOTE</a></div></Fade>
+      <Fade className={styles.finalContent}><span className={styles.kicker}>LET&apos;S CREATE YOUR PERFECT VIEW</span><h2>Designed around your view.</h2><p>Whether you&apos;re furnishing a luxury residence or a commercial space, we&apos;ll help you find the perfect balance of light, privacy, and design.</p><div><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE CONSULTATION</a><a className="button button-outline" href="/#contact">REQUEST A QUOTE</a></div></Fade>
     </section>
 
     <SiteFooter />

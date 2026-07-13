@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import NextImage from "next/image";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
+import { BOOKING_URL } from "../lib/booking";
 import styles from "./about.module.css";
 
 function Image(props: React.ComponentProps<typeof NextImage>) { return <NextImage {...props} unoptimized />; }
@@ -79,7 +80,7 @@ export default function AboutPage() {
         <motion.div className={styles.partnerMarks} id="partner-marks" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: .3 }} transition={{ duration: 1 }}><b>LUTRON.</b><b>somfy.</b><b>SMARTTINT®</b><b className={styles.partnerSerif}>ALTA</b><b>mecho</b></motion.div>
       </section>
 
-      <section className={styles.finalCta} id="contact"><div className={styles.finalShade} /><div><h2>Let&apos;s design the right<br />solution for your space.</h2><p>Schedule a private consultation and discover the perfect balance of light, privacy, and beauty.</p><a className="button button-gold" href="mailto:hello@luminixshades.com">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com">CONTACT OUR TEAM</a></div></section>
+      <section className={styles.finalCta} id="contact"><div className={styles.finalShade} /><div><h2>Let&apos;s design the right<br />solution for your space.</h2><p>Schedule a private consultation and discover the perfect balance of light, privacy, and beauty.</p><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com">CONTACT OUR TEAM</a></div></section>
 
       <SiteFooter />
     </main>

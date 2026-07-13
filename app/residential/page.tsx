@@ -5,6 +5,7 @@ import NextImage from "next/image";
 import { useEffect, useRef, useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
+import { BOOKING_URL } from "../lib/booking";
 import styles from "./residential.module.css";
 
 function Image(props: React.ComponentProps<typeof NextImage>) { return <NextImage {...props} unoptimized />; }
@@ -97,7 +98,7 @@ export default function ResidentialPage(){
 
     <section className={styles.projects}><Fade className={styles.projectsIntro}><span className={styles.kicker}>FEATURED RESIDENTIAL PROJECTS</span><h2>Real homes.<br/>Real solutions.</h2><p>View more projects in our gallery.</p><a className={styles.textLink} href="/#projects">EXPLORE GALLERY <span>→</span></a></Fade><div className={styles.projectGrid}>{projects.map(([name,location,image])=><a href="/#projects" key={name}><Image src={image} alt={name} fill sizes="(max-width:760px) 100vw, 22vw"/><div><h3>{name}</h3><span>{location}</span></div></a>)}</div></section>
 
-    <section className={styles.finalCta}><div/><div><h2>Let&apos;s design a home<br/>that feels as good<br/>as it looks.</h2><p>Schedule a private consultation and we&apos;ll help create the ideal balance of privacy, comfort, light control, and architectural beauty for your home.</p><a className="button button-gold" href="mailto:hello@luminixshades.com">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com">CONTACT OUR TEAM</a></div></section>
+    <section className={styles.finalCta}><div/><div><h2>Let&apos;s design a home<br/>that feels as good<br/>as it looks.</h2><p>Schedule a private consultation and we&apos;ll help create the ideal balance of privacy, comfort, light control, and architectural beauty for your home.</p><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com">CONTACT OUR TEAM</a></div></section>
     <SiteFooter />
   </main>;
 }

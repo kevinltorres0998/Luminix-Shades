@@ -5,6 +5,7 @@ import NextImage from "next/image";
 import { useState } from "react";
 import SiteFooter from "../../components/SiteFooter";
 import SiteHeader from "../../components/SiteHeader";
+import { BOOKING_URL } from "../../lib/booking";
 import styles from "./cellular-shades.module.css";
 
 function Image(props: React.ComponentProps<typeof NextImage>) {
@@ -84,7 +85,7 @@ export default function CellularShadesPage() {
           <h1>Comfort,<br /><em>engineered.</em></h1>
           <p>Cellular shades create a natural barrier at the window—bringing warmth, quiet, privacy, and beautifully controlled light into every room.</p>
           <div className={styles.heroActions}>
-            <a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a>
+            <a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a>
             <a className="button button-outline" href="#living">VIEW GALLERY</a>
           </div>
           <div className={styles.heroProof}>
@@ -217,7 +218,7 @@ export default function CellularShadesPage() {
           <span className={styles.kicker}>COMFORT, TAILORED TO YOUR SPACE</span>
           <h2>Engineered for comfort.<br /><em>Designed for you.</em></h2>
           <p>Let&apos;s create a quieter, more comfortable home—beautifully considered from the first measurement to the final installation.</p>
-          <a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a>
+          <a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a>
         </Fade>
       </section>
 

@@ -5,6 +5,7 @@ import NextImage from "next/image";
 import { useState } from "react";
 import SiteFooter from "../../components/SiteFooter";
 import SiteHeader from "../../components/SiteHeader";
+import { BOOKING_URL } from "../../lib/booking";
 import styles from "./smart-film.module.css";
 
 function Image(props: React.ComponentProps<typeof NextImage>) {
@@ -53,7 +54,7 @@ export default function SmartFilmPage() {
           <span className={styles.kicker}>SMART FILM</span>
           <h1>Privacy, on demand.<br /><em>Architecture,<br />uninterrupted.</em></h1>
           <p>Switchable privacy glass that moves effortlessly between openness and discretion—without compromising the design of the space.</p>
-          <div><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="#transformation">SEE IT IN ACTION</a></div>
+          <div><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="#transformation">SEE IT IN ACTION</a></div>
         </motion.div>
         <a className={styles.heroCue} href="#transformation" aria-label="View Smart Film transformation">⌄</a>
       </section>
@@ -96,7 +97,7 @@ export default function SmartFilmPage() {
 
       <section className={styles.finalCta} id="contact">
         <Fade className={styles.finalTitle}><span className={styles.kicker}>LET&apos;S DESIGN THE RIGHT SOLUTION</span><h2>See what your glass<br />can become.</h2></Fade>
-        <Fade className={styles.finalCopy}><p>Tell us about the space, the glass, and the level of privacy you need. We&apos;ll help determine the right Smart Film solution.</p><div><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com?subject=Smart%20Film%20Technical%20Information">REQUEST TECHNICAL INFORMATION</a></div></Fade>
+        <Fade className={styles.finalCopy}><p>Tell us about the space, the glass, and the level of privacy you need. We&apos;ll help determine the right Smart Film solution.</p><div><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com?subject=Smart%20Film%20Technical%20Information">REQUEST TECHNICAL INFORMATION</a></div></Fade>
       </section>
 
       <SiteFooter />

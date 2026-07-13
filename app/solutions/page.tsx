@@ -5,6 +5,7 @@ import NextImage from "next/image";
 import { useEffect, useRef, useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
+import { BOOKING_URL } from "../lib/booking";
 import styles from "./solutions.module.css";
 
 function Image(props: React.ComponentProps<typeof NextImage>) { return <NextImage {...props} unoptimized />; }
@@ -207,7 +208,7 @@ export default function SolutionsPage() {
       </section>
 
       <section className={styles.finalCta}>
-        <div><h2>Not sure which solution<br />is right for your space?</h2><p>Schedule a design consultation and our experts will recommend the ideal combination of privacy, light control, comfort, and design for your project.</p><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a></div>
+        <div><h2>Not sure which solution<br />is right for your space?</h2><p>Schedule a design consultation and our experts will recommend the ideal combination of privacy, light control, comfort, and design for your project.</p><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a></div>
       </section>
 
       <SiteFooter />
@@ -233,7 +234,7 @@ export default function SolutionsPage() {
 
                 <section className={styles.panelSection}><h3>RECOMMENDED COMBINATION</h3><div className={styles.combinationVisual}>{selectedSpace.combinationItems.map(([label, image], index) => <div key={label} className={styles.comboItem}><figure><Image src={image} alt="" fill sizes="110px" /></figure><span>{label}</span>{index === 0 && <b aria-hidden="true">+</b>}</div>)}</div></section>
 
-                <a className="button button-gold" href="/#contact" onClick={closeProjectPanel}>SCHEDULE A DESIGN CONSULTATION</a>
+                <a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={closeProjectPanel}>SCHEDULE A DESIGN CONSULTATION</a>
                 <button type="button" className={styles.exploreAnother} onClick={closeProjectPanel}>EXPLORE ANOTHER SPACE <span aria-hidden="true">←</span></button>
                 </motion.div>
                 </AnimatePresence>

@@ -3,6 +3,7 @@
 import NextImage from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { BOOKING_URL } from "../lib/booking";
 
 export default function SiteHeader() {
   const pathname = usePathname();
@@ -122,7 +123,7 @@ export default function SiteHeader() {
           <a href={homeAnchor("contact")}>Contact</a>
         </nav>
 
-        <a className="button button-gold desktop-cta" href={homeAnchor("contact")}>SCHEDULE A CONSULTATION</a>
+        <a className="button button-gold desktop-cta" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a>
         <button ref={menuButtonRef} className={`mobile-menu${mobileOpen ? " is-open" : ""}`} type="button" aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} aria-controls="mobile-navigation-panel" onClick={() => setMobileOpen((open) => !open)}>
           <span /><span /><span />
         </button>
@@ -150,7 +151,7 @@ export default function SiteHeader() {
             <a href={homeAnchor("projects")} onClick={closeNavigation}>Gallery</a>
             <a className={isCurrent("/about") ? "active" : ""} aria-current={isCurrent("/about") ? "page" : undefined} href="/about" onClick={closeNavigation}>About</a>
             <a href={homeAnchor("contact")} onClick={closeNavigation}>Contact</a>
-            <a className="button button-gold mobile-cta" href={homeAnchor("contact")} onClick={closeNavigation}>SCHEDULE A CONSULTATION</a>
+            <a className="button button-gold mobile-cta" href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={closeNavigation}>SCHEDULE A CONSULTATION</a>
           </nav>
         </div>
       )}

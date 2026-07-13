@@ -5,6 +5,7 @@ import NextImage from "next/image";
 import { useEffect, useRef, useState } from "react";
 import SiteFooter from "../../components/SiteFooter";
 import SiteHeader from "../../components/SiteHeader";
+import { BOOKING_URL } from "../../lib/booking";
 import styles from "./custom-drapery.module.css";
 
 function Image(props: React.ComponentProps<typeof NextImage>) {
@@ -210,7 +211,7 @@ export default function CustomDraperyPage() {
           <span className={styles.kicker}>CUSTOM DRAPERY</span>
           <h1>Tailored for<br />the way you live.</h1>
           <p>Luxury fabrics. Impeccable craftsmanship. Timeless elegance designed for modern interiors.</p>
-          <a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a>
+          <a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a>
         </motion.div>
         <span className={styles.scrollCue} aria-hidden="true">SCROLL <i /></span>
       </section>
@@ -348,7 +349,7 @@ export default function CustomDraperyPage() {
           <span className={styles.kicker}>BEGIN WITH THE SPACE</span>
           <h2>Luxury is in<br />the details.</h2>
           <p>Let&apos;s create something exceptional together.</p>
-          <a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a>
+          <a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a>
         </Fade>
       </section>
 
@@ -404,7 +405,7 @@ export default function CustomDraperyPage() {
                   ))}
                 </dl>
 
-                <a className="button button-gold" href="/#contact" onClick={closeDetail}>{detail.actionLabel}</a>
+                <a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={closeDetail}>{detail.actionLabel}</a>
               </div>
             </motion.aside>
           </motion.div>
