@@ -8,9 +8,7 @@ export const metadata = {
 };
 
 export default function ResponsivePreviewPage() {
-  const isDevelopment = (
-    import.meta as ImportMeta & { env: { DEV: boolean } }
-  ).env.DEV;
+  const isDevelopment = process.env.NODE_ENV === "development";
 
   if (!isDevelopment) {
     notFound();
