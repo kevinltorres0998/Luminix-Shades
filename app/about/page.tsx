@@ -61,7 +61,7 @@ export default function AboutPage() {
 
       <section className={styles.founder} aria-labelledby="founder-heading">
         <RevealImage className={styles.founderPortrait}><Image src="/images/luminix-founder-ceo.png" alt="Founder and CEO of Luminix Shades" fill sizes="(max-width:760px) 100vw, 38vw" /></RevealImage>
-        <Fade className={styles.founderCopy}><span className={styles.kicker}>LEADERSHIP</span><h2 id="founder-heading">A vision shaped<br />by <em>intention.</em></h2><i aria-hidden="true" /><strong>CEO &amp; FOUNDER</strong><small>LUMINIX SHADES</small></Fade>
+        <Fade className={styles.founderCopy}><span className={styles.kicker}>LEADERSHIP</span><h2 id="founder-heading">A vision shaped<br />by <em>intention.</em></h2><i aria-hidden="true" /><strong>Kevin L Torres</strong><small>CEO &amp; FOUNDER · LUMINIX SHADES</small></Fade>
       </section>
 
       <section className={styles.details} id="details">
