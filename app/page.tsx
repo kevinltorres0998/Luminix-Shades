@@ -92,8 +92,8 @@ export default function Home() {
       </section>
 
       <section className={styles.markets}>
-        <article><Image src="/images/residential.png" alt="Luxury residential window solutions" fill sizes="(max-width:760px) 100vw, 50vw" /><div><span>RESIDENTIAL</span><h2>Homes designed<br />for the way you live.</h2><a href="/solutions#finder">EXPLORE RESIDENTIAL →</a></div></article>
-        <article><Image src="/images/commercial.png" alt="Premium commercial window solutions" fill sizes="(max-width:760px) 100vw, 50vw" /><div><span>COMMERCIAL</span><h2>Solutions for every<br />business environment.</h2><a href="/solutions#finder">EXPLORE COMMERCIAL →</a></div></article>
+        <article id="residential"><Image src="/images/residential.png" alt="Luxury residential window solutions" fill sizes="(max-width:760px) 100vw, 50vw" /><div><span>RESIDENTIAL</span><h2>Homes designed<br />for the way you live.</h2><a href="/solutions#finder">EXPLORE RESIDENTIAL →</a></div></article>
+        <article id="commercial"><Image src="/images/commercial.png" alt="Premium commercial window solutions" fill sizes="(max-width:760px) 100vw, 50vw" /><div><span>COMMERCIAL</span><h2>Solutions for every<br />business environment.</h2><a href="/solutions#finder">EXPLORE COMMERCIAL →</a></div></article>
       </section>
 
       <section className={styles.process} id="process">

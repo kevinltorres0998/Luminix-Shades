@@ -13,7 +13,7 @@ img { object-fit:cover; }
 .main-nav { height:86px; padding:0 4vw; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; position:relative; }
 .brand { width:max-content; display:flex; align-items:center; }
 .official-logo { width:154px; height:auto; display:block; object-fit:contain; }
-.desktop-nav { display:flex; gap:42px; font-size:12px; align-self:stretch; align-items:center; }
+.desktop-nav { display:flex; gap:28px; font-size:12px; align-self:stretch; align-items:center; }
 .desktop-nav>a,.nav-trigger { height:100%; display:flex; align-items:center; position:relative; border:0; background:none; color:inherit; font:inherit; padding:0; cursor:pointer; letter-spacing:.025em; transition:color .25s ease; }
 .desktop-nav>a:hover,.nav-trigger:hover,.solutions-nav.is-open .nav-trigger { color:#dec291; }
 .desktop-nav>a.active::after,.nav-trigger.active::after { content:""; position:absolute; left:0; right:0; bottom:18px; height:1px; background:var(--gold); }
@@ -156,6 +156,12 @@ footer div>b { color:#b5b5b5; font-size:9px; letter-spacing:.08em; margin-bottom
   .projects { grid-template-columns:1fr 1fr; padding:28px 22px; }.projects-title { grid-column:1/-1; }.projects article>div { height:145px; }
   .service-area { grid-template-columns:1fr; padding:0; }.service-area>div:first-child { border-right:0; }.city-list { border-top:1px solid #ddd7cb; }.final-cta { margin:10px; }
   footer { grid-template-columns:1fr 1fr; }.footer-brand { grid-column:1/-1; }
+}
+
+@media(min-width:901px) and (max-width:1180px){
+  .desktop-nav { gap:17px; font-size:10px; }
+  .official-logo { width:140px; }
+  .desktop-cta { padding:0 17px; font-size:8px; }
 }
 
 @keyframes mobileNavIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }

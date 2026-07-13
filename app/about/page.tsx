@@ -6,173 +6,75 @@ import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import styles from "./about.module.css";
 
-function Image(props: React.ComponentProps<typeof NextImage>) {
-  return <NextImage {...props} unoptimized />;
-}
-
-function Fade({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <motion.div className={className} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.16 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
-      {children}
-    </motion.div>
-  );
-}
-
-function RevealImage({ children, className }: { children: React.ReactNode; className: string }) {
-  return (
-    <motion.div className={className} initial={{ clipPath: "inset(0 0 12% 0)", opacity: .7, scale: 1.018 }} whileInView={{ clipPath: "inset(0 0 0% 0)", opacity: 1, scale: 1 }} viewport={{ once: true, amount: .12 }} transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}>
-      {children}
-    </motion.div>
-  );
-}
+function Image(props: React.ComponentProps<typeof NextImage>) { return <NextImage {...props} unoptimized />; }
+function Fade({ children, className = "" }: { children: React.ReactNode; className?: string }) { return <motion.div className={className} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .14 }} transition={{ duration: .78, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>; }
+function RevealImage({ children, className }: { children: React.ReactNode; className: string }) { return <motion.div className={className} initial={{ clipPath: "inset(0 0 10% 0)", opacity: .75, scale: 1.018 }} whileInView={{ clipPath: "inset(0 0 0 0)", opacity: 1, scale: 1 }} viewport={{ once: true, amount: .12 }} transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>; }
 
 const principles = [
-  ["Precision", "Every proportion, material, and movement is considered as part of the architecture.", "precisionIcon"],
-  ["Discretion", "Technology should feel effortless—present when needed and nearly invisible when not.", "discretionIcon"],
-  ["Craft", "Premium materials and exact installation turn functional systems into finished interiors.", "craftIcon"],
+  { icon: "spaceIcon", title: "We begin with the space.", copy: "Every recommendation starts with understanding architecture, lifestyle, and purpose." },
+  { icon: "technologyIcon", title: "Technology should disappear.", copy: "Comfort, beauty, and performance should remain. We integrate technology with intention." },
+  { icon: "tailoredIcon", title: "Every solution is tailored.", copy: "No templates. No standards. Only solutions designed for your space." },
+  { icon: "materialsIcon", title: "Materials matter. Details matter even more.", copy: "We select the finest materials and obsess over every detail." },
+  { icon: "luxuryIcon", title: "Luxury is how a space feels.", copy: "True luxury is measured by comfort, calm, and the way a space makes you feel." },
 ];
 
-const capabilities = [
-  ["Residential", "Private residences shaped around comfort, atmosphere, and daily rituals.", "/images/residential.png"],
-  ["Commercial", "Scalable solutions for hospitality, workplace, retail, and signature developments.", "/images/about-hospitality.png"],
-  ["Design Partners", "A collaborative resource for architects, designers, builders, and contractors.", "/images/architecture.png"],
+const details = [
+  { image: "/images/about-fabric-detail.png", alt: "Close-up of a precisely finished drapery seam", caption: "Perfect seams. Every time." },
+  { image: "/images/about-motor-detail.png", alt: "Concealed motorized shade hardware integrated into architecture", caption: "Concealed hardware. Visible perfection." },
+  { image: "/images/about-smart-film-detail.png", alt: "Precise glass junction with integrated smart film", caption: "Engineered for flawless integration." },
+  { image: "/images/drapery-fabric-library.png", alt: "Premium natural fabric texture in warm neutral tones", caption: "The finest fabrics. Chosen carefully." },
+  { image: "/images/smart-film-control-detail.png", alt: "Clean architectural control and finished wall junction", caption: "Clean lines. Nothing out of place." },
+];
+
+const experience = [
+  { icon: "consultIcon", number: "01", title: "Consult", copy: "We listen, understand your needs, and analyze your space." },
+  { icon: "designIcon", number: "02", title: "Design", copy: "We create the ideal solution tailored to your lifestyle." },
+  { icon: "customizeIcon", number: "03", title: "Customize", copy: "Every detail is customized to fit your space perfectly." },
+  { icon: "installIcon", number: "04", title: "Install", copy: "Our team installs with precision, respect, and care." },
+  { icon: "enjoyIcon", number: "05", title: "Enjoy", copy: "Experience comfort, privacy, and beauty every single day." },
 ];
 
 export default function AboutPage() {
   const { scrollY } = useScroll();
-  const heroImageY = useTransform(scrollY, [0, 700], [0, 62]);
-
+  const heroY = useTransform(scrollY, [0, 760], [0, 54]);
   return (
-    <main className={styles.aboutPage}>
+    <main className={styles.page}>
       <SiteHeader />
 
       <section className={styles.hero} id="top">
-        <motion.div className={styles.heroMedia} style={{ y: heroImageY }}><Image src="/images/architecture.png" alt="Architectural glass residence at dusk" fill priority sizes="100vw" /></motion.div>
+        <motion.div className={styles.heroMedia} style={{ y: heroY }} initial={{ opacity: .72, scale: 1.035 }} animate={{ opacity: 1, scale: 1.01 }} transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}><Image src="/images/solutions-showroom-hero-v2.webp" alt="Sophisticated waterfront residence with floor-to-ceiling glass and integrated window solutions" fill priority sizes="100vw" /></motion.div>
         <div className={styles.heroShade} />
-        <motion.div className={styles.heroContent} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}>
-          <span className={styles.eyebrow}>ABOUT LUMINIX SHADES</span>
-          <h1>We design how light<br />is <em>experienced.</em></h1>
-          <p>Architectural window solutions where refined design, intelligent technology, and precise craftsmanship work as one.</p>
-        </motion.div>
-        <span className={styles.scrollCue}>DISCOVER OUR APPROACH <i aria-hidden="true" /></span>
-      </section>
-
-      <section className={styles.intro}>
-        <Fade className={styles.introCopy}>
-          <span className={styles.kicker}>OUR PERSPECTIVE</span>
-          <h2>More than window treatments.<br /><em>A study in atmosphere.</em></h2>
-          <p className={styles.lead}>Luminix Shades was created around a simple idea: the way light enters a space should be as carefully considered as the space itself.</p>
-          <p>We combine technical knowledge with a design-led sensibility to create environments that feel quieter, more comfortable, and completely intentional.</p>
-        </Fade>
-        <RevealImage className={styles.introImage}><Image src="/images/hero.png" alt="Refined Miami residence with controlled natural light" fill sizes="(max-width: 900px) 100vw, 58vw" /></RevealImage>
-      </section>
-
-      <section className={styles.principles}>
-        <Fade className={styles.sectionHeading}>
-          <span className={styles.kicker}>WHAT GUIDES US</span>
-          <h2>Quiet confidence.<br />Obsessive attention.</h2>
-          <p>Our work is defined by restraint, discipline, and an understanding that luxury is felt most clearly in the details.</p>
-        </Fade>
-        <div className={styles.principleGrid}>
-          {principles.map(([title, copy, icon]) => (
-            <Fade className={styles.principleCard} key={title}>
-              <span className={`${styles.archIcon} ${styles[icon]}`} aria-hidden="true"><i /></span>
-              <h3>{title}</h3><p>{copy}</p>
-            </Fade>
-          ))}
-        </div>
+        <motion.div className={styles.heroContent} initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .95, ease: [0.22, 1, 0.36, 1] }}><span className={styles.kicker}>ABOUT LUMINIX SHADES</span><h1>We design how<br />light <em>is experienced.</em></h1><p>Architectural window solutions where refined design, intelligent technology, and precise craftsmanship work as one.</p><a className={styles.textLink} href="#philosophy">DISCOVER OUR APPROACH <span>→</span></a></motion.div>
       </section>
 
       <section className={styles.manifesto}>
-        <Fade>
-          <span className={styles.kicker}>OUR STARTING POINT</span>
-          <h2>We don&apos;t begin with the product.<br /><em>We begin with the space.</em></h2>
-          <p>Every project starts by understanding how light, privacy, architecture, and daily life come together. The solution comes after.</p>
-        </Fade>
+        <Fade className={styles.logoStage}><Image src="/images/logo-white.png" alt="Luminix Shades" width={2420} height={689} sizes="50vw" /></Fade>
+        <Fade className={styles.manifestoCopy}><span className={styles.kicker}>OUR MANIFESTO</span><h2>Every space has its own rhythm.<br />Every window changes the way people live.<br />Every material changes the atmosphere.<br />We believe great design should solve problems without drawing attention to itself.</h2><i aria-hidden="true" /><strong>DESIGNED AROUND PEOPLE, ALWAYS.</strong></Fade>
       </section>
 
-      <section className={styles.details}>
-        <Fade className={styles.detailsHeading}>
-          <span className={styles.kicker}>ATTENTION TO DETAIL</span>
-          <h2>The difference lives<br />in what others overlook.</h2>
-          <p>Texture, alignment, movement, and finish are not secondary considerations. They are the experience.</p>
-        </Fade>
-        <div className={styles.detailGallery}>
-          <motion.figure className={styles.fabricDetail} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .85, ease: [0.22, 1, 0.36, 1] }}>
-            <div><Image src="/images/about-fabric-detail.png" alt="Close-up of premium sheer and linen drapery" fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
-            <figcaption><span>01 / MATERIAL</span><p>Fabrics selected for the way they filter light, fall, and complete the room.</p></figcaption>
-          </motion.figure>
-          <motion.figure className={styles.motorDetail} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .85, delay: .12, ease: [0.22, 1, 0.36, 1] }}>
-            <div><Image src="/images/about-motor-detail.png" alt="Precision installation of a concealed motorized shade" fill sizes="(max-width: 900px) 100vw, 38vw" /></div>
-            <figcaption><span>02 / PRECISION</span><p>Concealed technology resolved down to the final architectural junction.</p></figcaption>
-          </motion.figure>
-        </div>
+      <section className={styles.philosophy} id="philosophy">
+        <Fade className={styles.philosophyCopy}><span className={styles.kicker}>OUR PHILOSOPHY</span><h2>We begin with<br />the <em>space.</em></h2><p>Not the product. Not the trend.<br />We listen, understand, and study every detail before recommending a solution.<br />The result is a space that looks effortless, feels comfortable, and functions perfectly.</p><a className={styles.textLink} href="#principles">LEARN MORE ABOUT OUR APPROACH <span>→</span></a></Fade>
+        <RevealImage className={styles.philosophyImage}><Image src="/images/architecture.png" alt="Transparent glass and integrated privacy within a refined architectural interior" fill sizes="(max-width:800px) 100vw, 67vw" /></RevealImage>
       </section>
 
-      <section className={styles.approach}>
-        <motion.span className={styles.approachLine} aria-hidden="true" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, amount: .25 }} transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} />
-        <Fade className={styles.approachIntro}>
-          <span className={styles.kicker}>THE LUMINIX APPROACH</span>
-          <h2>A considered journey<br />from vision to installation.</h2>
-        </Fade>
-        <div className={styles.approachSteps}>
-          {["Listen", "Design", "Engineer", "Install"].map((step, index) => (
-            <div key={step}><span>0{index + 1}</span><h3>{step}</h3><p>{["Understand the space, the people, and the intention.", "Shape a solution around light, material, and proportion.", "Resolve every technical detail before production.", "Deliver a precise finish with minimal disruption."][index]}</p></div>
-          ))}
-        </div>
+      <section className={styles.principles} id="principles"><span className={styles.kicker}>OUR PRINCIPLES</span><div className={styles.principleGrid}>{principles.map((item,index) => <Fade className={styles.principle} key={item.title}><span className={`${styles.lineIcon} ${styles[item.icon]}`} aria-hidden="true"><i /></span><h3>{item.title}</h3><p>{item.copy}</p>{index < principles.length - 1 && <b aria-hidden="true" />}</Fade>)}</div></section>
+
+      <section className={styles.details} id="details">
+        <Fade className={styles.detailsIntro}><span className={styles.kicker}>THE DIFFERENCE LIVES</span><h2>in what others overlook.</h2><i aria-hidden="true" /><p>Obsessive attention to detail.<br />Flawless execution.<br />This is what sets our work apart.</p><a className={styles.textLink} href="#experience">SEE THE DETAILS <span>→</span></a></Fade>
+        <div className={styles.detailGrid}>{details.map((detail,index) => <motion.figure key={detail.caption} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .7, delay: index * .07, ease: [0.22, 1, 0.36, 1] }}><div><Image src={detail.image} alt={detail.alt} fill sizes="(max-width:700px) 50vw, 16vw" /></div><figcaption>{detail.caption}</figcaption></motion.figure>)}</div>
       </section>
 
-      <section className={styles.capabilities}>
-        <Fade className={styles.capabilitiesHeading}>
-          <span className={styles.kicker}>WHO WE WORK WITH</span>
-          <h2>One standard.<br />Every scale.</h2>
-        </Fade>
-        <div className={styles.capabilityGrid}>
-          {capabilities.map(([title, copy, image], index) => (
-            <motion.article className={styles.capabilityCard} key={title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .7, delay: index * .08, ease: [0.22, 1, 0.36, 1] }}>
-              <div className={styles.capabilityImage}><Image src={image} alt="" fill sizes="(max-width: 900px) 100vw, 33vw" /></div>
-              <div><h3>{title}</h3><p>{copy}</p><a href="/#contact">EXPLORE <span aria-hidden="true">→</span></a></div>
-            </motion.article>
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.technology}>
-        <RevealImage className={styles.technologyImage}><Image src="/images/about-smart-film-detail.png" alt="Smart film transitioning from transparent to frosted glass" fill sizes="(max-width: 900px) 100vw, 58vw" /></RevealImage>
-        <Fade className={styles.technologyCopy}>
-          <span className={styles.kicker}>TECHNOLOGY & CRAFT</span>
-          <h2>Advanced systems.<br /><em>Beautifully resolved.</em></h2>
-          <p>Innovation matters only when it improves the experience of the architecture. We pair proven technology with exact specification, careful fabrication, and a disciplined installation process.</p>
-          <div className={styles.technologyNotes}><span>Quiet movement</span><span>Seamless integration</span><span>Precise control</span></div>
-        </Fade>
+      <section className={styles.experience} id="experience">
+        <Fade className={styles.experienceIntro}><span className={styles.kicker}>THE LUMINIX EXPERIENCE</span><h2>A considered journey<br />from vision to installation.</h2></Fade>
+        <div className={styles.experienceSteps}>{experience.map((step,index) => <Fade className={styles.experienceStep} key={step.number}><span className={`${styles.lineIcon} ${styles[step.icon]}`} aria-hidden="true"><i /></span><small>{step.number}</small><h3>{step.title}</h3><p>{step.copy}</p>{index < experience.length - 1 && <b aria-hidden="true" />}</Fade>)}</div>
       </section>
 
       <section className={styles.partners}>
-        <Fade className={styles.partnersIntro}>
-          <span className={styles.kicker}>TRUSTED TECHNOLOGY PARTNERS</span>
-          <p>We work with established systems selected for performance, reliability, and elegant integration.</p>
-        </Fade>
-        <motion.div className={styles.partnerNames} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: .4 }} transition={{ duration: 1.1, ease: "easeOut" }}><b>somfy.</b><b>LUTRON.</b><b>SMARTTINT®</b><b className={styles.partnerSerif}>ALTA</b><b>mecho</b></motion.div>
+        <Fade className={styles.partnersIntro}><span className={styles.kicker}>TECHNOLOGY & PARTNERSHIP</span><h2>Advanced systems.<br />Beautifully resolved.</h2><p>We partner with the world&apos;s leading manufacturers to deliver technology that elevates every space. Integrated with precision. Built to last.</p><a className={styles.textLink} href="#partner-marks">OUR PARTNERS <span>→</span></a></Fade>
+        <motion.div className={styles.partnerMarks} id="partner-marks" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: .3 }} transition={{ duration: 1 }}><b>LUTRON.</b><b>somfy.</b><b>SMARTTINT®</b><b className={styles.partnerSerif}>ALTA</b><b>mecho</b></motion.div>
       </section>
 
-      <section className={styles.region}>
-        <Fade className={styles.regionCopy}>
-          <span className={styles.kicker}>MIAMI & SOUTH FLORIDA</span>
-          <h2>Designed here.<br />Ready for anywhere.</h2>
-          <p>We serve homeowners, design professionals, and commercial teams throughout Miami, Fort Lauderdale, Boca Raton, Palm Beach, and beyond.</p>
-          <a className="arrow-link" href="/#areas">VIEW SERVICE AREAS <span aria-hidden="true">→</span></a>
-        </Fade>
-        <RevealImage className={styles.regionImage}><Image src="/images/smart-film.png" alt="South Florida interior overlooking the water" fill sizes="(max-width: 900px) 100vw, 58vw" /></RevealImage>
-      </section>
-
-      <section className={styles.finalSection}>
-        <div className={styles.finalPanel}>
-          <span className={styles.kicker}>THE BEGINNING OF SOMETHING CONSIDERED</span>
-          <h2>Bring us the space.<br /><em>We&apos;ll begin with the light.</em></h2>
-          <p>Every meaningful project begins with a conversation about how you want the environment to feel.</p>
-          <div><a className="button button-gold" href="/#contact">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com">CONTACT OUR TEAM</a></div>
-        </div>
-      </section>
+      <section className={styles.finalCta} id="contact"><div className={styles.finalShade} /><div><h2>Let&apos;s design the right<br />solution for your space.</h2><p>Schedule a private consultation and discover the perfect balance of light, privacy, and beauty.</p><a className="button button-gold" href="mailto:hello@luminixshades.com">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com">CONTACT OUR TEAM</a></div></section>
 
       <SiteFooter />
     </main>
