@@ -1,17 +1,38 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { BOOKING_URL } from "../lib/booking";
 import styles from "./ConsultationBooking.module.css";
 
+type BookingStage = "closed" | "signature" | "scheduler";
+
 export default function ConsultationBooking() {
-  const [open, setOpen] = useState(false);
+  const [stage, setStage] = useState<BookingStage>("closed");
   const [schedulerReady, setSchedulerReady] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
+  const stageRef = useRef<BookingStage>(stage);
+  const schedulerReadyRef = useRef(false);
+  const signatureCompleteRef = useRef(false);
+
+  const active = stage !== "closed";
+
+  const closeBooking = useCallback(() => {
+    setStage("closed");
+    signatureCompleteRef.current = false;
+  }, []);
 
   const openBooking = useCallback(() => {
-    setOpen(true);
+    if (stageRef.current !== "closed") return;
+    returnFocusRef.current = document.activeElement as HTMLElement | null;
+    signatureCompleteRef.current = false;
+    setStage("signature");
   }, []);
+
+  useEffect(() => {
+    stageRef.current = stage;
+  }, [stage]);
 
   useEffect(() => {
     const handleBookingClick = (event: MouseEvent) => {
@@ -29,20 +50,30 @@ export default function ConsultationBooking() {
   }, [openBooking]);
 
   useEffect(() => {
-    if (!open) return;
+    if (stage !== "signature") return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timer = window.setTimeout(() => {
+      signatureCompleteRef.current = true;
+      if (schedulerReadyRef.current) setStage("scheduler");
+    }, reducedMotion ? 220 : 820);
+    return () => window.clearTimeout(timer);
+  }, [stage]);
 
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    const dialog = document.querySelector<HTMLElement>("[data-consultation-dialog]");
-    const focusable = dialog ? Array.from(dialog.querySelectorAll<HTMLElement>('button, a[href], iframe, [tabindex]:not([tabindex="-1"])')) : [];
+  useEffect(() => {
+    if (!active) return;
+
     document.documentElement.classList.add("consultation-open");
-    closeButtonRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setOpen(false);
+        closeBooking();
         return;
       }
-      if (event.key !== "Tab" || focusable.length === 0) return;
+      if (event.key !== "Tab" || stageRef.current !== "scheduler") return;
+
+      const dialog = document.querySelector<HTMLElement>("[data-consultation-dialog]");
+      const focusable = dialog ? Array.from(dialog.querySelectorAll<HTMLElement>('button, a[href], iframe, [tabindex]:not([tabindex="-1"])')) : [];
+      if (focusable.length === 0) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
       if (event.shiftKey && document.activeElement === first) {
@@ -58,41 +89,63 @@ export default function ConsultationBooking() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.documentElement.classList.remove("consultation-open");
-      previouslyFocused?.focus();
+      returnFocusRef.current?.focus();
     };
-  }, [open]);
+  }, [active, closeBooking]);
+
+  useEffect(() => {
+    if (stage === "scheduler") closeButtonRef.current?.focus();
+  }, [stage]);
 
   return (
     <div
-      className={`${styles.overlay} ${open ? styles.overlayOpen : styles.overlayClosed}`}
-      aria-hidden={!open}
-      onMouseDown={(event) => { if (open && event.target === event.currentTarget) setOpen(false); }}
+      className={`${styles.overlay} ${active ? styles.overlayOpen : styles.overlayClosed}`}
+      aria-hidden={!active}
+      onMouseDown={(event) => {
+        if (stage === "scheduler" && event.target === event.currentTarget) closeBooking();
+      }}
     >
-      <section className={styles.dialog} data-consultation-dialog role="dialog" aria-modal="true" aria-labelledby="consultation-title">
+      <div className={`${styles.brandSignature} ${stage === "signature" ? styles.brandSignatureVisible : styles.brandSignatureHidden}`} aria-hidden="true">
+        <div className={styles.logoStage}>
+          <Image className={styles.logoBase} src="/images/logo-white.png" alt="" width={2420} height={689} priority />
+          <span className={styles.logoSweep}>
+            <Image src="/images/logo-white.png" alt="" width={2420} height={689} priority />
+          </span>
+        </div>
+      </div>
+
+      <section
+        className={`${styles.dialog} ${stage === "scheduler" ? styles.dialogVisible : styles.dialogHidden}`}
+        data-consultation-dialog
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={stage !== "scheduler"}
+        aria-labelledby="consultation-title"
+      >
         <div className={styles.heading}>
           <div>
             <span>PRIVATE CONSULTATION</span>
             <h2 id="consultation-title">Schedule your consultation.</h2>
             <p>Choose a time that works for you. Our team will help shape the right solution for your space.</p>
           </div>
-          <button ref={closeButtonRef} type="button" className={styles.close} onClick={() => setOpen(false)} aria-label="Close consultation scheduler">×</button>
+          <button ref={closeButtonRef} type="button" tabIndex={stage === "scheduler" ? 0 : -1} className={styles.close} onClick={closeBooking} aria-label="Close consultation scheduler">×</button>
         </div>
         <div className={styles.scheduler}>
-          <div className={`${styles.schedulerLoading} ${schedulerReady ? styles.schedulerLoadingHidden : ""}`} aria-hidden="true">
-            <span className={styles.loadingMark}>L</span>
-            <strong>PREPARING YOUR PRIVATE CONSULTATION</strong>
-            <i />
-          </div>
           <iframe
             className={schedulerReady ? styles.schedulerReady : ""}
+            tabIndex={stage === "scheduler" ? 0 : -1}
             title="Schedule a consultation with Luminix Shades"
             src={`${BOOKING_URL}&embed=1`}
-            onLoad={() => setSchedulerReady(true)}
+            onLoad={() => {
+              schedulerReadyRef.current = true;
+              setSchedulerReady(true);
+              if (stageRef.current === "signature" && signatureCompleteRef.current) setStage("scheduler");
+            }}
           />
         </div>
         <div className={styles.fallback}>
           <span>HAVING TROUBLE WITH THE CALENDAR?</span>
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" data-booking-external>OPEN SCHEDULER IN A NEW TAB <b>↗</b></a>
+          <a href={BOOKING_URL} tabIndex={stage === "scheduler" ? 0 : -1} target="_blank" rel="noopener noreferrer" data-booking-external>OPEN SCHEDULER IN A NEW TAB <b>↗</b></a>
         </div>
       </section>
     </div>
