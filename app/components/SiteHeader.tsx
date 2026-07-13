@@ -86,8 +86,6 @@ export default function SiteHeader() {
               </div>
             </div>
           </div>
-          <a href="/#residential">Residential</a>
-          <a href="/#commercial">Commercial</a>
           <a href={homeAnchor("projects")}>Gallery</a>
           <a className={pathname === "/about" ? "active" : ""} href="/about">About</a>
           <a href={homeAnchor("contact")}>Contact</a>
@@ -118,8 +116,6 @@ export default function SiteHeader() {
                 <div><a href="/solutions#residential" onClick={closeNavigation}>Residential</a><a href="/solutions#commercial" onClick={closeNavigation}>Commercial</a></div>
               </div>
             )}
-            <a href="/#residential" onClick={closeNavigation}>Residential</a>
-            <a href="/#commercial" onClick={closeNavigation}>Commercial</a>
             <a href={homeAnchor("projects")} onClick={closeNavigation}>Gallery</a>
             <a href="/about" onClick={closeNavigation}>About</a>
             <a href={homeAnchor("contact")} onClick={closeNavigation}>Contact</a>
