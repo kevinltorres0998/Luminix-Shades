@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: "Smart film, motorized shades and custom drapery for exceptional residential and commercial spaces across South Florida.",
   metadataBase: new URL("https://luminix-shades.vercel.app"),
   icons: {
-    icon: [{ url: "/images/logo-white.png?v=3", type: "image/png" }],
-    shortcut: "/images/logo-white.png?v=3",
+    icon: [{ url: "/images/luminix-favicon.png?v=4", type: "image/png", sizes: "512x512" }],
+    shortcut: "/images/luminix-favicon.png?v=4",
   },
   openGraph: {
     title: "Luminix Shades | Designed around the way you live.",
