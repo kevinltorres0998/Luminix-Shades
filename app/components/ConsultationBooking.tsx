@@ -50,7 +50,7 @@ export default function ConsultationBooking() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const timer = window.setTimeout(() => {
       setStage("scheduler");
-    }, reducedMotion ? 320 : 1020);
+    }, reducedMotion ? 320 : 1120);
     return () => window.clearTimeout(timer);
   }, [stage]);
 

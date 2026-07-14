@@ -52,7 +52,7 @@
   line-height: 0;
 }
 
-.websiteTransitionVisible .logoStage { animation: logoSequence 1.02s cubic-bezier(.22, 1, .36, 1) both; }
+.websiteTransitionVisible .logoStage { animation: logoSequence 1.12s cubic-bezier(.22, 1, .36, 1) both; }
 
 .logoBase,
 .logoSweep img { width: 100%; height: auto; display: block; }
@@ -67,7 +67,7 @@
   filter: brightness(1.28) sepia(.08) drop-shadow(0 0 5px rgba(255, 244, 218, .28));
 }
 
-.websiteTransitionVisible .logoSweep { animation: architecturalSweep .52s .34s cubic-bezier(.4, 0, .2, 1) both; }
+.websiteTransitionVisible .logoSweep { animation: architecturalSweep .82s .12s cubic-bezier(.32, 0, .18, 1) both; }
 
 .dialog {
   width: min(1080px, 100%);
@@ -131,8 +131,8 @@
 
 @keyframes logoSequence {
   0% { opacity: 0; transform: scale(.985); }
-  22% { opacity: 1; transform: scale(1); }
-  78% { opacity: 1; transform: scale(1); }
+  20% { opacity: 1; transform: scale(1); }
+  86% { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(1); }
 }
 
