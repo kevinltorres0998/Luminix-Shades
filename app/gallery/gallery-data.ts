@@ -1,0 +1,225 @@
+export type GalleryContentType = "installed" | "concept";
+export type GallerySector = "residential" | "commercial";
+
+export type GalleryProject = {
+  id: string;
+  slug: string;
+  title: string;
+  contentType: GalleryContentType;
+  sector: GallerySector;
+  location: string;
+  serviceArea: string;
+  statusLabel: string;
+  categories: string[];
+  spaces: string[];
+  solutions: string[];
+  recommendations: Array<[string, number]>;
+  featuredImage: string;
+  galleryImages: string[];
+  projectStory: string;
+  objective: string;
+  proposedStrategy: string;
+  bestCombination: [string, string];
+  size: "tall" | "wide" | "standard";
+  featured?: boolean;
+};
+
+export const galleryProjects: GalleryProject[] = [
+  {
+    id: "brickell-penthouse",
+    slug: "brickell-penthouse-concept",
+    title: "Brickell Penthouse",
+    contentType: "concept",
+    sector: "residential",
+    location: "Brickell, Miami",
+    serviceArea: "Miami",
+    statusLabel: "Design Study 2026",
+    categories: ["Smart Film", "Custom Drapery", "Motorized Shades"],
+    spaces: ["Living Rooms", "Bedrooms"],
+    solutions: ["Smart Film", "Ripple Fold Drapery", "Motorized Roller Shades"],
+    recommendations: [["Smart Film", 5], ["Custom Drapery", 5], ["Motorized Shades", 4], ["Cellular Shades", 2]],
+    featuredImage: "/images/hero.png",
+    galleryImages: ["/images/hero.png", "/images/drapery-room-linen.png", "/images/smart-film.png"],
+    projectStory: "A waterfront residence study exploring privacy without compromising panoramic views, balanced with softness, acoustic comfort and precise daylight control.",
+    objective: "Preserve the architecture and uninterrupted skyline while giving every living zone a distinct level of privacy and atmosphere.",
+    proposedStrategy: "Layer switchable privacy glass with full-height linen drapery and discreet motorized solar shades for a complete, adaptable envelope.",
+    bestCombination: ["Smart Film", "Ripple Fold Drapery"],
+    size: "tall",
+    featured: true,
+  },
+  {
+    id: "coconut-grove-residence",
+    slug: "coconut-grove-residence-concept",
+    title: "Coconut Grove Residence",
+    contentType: "concept",
+    sector: "residential",
+    location: "Coconut Grove, Florida",
+    serviceArea: "Coconut Grove",
+    statusLabel: "Design Study 2026",
+    categories: ["Custom Drapery", "Motorized Shades"],
+    spaces: ["Living Rooms", "Bedrooms"],
+    solutions: ["Linen Drapery", "Motorized Screen Roller Shades"],
+    recommendations: [["Custom Drapery", 5], ["Motorized Shades", 5], ["Cellular Shades", 3], ["Smart Film", 2]],
+    featuredImage: "/images/drapery-room-linen.png",
+    galleryImages: ["/images/drapery-room-linen.png", "/images/drapery-hero-sheer.png"],
+    projectStory: "A warm residential concept where filtered daylight, natural texture and quiet automation soften expansive contemporary glazing.",
+    objective: "Create a relaxed interior that remains bright while controlling glare and adding a refined layer of privacy.",
+    proposedStrategy: "Combine softly tailored linen drapery with automated screen shades concealed within the architectural ceiling line.",
+    bestCombination: ["Linen Drapery", "Screen Roller Shades"],
+    size: "tall",
+  },
+  {
+    id: "aventura-ocean-view",
+    slug: "aventura-ocean-view-concept",
+    title: "Aventura Ocean View",
+    contentType: "concept",
+    sector: "residential",
+    location: "Aventura, Florida",
+    serviceArea: "Aventura",
+    statusLabel: "Design Study 2026",
+    categories: ["Motorized Shades", "Cellular Shades"],
+    spaces: ["Living Rooms", "Home Offices"],
+    solutions: ["Motorized Screen Shades", "Cellular Shades"],
+    recommendations: [["Motorized Shades", 5], ["Cellular Shades", 4], ["Custom Drapery", 3], ["Smart Film", 2]],
+    featuredImage: "/images/roller-shades-demo-room.png",
+    galleryImages: ["/images/roller-shades-demo-room.png", "/images/cellular-og.png"],
+    projectStory: "A high-rise light-control study designed around changing sun conditions and a view that should remain present throughout the day.",
+    objective: "Reduce heat and glare without making the room feel closed or disconnected from the waterfront.",
+    proposedStrategy: "Use independent motorized screen panels for precise solar control, supported by insulating cellular shades in private rooms.",
+    bestCombination: ["Screen Roller Shades", "Cellular Shades"],
+    size: "standard",
+  },
+  {
+    id: "downtown-office",
+    slug: "downtown-office-concept",
+    title: "Downtown Office",
+    contentType: "concept",
+    sector: "commercial",
+    location: "Downtown Miami, Florida",
+    serviceArea: "Miami",
+    statusLabel: "Design Study 2026",
+    categories: ["Smart Film", "Motorized Shades"],
+    spaces: ["Offices", "Healthcare"],
+    solutions: ["Smart Film", "Motorized Screen Roller Shades"],
+    recommendations: [["Smart Film", 5], ["Motorized Shades", 5], ["Cellular Shades", 3], ["Custom Drapery", 1]],
+    featuredImage: "/images/commercial-hero-boardroom.png",
+    galleryImages: ["/images/commercial-hero-boardroom.png", "/images/commercial-smart-film-cover-v3.png"],
+    projectStory: "A commercial privacy concept that lets meeting spaces alternate between openness and discretion while maintaining a calm, cohesive workplace.",
+    objective: "Support confidential collaboration, reduce screen glare and preserve transparent architectural sightlines.",
+    proposedStrategy: "Pair switchable glass partitions with independently controlled screen shades along the exterior facade.",
+    bestCombination: ["Smart Film", "Screen Roller Shades"],
+    size: "standard",
+  },
+  {
+    id: "key-biscayne-estate",
+    slug: "key-biscayne-estate-concept",
+    title: "Key Biscayne Estate",
+    contentType: "concept",
+    sector: "residential",
+    location: "Key Biscayne, Florida",
+    serviceArea: "Key Biscayne",
+    statusLabel: "Design Study 2026",
+    categories: ["Smart Film", "Custom Drapery"],
+    spaces: ["Living Rooms", "Bathrooms", "Bedrooms"],
+    solutions: ["Smart Film", "Custom Drapery"],
+    recommendations: [["Smart Film", 5], ["Custom Drapery", 5], ["Motorized Shades", 4], ["Cellular Shades", 2]],
+    featuredImage: "/images/residential.png",
+    galleryImages: ["/images/residential.png", "/images/residential-smart-film-cover-v3.png"],
+    projectStory: "A coastal residence concept focused on effortless transitions between open views, intimate privacy and tactile residential comfort.",
+    objective: "Give public and private rooms different levels of visual softness without interrupting the home’s minimal architecture.",
+    proposedStrategy: "Use Smart Film in glass-intensive zones and tailored drapery where softness, acoustic control and atmosphere matter most.",
+    bestCombination: ["Smart Film", "Custom Drapery"],
+    size: "wide",
+  },
+  {
+    id: "miami-beach-hotel",
+    slug: "miami-beach-hotel-concept",
+    title: "Miami Beach Hotel",
+    contentType: "concept",
+    sector: "commercial",
+    location: "Miami Beach, Florida",
+    serviceArea: "Miami Beach",
+    statusLabel: "Design Study 2026",
+    categories: ["Custom Drapery", "Motorized Shades"],
+    spaces: ["Hotels", "Restaurants"],
+    solutions: ["Ripple Fold Drapery", "Motorized Blackout Shades"],
+    recommendations: [["Custom Drapery", 5], ["Motorized Shades", 5], ["Smart Film", 3], ["Cellular Shades", 2]],
+    featuredImage: "/images/about-hospitality.png",
+    galleryImages: ["/images/about-hospitality.png", "/images/drapery-final-sunset.png"],
+    projectStory: "A hospitality concept where daylight, acoustic softness and nighttime privacy work together to create an elevated guest experience.",
+    objective: "Shape a memorable atmosphere from morning through evening while supporting comfort and operational simplicity.",
+    proposedStrategy: "Layer custom ripple-fold drapery over automated blackout systems for flexible mood, privacy and rest.",
+    bestCombination: ["Ripple Fold Drapery", "Blackout Roller Shades"],
+    size: "wide",
+  },
+  {
+    id: "coral-gables-office",
+    slug: "coral-gables-office-concept",
+    title: "Coral Gables Office",
+    contentType: "concept",
+    sector: "commercial",
+    location: "Coral Gables, Florida",
+    serviceArea: "Coral Gables",
+    statusLabel: "Design Study 2026",
+    categories: ["Smart Film", "Cellular Shades"],
+    spaces: ["Offices", "Healthcare"],
+    solutions: ["Smart Film", "Cellular Shades"],
+    recommendations: [["Smart Film", 5], ["Cellular Shades", 4], ["Motorized Shades", 4], ["Custom Drapery", 2]],
+    featuredImage: "/images/commercial.png",
+    galleryImages: ["/images/commercial.png", "/images/smart-film-control-detail.png"],
+    projectStory: "A professional environment study balancing confidentiality, daylight and thermal comfort within a restrained architectural palette.",
+    objective: "Create private, focused rooms that still feel connected to natural light and the larger workplace.",
+    proposedStrategy: "Introduce Smart Film at internal glazing and cellular shades at exterior openings requiring added insulation and glare control.",
+    bestCombination: ["Smart Film", "Cellular Shades"],
+    size: "standard",
+  },
+  {
+    id: "waterfront-wellness-suite",
+    slug: "waterfront-wellness-suite-concept",
+    title: "Waterfront Wellness Suite",
+    contentType: "concept",
+    sector: "commercial",
+    location: "Fort Lauderdale, Florida",
+    serviceArea: "Fort Lauderdale",
+    statusLabel: "Design Study 2026",
+    categories: ["Smart Film", "Cellular Shades", "Custom Drapery"],
+    spaces: ["Healthcare", "Bathrooms"],
+    solutions: ["Smart Film", "Cellular Shades", "Sheer Drapery"],
+    recommendations: [["Smart Film", 5], ["Cellular Shades", 5], ["Custom Drapery", 3], ["Motorized Shades", 3]],
+    featuredImage: "/images/cellular-compare-with.webp",
+    galleryImages: ["/images/cellular-compare-with.webp", "/images/commercial-smart-film-cover-v3.png"],
+    projectStory: "A quiet wellness concept designed around privacy, softly filtered daylight and an environment that feels protected without becoming clinical.",
+    objective: "Deliver discretion, calm acoustics and controlled natural light for both guests and care teams.",
+    proposedStrategy: "Combine instant-privacy glass with insulating cellular shades and selective sheer layers in reception and recovery areas.",
+    bestCombination: ["Smart Film", "Cellular Shades"],
+    size: "standard",
+  },
+];
+
+export const galleryFilters = ["All", "Residential", "Commercial", "Smart Film", "Motorized Shades", "Custom Drapery", "Cellular Shades"];
+
+export const gallerySpaces = [
+  ["Living Rooms", "/images/hero.png", "Layered comfort and architectural views"],
+  ["Bedrooms", "/images/cellular-space-media-v2.webp", "Privacy, darkness and quiet comfort"],
+  ["Bathrooms", "/images/residential-smart-film-cover-v3.png", "Privacy without visual clutter"],
+  ["Kitchens", "/images/residential.png", "Controlled daylight for daily living"],
+  ["Offices", "/images/commercial-hero-boardroom.png", "Focus, performance and discretion"],
+  ["Restaurants", "/images/about-hospitality.png", "Atmosphere that evolves all day"],
+  ["Hotels", "/images/drapery-final-sunset.png", "Comfort designed around every guest"],
+  ["Retail", "/images/commercial.png", "Light that supports the brand experience"],
+  ["Healthcare", "/images/commercial-smart-film-cover-v3.png", "Privacy where trust matters most"],
+] as const;
+
+export const serviceAreas = [
+  { name: "Miami", x: 59, y: 72 },
+  { name: "Brickell", x: 55, y: 68 },
+  { name: "Miami Beach", x: 69, y: 61 },
+  { name: "Coconut Grove", x: 47, y: 78 },
+  { name: "Coral Gables", x: 42, y: 71 },
+  { name: "Key Biscayne", x: 68, y: 82 },
+  { name: "Sunny Isles", x: 70, y: 43 },
+  { name: "Aventura", x: 64, y: 37 },
+  { name: "Fort Lauderdale", x: 54, y: 21 },
+  { name: "Boca Raton", x: 43, y: 10 },
+  { name: "Palm Beach", x: 33, y: 4 },
+];

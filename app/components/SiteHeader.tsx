@@ -118,7 +118,7 @@ export default function SiteHeader() {
               </div>
             </div>
           </div>
-          <a href={homeAnchor("projects")}>Gallery</a>
+          <a className={pathname === "/gallery" ? "active" : ""} href="/gallery">Gallery</a>
           <a className={pathname === "/about" ? "active" : ""} href="/about">About</a>
           <a href={homeAnchor("contact")}>Contact</a>
         </nav>
@@ -148,7 +148,7 @@ export default function SiteHeader() {
                 <div><a className={isCurrent("/residential") ? "active" : ""} aria-current={isCurrent("/residential") ? "page" : undefined} href="/residential" onClick={closeNavigation}>Residential</a><a className={isCurrent("/commercial") ? "active" : ""} aria-current={isCurrent("/commercial") ? "page" : undefined} href="/commercial" onClick={closeNavigation}>Commercial</a></div>
               </div>
             )}
-            <a href={homeAnchor("projects")} onClick={closeNavigation}>Gallery</a>
+            <a className={isCurrent("/gallery") ? "active" : ""} aria-current={isCurrent("/gallery") ? "page" : undefined} href="/gallery" onClick={closeNavigation}>Gallery</a>
             <a className={isCurrent("/about") ? "active" : ""} aria-current={isCurrent("/about") ? "page" : undefined} href="/about" onClick={closeNavigation}>About</a>
             <a href={homeAnchor("contact")} onClick={closeNavigation}>Contact</a>
             <a className="button button-gold mobile-cta" href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={closeNavigation}>SCHEDULE A CONSULTATION</a>
