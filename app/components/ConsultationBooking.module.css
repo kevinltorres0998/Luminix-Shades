@@ -49,6 +49,7 @@
 .logoStage {
   width: clamp(210px, 32vw, 410px);
   position: relative;
+  opacity: 0;
   line-height: 0;
 }
 
