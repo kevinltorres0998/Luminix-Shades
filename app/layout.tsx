@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://admin.luminixshades.com"),
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: [{ url: "/images/luminix-full-logo-icon.png?v=7", type: "image/png", sizes: "1536x1536" }],
-    shortcut: "/images/luminix-full-logo-icon.png?v=7",
+    icon: [{ url: "/images/luminix-favicon.png?v=8", type: "image/png", sizes: "512x512" }],
+    shortcut: "/images/luminix-favicon.png?v=8",
     apple: [{ url: "/images/luminix-full-logo-icon.png?v=7", type: "image/png", sizes: "1536x1536" }],
   },
   appleWebApp: {
