@@ -14,7 +14,6 @@ export default function SiteHeader() {
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
-  const homeAnchor = (id: string) => onHome ? `#${id}` : `/#${id}`;
   const isCurrent = (href: string) => pathname === href;
 
   useEffect(() => {
@@ -120,7 +119,7 @@ export default function SiteHeader() {
           </div>
           <a className={pathname === "/gallery" ? "active" : ""} href="/gallery">Gallery</a>
           <a className={pathname === "/about" ? "active" : ""} href="/about">About</a>
-          <a href={homeAnchor("contact")}>Contact</a>
+          <a className={pathname === "/contact" ? "active" : ""} href="/contact">Contact</a>
         </nav>
 
         <a className="button button-gold desktop-cta" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a>
@@ -150,7 +149,7 @@ export default function SiteHeader() {
             )}
             <a className={isCurrent("/gallery") ? "active" : ""} aria-current={isCurrent("/gallery") ? "page" : undefined} href="/gallery" onClick={closeNavigation}>Gallery</a>
             <a className={isCurrent("/about") ? "active" : ""} aria-current={isCurrent("/about") ? "page" : undefined} href="/about" onClick={closeNavigation}>About</a>
-            <a href={homeAnchor("contact")} onClick={closeNavigation}>Contact</a>
+            <a className={isCurrent("/contact") ? "active" : ""} aria-current={isCurrent("/contact") ? "page" : undefined} href="/contact" onClick={closeNavigation}>Contact</a>
             <a className="button button-gold mobile-cta" href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={closeNavigation}>SCHEDULE A CONSULTATION</a>
           </nav>
         </div>
