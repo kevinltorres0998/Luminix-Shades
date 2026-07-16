@@ -5,12 +5,20 @@ import AIConciergeLauncher from "./components/ai-concierge/AIConciergeLauncher";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  applicationName: "Luminix Shades Admin",
   title: "Luminix Shades | Premium Window Solutions Miami",
   description: "Smart film, motorized shades and custom drapery for exceptional residential and commercial spaces across South Florida.",
-  metadataBase: new URL("https://luminix-shades.vercel.app"),
+  metadataBase: new URL("https://admin.luminixshades.com"),
+  manifest: "/manifest.webmanifest",
   icons: {
-    icon: [{ url: "/images/luminix-favicon.png?v=5", type: "image/png", sizes: "512x512" }],
-    shortcut: "/images/luminix-favicon.png?v=5",
+    icon: [{ url: "/images/luminix-favicon.png?v=6", type: "image/png", sizes: "512x512" }],
+    shortcut: "/images/luminix-favicon.png?v=6",
+    apple: [{ url: "/images/luminix-favicon.png?v=6", type: "image/png", sizes: "512x512" }],
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Luminix Admin",
   },
   openGraph: {
     title: "Luminix Shades | Designed around the way you live.",
