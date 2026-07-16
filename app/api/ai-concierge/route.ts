@@ -1,4 +1,4 @@
-import { conciergeSystemPrompt, type ConciergeMessage } from "../../lib/ai-concierge";
+import { conciergeFallbackReply, conciergeSystemPrompt, type ConciergeMessage } from "../../lib/ai-concierge";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -46,12 +46,13 @@ function outputText(body: unknown) {
 
 export async function POST(request: Request) {
   const openAIKey = process.env.OPENAI_API_KEY;
-  const gatewayKey = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN || request.headers.get("x-vercel-oidc-token");
-  if (!openAIKey && !gatewayKey) return error("concierge_unavailable", 503);
+  const gatewayKey = process.env.AI_GATEWAY_API_KEY;
   if (!allowed(request)) return error("rate_limited", 429);
   const body = await request.json().catch(() => null) as { messages?: unknown } | null;
   const messages = parseMessages(body?.messages);
   if (!messages) return error("invalid_messages", 400);
+  const fallback = () => Response.json({ ok: true, reply: conciergeFallbackReply(messages[messages.length - 1].content) });
+  if (!openAIKey && !gatewayKey) return fallback();
 
   try {
     const usingGateway = !openAIKey;
@@ -68,11 +69,11 @@ export async function POST(request: Request) {
       }),
       signal: AbortSignal.timeout(22_000),
     });
-    if (!response.ok) return error("concierge_unavailable", response.status === 429 ? 429 : 502);
+    if (!response.ok) return fallback();
     const reply = outputText(await response.json());
-    if (!reply) return error("empty_response", 502);
+    if (!reply) return fallback();
     return Response.json({ ok: true, reply: reply.slice(0, 3_500) });
   } catch {
-    return error("concierge_unavailable", 503);
+    return fallback();
   }
 }
