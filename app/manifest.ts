@@ -12,8 +12,8 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#141414",
     icons: [
       {
-        src: "/images/luminix-favicon.png?v=6",
-        sizes: "512x512",
+        src: "/images/luminix-full-logo-icon.png?v=7",
+        sizes: "1536x1536",
         type: "image/png",
         purpose: "any maskable",
       },
