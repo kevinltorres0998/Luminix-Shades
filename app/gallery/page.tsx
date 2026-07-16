@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import { BOOKING_URL } from "../lib/booking";
@@ -15,20 +16,52 @@ function Stars({ score }: { score: number }) {
   return <span className={styles.stars} aria-label={`${score} out of 5 recommendation`}><b>{"★".repeat(score)}</b><i>{"☆".repeat(5 - score)}</i></span>;
 }
 
-function BeforeAfter({ kind, value, onChange }: { kind: "film" | "shades"; value: number; onChange: (value: number) => void }) {
-  const film = kind === "film";
-  const image = film ? "/images/smart-film-demo-clear.png" : "/images/roller-shades-demo-room.png";
+function SmartFilmControl() {
+  const reducedMotion = useReducedMotion();
+  const [powered, setPowered] = useState(false);
+
   return (
-    <div className={styles.comparisonFrame} style={{ "--comparison": `${value}%` } as CSSProperties}>
-      <Image src={image} alt={film ? "Transparent architectural glass before Smart Film privacy mode" : "Waterfront room before roller shade installation"} fill sizes="(max-width: 850px) 100vw, 46vw" />
-      <div className={styles.comparisonAfter} aria-hidden="true">
-        <Image src={image} alt="" fill sizes="(max-width: 850px) 100vw, 46vw" />
-        {film ? <div className={styles.filmTreatment}><i /><i /><i /></div> : <div className={styles.shadeTreatment}><b /><i /><i /><i /><i /></div>}
+    <div className={styles.productDemo} data-gallery-film-state={powered ? "on" : "off"}>
+      <Image src="/images/smart-film-demo-clear.png" alt="Conference room with switchable Smart Film glass" fill sizes="(max-width: 850px) 100vw, 46vw" unoptimized />
+      <div className={`${styles.galleryFilm} ${powered ? styles.galleryFilmPowered : ""}`} aria-hidden="true">
+        {[0, 1, 2].map((pane) => <motion.i key={pane} animate={{ opacity: powered ? 0 : 1, filter: powered ? "blur(0px)" : "blur(5px)" }} transition={{ duration: reducedMotion ? .01 : .3, ease: [0.45, 0, 0.2, 1] }} />)}
       </div>
-      <span className={styles.beforeLabel}>BEFORE</span><span className={styles.afterLabel}>AFTER</span>
-      <span className={styles.comparisonLine} aria-hidden="true"><b>↔</b></span>
-      <input type="range" min="5" max="95" value={value} onChange={(event) => onChange(Number(event.target.value))} aria-label={`Compare ${film ? "Smart Film" : "roller shade"} before and after`} />
+      <div className={styles.galleryFrameLayer} aria-hidden="true"><i /><i /><i /><i /><b /><b /></div>
+      <div className={styles.filmControl}>
+        <div className={styles.demoStatus}><span>POWER</span><strong>{powered ? "ON" : "OFF"}</strong></div>
+        <button className={`${styles.gallerySwitch} ${powered ? styles.gallerySwitchOn : ""}`} type="button" aria-label={`Turn Smart Film ${powered ? "off for privacy" : "on for clear visibility"}`} aria-pressed={powered} onClick={() => setPowered((current) => !current)}>
+          <span /><i />
+        </button>
+        <p className={styles.demoNote}>{powered ? "Crystal clear visibility." : "Instant privacy."}</p>
+      </div>
     </div>
+  );
+}
+
+function RollerShadeControl() {
+  const reducedMotion = useReducedMotion();
+  const [closed, setClosed] = useState(false);
+
+  return (
+    <div className={styles.productDemo} data-gallery-shade-state={closed ? "closed" : "open"}>
+      <Image src="/images/roller-shades-demo-room.png" alt="Waterfront living room with four motorized roller shades" fill sizes="(max-width: 850px) 100vw, 46vw" unoptimized />
+      <motion.div className={styles.galleryRoomDim} aria-hidden="true" initial={false} animate={{ opacity: closed ? 1 : 0 }} transition={{ duration: reducedMotion ? .01 : 1.15, ease: [0.45, 0, 0.2, 1] }} />
+      <div className={styles.galleryShadeHardware} aria-hidden="true">{[0, 1, 2, 3].map((panel) => <i key={panel} />)}</div>
+      <div className={styles.galleryShades} aria-hidden="true">
+        {[0, 1, 2, 3].map((panel) => <motion.i key={panel} initial={false} animate={{ scaleY: closed ? 1 : .025 }} transition={{ duration: reducedMotion ? .01 : 1.35, delay: reducedMotion ? 0 : panel * .095, ease: [0.65, 0, 0.35, 1] }} />)}
+      </div>
+      <div className={styles.demoStatus}><span>POSITION</span><strong>{closed ? "CLOSED" : "OPEN"}</strong></div>
+      <button className={`${styles.shadeButton} ${closed ? styles.shadeButtonClosed : ""}`} type="button" aria-label={`${closed ? "Raise" : "Lower"} all four motorized roller shades`} aria-pressed={closed} onClick={() => setClosed((current) => !current)}>
+        <span aria-hidden="true">{closed ? "↑" : "↓"}</span>
+      </button>
+      <p className={styles.demoNote}>{closed ? "Privacy and softened daylight." : "Open view and natural light."}</p>
+    </div>
+  );
+}
+
+function SouthFloridaMap() {
+  return (
+    <Image className={styles.southFloridaMap} src="/images/south-florida-basemap.webp" alt="Detailed road and city map of Broward and Palm Beach counties" fill sizes="(max-width: 900px) 100vw, 45vw" unoptimized />
   );
 }
 
@@ -70,9 +103,7 @@ export default function GalleryPage() {
   const [selectedSpace, setSelectedSpace] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<GalleryProject | null>(null);
   const [compactPanel, setCompactPanel] = useState(false);
-  const [selectedArea, setSelectedArea] = useState("Miami");
-  const [filmCompare, setFilmCompare] = useState(50);
-  const [shadeCompare, setShadeCompare] = useState(50);
+  const [selectedArea, setSelectedArea] = useState("Fort Lauderdale");
   const spaceTrackRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -129,7 +160,7 @@ export default function GalleryPage() {
       <section className={styles.hero} id="top">
         <Image src="/images/hero.png" alt="Waterfront luxury interior at dusk with architectural window treatments" fill priority sizes="100vw" />
         <div className={styles.heroShade} />
-        <motion.div className={styles.heroCopy} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .9, ease }}>
+        <motion.div className={styles.heroCopy} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .9, ease }}>
           <span className={styles.kicker}>SELECTED WORKS</span>
           <h1>Every project<br />tells a different<br /><em>story.</em></h1>
           <p>Explore a curated collection of residential and commercial environments where light, privacy and architecture work together.</p>
@@ -176,14 +207,14 @@ export default function GalleryPage() {
       </section>
 
       <section className={styles.comparisons}>
-        <article><span className={styles.kicker}>BEFORE / AFTER · SMART FILM</span><BeforeAfter kind="film" value={filmCompare} onChange={setFilmCompare} /></article>
-        <article><span className={styles.kicker}>BEFORE / AFTER · ROLLER SHADES</span><BeforeAfter kind="shades" value={shadeCompare} onChange={setShadeCompare} /></article>
+        <article><span className={styles.kicker}>SMART FILM TOTAL · POWER CONTROL</span><SmartFilmControl /></article>
+        <article><span className={styles.kicker}>ROLLER SHADES · MOTORIZED CONTROL</span><RollerShadeControl /></article>
       </section>
 
       <section className={styles.mapSection}>
         <div className={styles.mapIntro}><span className={styles.kicker}>PROJECTS ACROSS</span><h2>South Florida</h2><p>Local expertise. Premium results. From waterfront estates to commercial developments, we bring architectural solutions to every environment.</p><small>Markers identify active service areas, not completed-project claims.</small><a className={styles.textLink} href="#browse">VIEW ALL PROJECTS <b>→</b></a></div>
-        <div className={styles.mapCanvas} aria-label="Luminix Shades South Florida active service areas"><span className={styles.coastline} aria-hidden="true" />{serviceAreas.map((area) => <button type="button" key={area.name} style={{ left: `${area.x}%`, top: `${area.y}%` }} className={selectedArea === area.name ? styles.activeMarker : ""} onClick={() => setSelectedArea(area.name)} aria-label={`${area.name}, active service area`}><i /><span>{area.name}</span></button>)}</div>
-        <div className={styles.areaProjects}><span className={styles.kicker}>FEATURED IN THIS AREA</span><h3>{selectedArea}</h3><small>ACTIVE SERVICE AREA</small>{areaProjects.length ? areaProjects.map((project) => <button type="button" key={project.id} onClick={() => setSelectedProject(project)} data-project-card><Image src={project.featuredImage} alt="" width={92} height={62} /><span><b>{project.title}</b><i>Concept Visualization · {project.solutions.length} Solutions</i></span></button>) : <p>No gallery study is currently assigned to this service area. A tailored concept can be developed for your project.</p>}<a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">DISCUSS A PROJECT <b>→</b></a></div>
+        <div className={styles.mapCanvas}><div className={styles.mapViewport}><SouthFloridaMap />{serviceAreas.map((area) => <button type="button" key={area.name} style={{ left: `${area.x}%`, top: `${area.y}%` }} className={selectedArea === area.name ? styles.activeMarker : ""} onClick={() => setSelectedArea(area.name)} aria-label={`${area.name}, active service area`}><i /><span>{area.name}</span></button>)}</div><span className={styles.mapAttribution}>© OpenStreetMap contributors · © CARTO</span></div>
+        <div className={styles.areaProjects}><span className={styles.kicker}>FEATURED IN THIS AREA</span><h3>{selectedArea}</h3><small>ACTIVE SERVICE AREA</small>{areaProjects.length ? areaProjects.map((project) => <button type="button" key={project.id} onClick={() => setSelectedProject(project)} data-project-card><Image src={project.featuredImage} alt="" width={92} height={62} unoptimized /><span><b>{project.title}</b><i>Concept Visualization · {project.solutions.length} Solutions</i></span></button>) : <p>No gallery study is currently assigned to this service area. A tailored concept can be developed for your project.</p>}<a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">DISCUSS A PROJECT <b>→</b></a></div>
       </section>
 
       <section className={styles.trustStrip} aria-label="Luminix portfolio principles"><div><b>TAILORED</b><span>Designed for each space</span></div><div><b>INTEGRATED</b><span>Complete solution strategies</span></div><div><b>LOCAL</b><span>South Florida expertise</span></div><div><b>PRECISE</b><span>Details considered carefully</span></div><div><b>EVOLVING</b><span>Concepts ready for real projects</span></div></section>
@@ -194,7 +225,7 @@ export default function GalleryPage() {
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .3 }} transition={{ duration: .8, ease }}>
           <h2>The next project<br />could be <em>yours.</em></h2>
           <p>Every environment begins with a conversation about how it should feel.</p>
-          <span><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com?subject=Gallery%20Project%20Quote">REQUEST A QUOTE</a></span>
+          <span><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a><Link className="button button-outline" href="/plan-your-project">REQUEST A QUOTE</Link></span>
         </motion.section>
       </section>
 

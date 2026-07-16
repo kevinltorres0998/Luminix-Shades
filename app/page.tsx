@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import NextImage from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import SiteFooter from "./components/SiteFooter";
 import SiteHeader from "./components/SiteHeader";
@@ -21,10 +22,10 @@ const heroSlides = [
 ];
 
 const solutions = [
-  { key: "film", name: "Smart Film", copy: "Instant privacy on demand. Transform glass without interrupting the architecture.", image: "/images/smart-film.png", href: "/solutions/smart-film" },
-  { key: "roller", name: "Motorized Roller Shades", copy: "Quiet, precise control of daylight, privacy, glare, and comfort.", image: "/images/hero.png", href: "/solutions/roller-shades" },
-  { key: "drapery", name: "Custom Drapery", copy: "Bespoke fabrics, refined folds, and softness tailored to every interior.", image: "/images/drapery-hero-sheer.png", href: "/solutions/custom-drapery" },
-  { key: "cellular", name: "Cellular Shades", copy: "Thermal comfort, gentle privacy, and energy efficiency for everyday living.", image: "/images/cellular-hero-winter.webp", href: "/solutions/cellular-shades" },
+  { key: "film", icon: "film-detail", name: "Smart Film", copy: "Instant privacy on demand. Transform glass without interrupting the architecture.", image: "/images/smart-film.png", href: "/solutions/smart-film" },
+  { key: "roller", icon: "shade-detail", name: "Motorized Roller Shades", copy: "Quiet, precise control of daylight, privacy, glare, and comfort.", image: "/images/hero.png", href: "/solutions/roller-shades" },
+  { key: "drapery", icon: "drapery-detail", name: "Custom Drapery", copy: "Bespoke fabrics, refined folds, and softness tailored to every interior.", image: "/images/drapery-hero-sheer.png", href: "/solutions/custom-drapery" },
+  { key: "cellular", icon: "cellular-detail", name: "Cellular Shades", copy: "Thermal comfort, gentle privacy, and energy efficiency for everyday living.", image: "/images/cellular-hero-winter.webp", href: "/solutions/cellular-shades" },
 ];
 
 const spaces = [
@@ -89,7 +90,7 @@ export default function Home() {
 
       <section className={styles.solutions} id="solutions">
         <Fade className={styles.sectionHeading}><div><span className={styles.kicker}>EXPLORE OUR SOLUTIONS</span><h2>Every space. Every need.<br />The perfect solution.</h2></div><a className={styles.textLink} href="/solutions">VIEW ALL SOLUTIONS <span>→</span></a></Fade>
-        <div className={styles.solutionGrid}>{solutions.map((item) => <motion.a className={`${styles.solutionCard} ${styles[item.key]}`} href={item.href} key={item.name}><div className={styles.solutionImage}><Image src={item.image} alt={`${item.name} installation`} fill sizes="(max-width:760px) 100vw, 25vw" /></div><div className={styles.solutionBody}><span className={styles.miniIcon} aria-hidden="true" /><h3>{item.name}</h3><p>{item.copy}</p><strong>EXPLORE {item.name.toUpperCase()} <b>→</b></strong></div></motion.a>)}</div>
+        <div className={styles.solutionGrid}>{solutions.map((item) => <motion.a className={`${styles.solutionCard} ${styles[item.key]}`} href={item.href} key={item.name}><div className={styles.solutionImage}><Image src={item.image} alt={`${item.name} installation`} fill sizes="(max-width:760px) 100vw, 25vw" /></div><div className={styles.solutionBody}><span className={`${styles.miniIcon} mega-detail ${item.icon}`} aria-hidden="true" /><h3>{item.name}</h3><p>{item.copy}</p><strong>EXPLORE {item.name.toUpperCase()} <b>→</b></strong></div></motion.a>)}</div>
       </section>
 
       <section className={styles.markets}>
@@ -109,7 +110,7 @@ export default function Home() {
 
       <section className={styles.service} id="areas"><div className={styles.serviceIntro}><span>SERVING MIAMI<br />& SOUTH FLORIDA</span><p>Proudly serving Miami and surrounding communities with tailored window solutions.</p><a className={styles.textLink} href="/#contact">VIEW SERVICE AREAS <b>→</b></a></div><div className={styles.cities}>{["Miami","Coconut Grove","Fort Lauderdale","Miami Beach","Key Biscayne","Palm Beach","Brickell","Aventura","Boca Raton","Coral Gables","Sunny Isles","And more"].map((city) => <span key={city}>{city}</span>)}</div><div className={styles.serviceImage}><Image src="/images/residential-smart-film-cover-v3.png" alt="South Florida residential architecture" fill sizes="(max-width:760px) 100vw, 35vw" /></div></section>
 
-      <section className={styles.finalCta} id="contact"><div><h2>Let&apos;s design the right solution<br />for your space.</h2><p>Begin with a design consultation tailored to your architecture, lifestyle, privacy, and comfort.</p><div className={styles.buttonRow}><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a><a className="button button-outline" href="mailto:hello@luminixshades.com">REQUEST A QUOTE</a></div></div></section>
+      <section className={styles.finalCta} id="contact"><div><h2>Let&apos;s design the right solution<br />for your space.</h2><p>Begin with a design consultation tailored to your architecture, lifestyle, privacy, and comfort.</p><div className={styles.buttonRow}><a className="button button-gold" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">SCHEDULE A CONSULTATION</a><Link className="button button-outline" href="/plan-your-project">REQUEST A QUOTE</Link></div></div></section>
 
       <SiteFooter />
 

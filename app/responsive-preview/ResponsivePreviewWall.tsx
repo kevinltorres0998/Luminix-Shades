@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type CSSProperties, type FormEvent } from "react";
+import { useRef, useState, type CSSProperties, type FormEvent } from "react";
 
 import styles from "./responsive-preview.module.css";
 
@@ -82,6 +82,7 @@ function normalizeRoute(value: string) {
 }
 
 export default function ResponsivePreviewWall() {
+  const previewScrollerRef = useRef<HTMLDivElement>(null);
   const [routeInput, setRouteInput] = useState("/");
   const [activeRoute, setActiveRoute] = useState("/");
   const [routeError, setRouteError] = useState("");
@@ -102,6 +103,7 @@ export default function ResponsivePreviewWall() {
   });
   const [expanded, setExpanded] = useState<DeviceId | null>(null);
   const [showDeviceFrames, setShowDeviceFrames] = useState(true);
+  const [horizontalPosition, setHorizontalPosition] = useState(0);
 
   function applyRoute(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -138,6 +140,23 @@ export default function ResponsivePreviewWall() {
   function toggleVisibility(id: DeviceId) {
     setVisible((current) => ({ ...current, [id]: !current[id] }));
     if (expanded === id) setExpanded(null);
+  }
+
+  function movePreviewWall(position: number) {
+    const scroller = previewScrollerRef.current;
+    setHorizontalPosition(position);
+    if (!scroller) return;
+
+    const availableDistance = scroller.scrollWidth - scroller.clientWidth;
+    scroller.scrollLeft = availableDistance * (position / 100);
+  }
+
+  function syncHorizontalPosition() {
+    const scroller = previewScrollerRef.current;
+    if (!scroller) return;
+
+    const availableDistance = scroller.scrollWidth - scroller.clientWidth;
+    setHorizontalPosition(availableDistance > 0 ? (scroller.scrollLeft / availableDistance) * 100 : 0);
   }
 
   return (
@@ -190,13 +209,27 @@ export default function ResponsivePreviewWall() {
           >
             Device frames
           </button>
+          <label className={styles.panControl} htmlFor="preview-position">
+            <span>Move previews</span>
+            <input
+              aria-label="Move between Desktop, Tablet, and Smartphone previews"
+              id="preview-position"
+              max="100"
+              min="0"
+              onChange={(event) => movePreviewWall(Number(event.target.value))}
+              step="1"
+              type="range"
+              value={horizontalPosition}
+            />
+          </label>
         </div>
 
         {routeError && <p className={styles.error} id="route-error" role="alert">{routeError}</p>}
       </header>
 
-      <section className={styles.grid} aria-label="Responsive page previews">
-        {DEVICES.map((device) => {
+      <div className={styles.previewScroller} onScroll={syncHorizontalPosition} ref={previewScrollerRef}>
+        <section className={styles.grid} aria-label="Responsive page previews">
+          {DEVICES.map((device) => {
           if (!visible[device.id]) return null;
 
           const orientation = orientations[device.id];
@@ -246,8 +279,9 @@ export default function ResponsivePreviewWall() {
               </div>
             </article>
           );
-        })}
-      </section>
+          })}
+        </section>
+      </div>
     </main>
   );
 }

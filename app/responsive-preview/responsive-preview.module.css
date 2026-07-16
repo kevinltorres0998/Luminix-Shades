@@ -1,5 +1,6 @@
 .wall {
-  min-width: max-content;
+  width: 100%;
+  min-width: 0;
   min-height: 100vh;
   padding: 22px;
   background: #131416;
@@ -108,6 +109,27 @@
 
 .globalControls {
   justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.panControl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 0 9px;
+  border: 1px solid #494c52;
+  border-radius: 6px;
+  color: #d7d9dd;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.panControl input {
+  width: 150px;
+  accent-color: #edf3ff;
+  cursor: ew-resize;
 }
 
 .error {
@@ -116,9 +138,34 @@
   font-size: 11px;
 }
 
+.previewScroller {
+  width: 100%;
+  padding: 10px 12px 30px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-color: #747983 #24262a;
+  scrollbar-width: auto;
+}
+
+.previewScroller::-webkit-scrollbar {
+  height: 14px;
+}
+
+.previewScroller::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: #24262a;
+}
+
+.previewScroller::-webkit-scrollbar-thumb {
+  border: 3px solid #24262a;
+  border-radius: 999px;
+  background: #747983;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(3, max-content);
+  width: max-content;
   align-items: start;
   gap: 28px;
 }

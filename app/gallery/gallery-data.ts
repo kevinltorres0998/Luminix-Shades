@@ -211,15 +211,11 @@ export const gallerySpaces = [
 ] as const;
 
 export const serviceAreas = [
-  { name: "Miami", x: 59, y: 72 },
-  { name: "Brickell", x: 55, y: 68 },
-  { name: "Miami Beach", x: 69, y: 61 },
-  { name: "Coconut Grove", x: 47, y: 78 },
-  { name: "Coral Gables", x: 42, y: 71 },
-  { name: "Key Biscayne", x: 68, y: 82 },
-  { name: "Sunny Isles", x: 70, y: 43 },
-  { name: "Aventura", x: 64, y: 37 },
-  { name: "Fort Lauderdale", x: 54, y: 21 },
-  { name: "Boca Raton", x: 43, y: 10 },
-  { name: "Palm Beach", x: 33, y: 4 },
+  { name: "Palm Beach", x: 81, y: 29 },
+  { name: "West Palm Beach", x: 80, y: 30 },
+  { name: "Boynton Beach", x: 79, y: 44 },
+  { name: "Delray Beach", x: 79, y: 50 },
+  { name: "Boca Raton", x: 75, y: 58 },
+  { name: "Pompano Beach", x: 75, y: 69 },
+  { name: "Fort Lauderdale", x: 74, y: 79 },
 ];
