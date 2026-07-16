@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const count = await env.DB.prepare("SELECT COUNT(*) AS count FROM admin_users").first<{ count: number }>(); const firstUser = (count?.count || 0) === 0;
   let inviteId = "";
   if (firstUser) {
-    if (!process.env.ADMIN_BOOTSTRAP_TOKEN || token !== process.env.ADMIN_BOOTSTRAP_TOKEN || email !== process.env.ADMIN_BOOTSTRAP_EMAIL?.toLowerCase()) return Response.json({ ok: false, error: "This owner registration link is invalid." }, { status: 403 });
+    if (!process.env.ADMIN_BOOTSTRAP_TOKEN || token !== process.env.ADMIN_BOOTSTRAP_TOKEN) return Response.json({ ok: false, error: "This owner registration link is invalid." }, { status: 403 });
   } else {
     const invite = await env.DB.prepare("SELECT id,email FROM admin_invites WHERE token_hash=? AND accepted_at IS NULL AND expires_at>?").bind(await sha256(token), new Date().toISOString()).first<{ id: string; email: string }>();
     if (!invite || invite.email !== email) return Response.json({ ok: false, error: "This invitation is invalid or expired." }, { status: 403 }); inviteId = invite.id;
