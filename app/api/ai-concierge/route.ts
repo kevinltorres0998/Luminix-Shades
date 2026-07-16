@@ -45,18 +45,21 @@ function outputText(body: unknown) {
 }
 
 export async function POST(request: Request) {
-  if (!process.env.OPENAI_API_KEY) return error("concierge_unavailable", 503);
+  const openAIKey = process.env.OPENAI_API_KEY;
+  const gatewayKey = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN || request.headers.get("x-vercel-oidc-token");
+  if (!openAIKey && !gatewayKey) return error("concierge_unavailable", 503);
   if (!allowed(request)) return error("rate_limited", 429);
   const body = await request.json().catch(() => null) as { messages?: unknown } | null;
   const messages = parseMessages(body?.messages);
   if (!messages) return error("invalid_messages", 400);
 
   try {
-    const response = await fetch("https://api.openai.com/v1/responses", {
+    const usingGateway = !openAIKey;
+    const response = await fetch(usingGateway ? "https://ai-gateway.vercel.sh/v1/responses" : "https://api.openai.com/v1/responses", {
       method: "POST",
-      headers: { "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`, "Content-Type": "application/json" },
+      headers: { "Authorization": `Bearer ${openAIKey || gatewayKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-5.6-luna",
+        model: process.env.OPENAI_MODEL || (usingGateway ? "openai/gpt-5.6-luna" : "gpt-5.6-luna"),
         instructions: conciergeSystemPrompt,
         input: messages,
         max_output_tokens: 500,
@@ -73,4 +76,3 @@ export async function POST(request: Request) {
     return error("concierge_unavailable", 503);
   }
 }
-
