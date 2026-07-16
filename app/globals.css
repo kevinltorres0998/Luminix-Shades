@@ -7,6 +7,10 @@ body { max-width:100%; margin:0; overflow-x:clip; background:var(--ink); color:#
 html.consultation-open,html.consultation-open body { overflow:hidden; }
 a { color:inherit; text-decoration:none; }
 img { object-fit:cover; }
+.whatsapp-float { position:fixed; right:max(24px,env(safe-area-inset-right)); bottom:max(24px,env(safe-area-inset-bottom)); z-index:45; width:54px; height:54px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.26); border-radius:50%; background:rgba(31,169,84,.94); color:#fff; box-shadow:0 12px 32px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.16); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transition:transform .25s ease,background .25s ease,box-shadow .25s ease; }
+.whatsapp-float svg { width:27px; height:27px; fill:currentColor; }
+.whatsapp-float:hover { transform:translateY(-3px); background:#25b85f; box-shadow:0 16px 38px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.18); }
+.whatsapp-float:focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
 .site-header { position:fixed; inset:0 0 auto; z-index:50; color:#fff; transition:background .45s ease,box-shadow .45s ease,backdrop-filter .45s ease; }
 .site-header::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(5,6,6,.74),rgba(5,6,6,.08)); transition:opacity .45s ease; }
 .site-header.is-scrolled,.site-header.is-mobile-open { background:rgba(10,11,11,.92); box-shadow:0 1px 0 rgba(255,255,255,.1),0 16px 45px rgba(0,0,0,.18); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }
@@ -165,6 +169,8 @@ footer div>b { color:#b5b5b5; font-size:9px; letter-spacing:.08em; margin-bottom
 @keyframes mobileNavIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
 
 @media(max-width:520px){
+  .whatsapp-float { right:max(18px,env(safe-area-inset-right)); bottom:max(18px,env(safe-area-inset-bottom)); width:50px; height:50px; }
+  .whatsapp-float svg { width:25px; height:25px; }
   .hero h1 { font-size:36px; }.button { padding:0 18px; }
   .intro h2 { font-size:30px; }
   .products { gap:38px; }
