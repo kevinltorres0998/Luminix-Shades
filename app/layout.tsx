@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ConsultationBooking from "./components/ConsultationBooking";
 import WhatsAppButton from "./components/WhatsAppButton";
+import AIConciergeLauncher from "./components/ai-concierge/AIConciergeLauncher";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -28,5 +29,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}<ConsultationBooking /><WhatsAppButton /></body></html>;
+  return <html lang="en"><body>{children}<ConsultationBooking /><AIConciergeLauncher /><WhatsAppButton /></body></html>;
 }
