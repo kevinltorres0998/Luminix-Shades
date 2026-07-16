@@ -13,20 +13,16 @@ export default function ConsultationBooking() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const stageRef = useRef<BookingStage>(stage);
-  const schedulerReadyRef = useRef(false);
-  const signatureCompleteRef = useRef(false);
 
   const active = stage !== "closed";
 
   const closeBooking = useCallback(() => {
     setStage("closed");
-    signatureCompleteRef.current = false;
   }, []);
 
   const openBooking = useCallback(() => {
     if (stageRef.current !== "closed") return;
     returnFocusRef.current = document.activeElement as HTMLElement | null;
-    signatureCompleteRef.current = false;
     setStage("signature");
   }, []);
 
@@ -53,10 +49,18 @@ export default function ConsultationBooking() {
     if (stage !== "signature") return;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const timer = window.setTimeout(() => {
-      signatureCompleteRef.current = true;
-      if (schedulerReadyRef.current) setStage("scheduler");
-    }, reducedMotion ? 220 : 820);
+      setStage("scheduler");
+    }, reducedMotion ? 320 : 1120);
     return () => window.clearTimeout(timer);
+  }, [stage]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle("consultation-signature", stage === "signature");
+    root.classList.toggle("consultation-scheduler", stage === "scheduler");
+    return () => {
+      root.classList.remove("consultation-signature", "consultation-scheduler");
+    };
   }, [stage]);
 
   useEffect(() => {
@@ -98,7 +102,7 @@ export default function ConsultationBooking() {
   }, [stage]);
 
   return (
-    <>
+    <div className={styles.bookingRoot} data-consultation-root>
       <div
         className={`${styles.websiteTransition} ${stage === "signature" ? styles.websiteTransitionVisible : styles.websiteTransitionHidden}`}
         data-luminix-site-transition
@@ -141,9 +145,7 @@ export default function ConsultationBooking() {
               title="Schedule a consultation with Luminix Shades"
               src={`${BOOKING_URL}&embed=1`}
               onLoad={() => {
-                schedulerReadyRef.current = true;
                 setSchedulerReady(true);
-                if (stageRef.current === "signature" && signatureCompleteRef.current) setStage("scheduler");
               }}
             />
           </div>
@@ -153,6 +155,6 @@ export default function ConsultationBooking() {
           </div>
         </section>
       </div>
-    </>
+    </div>
   );
 }

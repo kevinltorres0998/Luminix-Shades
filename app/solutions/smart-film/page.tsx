@@ -62,10 +62,12 @@ export default function SmartFilmPage() {
       <section className={styles.transformation} id="transformation">
         <Fade className={styles.transformHeading}><div><span className={styles.kicker}>EXPERIENCE THE TRANSFORMATION</span><h2>One room.<br />Two precise states.</h2></div><p>Click the wall switch to control the Smart Film.</p></Fade>
         <motion.div className={styles.comparison} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }}>
-          <Image src="/images/smart-film-demo-clear.png" alt="Conference room glass controlled by an architectural Smart Film wall switch" fill sizes="100vw" />
-          <motion.div key={`${selectedFilm}-clear`} className={`${styles.clearProductState} ${styles[`${selectedFilm}Clear`]}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true"><i /><i /><i /></motion.div>
-          <motion.div key={selectedFilm} className={`${styles.privateState} ${styles[selectedFilm]} ${powered ? styles.filmPowered : ""}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true"><i /><i /><i /></motion.div>
-          <div className={styles.frameLayer} aria-hidden="true"><i className={styles.frameLeft} /><i className={styles.frameOne} /><i className={styles.frameTwo} /><i className={styles.frameRight} /><i className={styles.frameTop} /><i className={styles.frameBottom} /></div>
+          <div className={styles.comparisonMedia}>
+            <Image src="/images/smart-film-demo-clear.png" alt="Conference room glass controlled by an architectural Smart Film wall switch" fill sizes="100vw" />
+            <motion.div key={`${selectedFilm}-clear`} className={`${styles.clearProductState} ${styles[`${selectedFilm}Clear`]}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true"><i /><i /><i /></motion.div>
+            <motion.div key={selectedFilm} className={`${styles.privateState} ${styles[selectedFilm]} ${powered ? styles.filmPowered : ""}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} aria-hidden="true"><i /><i /><i /></motion.div>
+            <div className={styles.frameLayer} aria-hidden="true"><i className={styles.frameLeft} /><i className={styles.frameOne} /><i className={styles.frameTwo} /><i className={styles.frameRight} /><i className={styles.frameTop} /><i className={styles.frameBottom} /></div>
+          </div>
           <div className={styles.switchConsole}>
             <div className={styles.powerStatus} aria-live="polite"><span>POWER</span><strong>{powered ? "ON" : "OFF"}</strong></div>
             <motion.button type="button" className={`${styles.wallSwitch} ${powered ? styles.switchOn : ""}`} onClick={() => setPowered((value) => !value)} whileTap={{ scale: .965, y: 1 }} transition={{ duration: .12 }} aria-pressed={powered} aria-label={`${powered ? "Turn off" : "Turn on"} Smart Film`}>

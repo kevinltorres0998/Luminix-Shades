@@ -1,0 +1,33 @@
+import { BOOKING_URL } from "../../lib/booking";
+
+export type StoredFile = { name: string; pathname: string; contentType: string; size: number; secureUrl: string };
+export type ProjectLead = {
+  submissionId: string; receivedAt: string; source: string; referrer: string; utm: Record<string, string>;
+  projectType: string; solutions: string[];
+  details: { openings: string; timeline: string; measurementStatus: string; exactMeasurementsPending: boolean; measurements: { width: string; height: string; unit: string }[] };
+  contact: { fullName: string; email: string; phone: string; company: string; address: string; city: string; state: string; zip: string; message: string; preferred: string };
+  files: StoredFile[]; deliveryStatus: "stored" | "delivered" | "email_pending";
+};
+
+const e = (value: unknown) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char] || char);
+const row = (label: string, value: unknown) => `<tr><td style="padding:7px 12px;color:#756e65;font-size:12px;width:38%;border-bottom:1px solid #e6ded2">${e(label)}</td><td style="padding:7px 12px;color:#181919;font-size:12px;border-bottom:1px solid #e6ded2">${e(value || "—")}</td></tr>`;
+const section = (title: string, body: string) => `<h2 style="margin:30px 0 10px;color:#171818;font-family:Georgia,serif;font-size:22px;font-weight:400;border-left:3px solid #c9a46b;padding-left:12px">${e(title)}</h2><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#fff">${body}</table>`;
+
+function shell(content: string) {
+  return `<!doctype html><html><body style="margin:0;background:#f3efe7;font-family:Arial,sans-serif"><div style="max-width:680px;margin:0 auto;padding:28px 16px"><div style="background:#151717;padding:24px 28px;color:#fff"><div style="color:#d6b174;font-size:11px;letter-spacing:2px">LUMINIX SHADES</div><div style="margin-top:8px;font-family:Georgia,serif;font-size:28px">Plan Your Project</div></div><div style="background:#f9f7f2;padding:28px">${content}</div><div style="padding:18px 8px;color:#78736c;font-size:10px;text-align:center">Luminix Shades · South Florida</div></div></body></html>`;
+}
+
+export function internalEmail(lead: ProjectLead) {
+  const measurements = lead.details.measurements.length ? lead.details.measurements.map((m, index) => `Opening ${index + 1}: ${m.width || "—"} × ${m.height || "—"} ${m.unit}`).join("; ") : "Not provided";
+  const fileRows = lead.files.length ? lead.files.map((file) => `<tr><td colspan="2" style="padding:8px 12px;border-bottom:1px solid #e6ded2"><a href="${e(file.secureUrl)}" style="color:#9b713b">${e(file.name)}</a> <span style="color:#777;font-size:10px">(${(file.size / 1024 / 1024).toFixed(1)} MB)</span></td></tr>`).join("") : row("Files", "None");
+  const html = shell(`<p style="margin:0 0 24px;color:#5f5a53;font-size:13px;line-height:1.7">A new project request has been received and stored successfully.</p>${section("Lead Information", row("Full name", lead.contact.fullName) + row("Email", lead.contact.email) + row("Phone", lead.contact.phone) + row("Company", lead.contact.company) + row("Preferred contact", lead.contact.preferred))}${section("Project Location", row("Address", lead.contact.address) + row("City", lead.contact.city) + row("State", lead.contact.state) + row("ZIP code", lead.contact.zip))}${section("Project Overview", row("Project type", lead.projectType) + row("Selected products", lead.solutions.join(", ")) + row("Number of openings", lead.details.openings) + row("Timeline", lead.details.timeline) + row("Measurement status", lead.details.measurementStatus) + row("Exact measurements", measurements) + row("Additional message", lead.contact.message))}${section(`Uploaded Files (${lead.files.length})`, fileRows)}${section("Submission Metadata", row("Submission ID", lead.submissionId) + row("Received", lead.receivedAt) + row("Source page", lead.source) + row("Referring page", lead.referrer) + row("UTM", Object.entries(lead.utm).map(([k, v]) => `${k}: ${v}`).join("; ") || "None"))}`);
+  const text = `NEW LUMINIX PROJECT REQUEST\n\nSubmission ID: ${lead.submissionId}\nReceived: ${lead.receivedAt}\n\nLEAD\n${lead.contact.fullName}\n${lead.contact.email}\n${lead.contact.phone}\nCompany: ${lead.contact.company || "—"}\nPreferred contact: ${lead.contact.preferred}\n\nLOCATION\n${lead.contact.address}\n${lead.contact.city}, ${lead.contact.state} ${lead.contact.zip}\n\nPROJECT\nType: ${lead.projectType}\nSolutions: ${lead.solutions.join(", ")}\nOpenings: ${lead.details.openings}\nTimeline: ${lead.details.timeline}\nMeasurements: ${measurements}\nMessage: ${lead.contact.message || "—"}\n\nFILES\n${lead.files.map((file) => `${file.name}: ${file.secureUrl}`).join("\n") || "None"}`;
+  return { html, text };
+}
+
+export function customerEmail(lead: ProjectLead) {
+  const firstName = lead.contact.fullName.trim().split(/\s+/)[0] || "there";
+  const html = shell(`<p style="margin:0;color:#b1874e;font-size:10px;font-weight:700;letter-spacing:1.8px">THANK YOU, ${e(firstName.toUpperCase())}</p><h1 style="margin:16px 0 22px;color:#171818;font-family:Georgia,serif;font-size:36px;font-weight:400;line-height:1.08">Your project request has been successfully received.</h1><p style="color:#5f5a53;font-size:13px;line-height:1.75">A Luminix Shades specialist will review the information you provided and contact you shortly to discuss the best solution for your space.</p>${section("Project Summary", row("Project Type", lead.projectType) + row("Selected Solutions", lead.solutions.join(", ")) + row("Preferred Contact Method", lead.contact.preferred))}<p style="margin:30px 0"><a href="${BOOKING_URL}" style="display:inline-block;padding:16px 22px;background:#171818;color:#e4bf82;text-decoration:none;font-size:10px;font-weight:700;letter-spacing:1.4px;border:1px solid #c9a46b">SCHEDULE YOUR CONSULTATION</a></p><p style="color:#6e6860;font-size:12px;line-height:1.7">If you need to provide additional information, simply reply directly to this email.</p>`);
+  const text = `Thank you, ${firstName}.\n\nYour project request has been successfully received.\n\nA Luminix Shades specialist will review the information you provided and contact you shortly to discuss the best solution for your space.\n\nProject Type: ${lead.projectType}\nSelected Solutions: ${lead.solutions.join(", ")}\nPreferred Contact Method: ${lead.contact.preferred}\n\nSchedule your consultation: ${BOOKING_URL}\n\nReply directly to this email if you need to provide additional information.`;
+  return { html, text };
+}
