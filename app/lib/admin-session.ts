@@ -10,7 +10,7 @@ export async function sha256(value: string) { return Buffer.from(await crypto.su
 export function randomToken(bytes = 32) { const value = new Uint8Array(bytes); crypto.getRandomValues(value); return Buffer.from(value).toString("base64url"); }
 export async function hashPassword(password: string, salt = randomToken(18)) {
   const key = await crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits"]);
-  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: encoder.encode(salt), iterations: 210000 }, key, 256);
+  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: encoder.encode(salt), iterations: 100000 }, key, 256);
   return { salt, hash: Buffer.from(bits).toString("base64url") };
 }
 export async function verifyPassword(password: string, salt: string, expected: string) {
